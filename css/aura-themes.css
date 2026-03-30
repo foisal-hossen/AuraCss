@@ -1,0 +1,593 @@
+/* ============================================================
+   AURA CSS — Phase 03: Multi-Theme Engine
+   Version  : 1.0.0
+   Layer    : aura.theme
+   Depends  : aura-core.css (Phase 01)
+              aura-tokens.css (Phase 02)
+   ============================================================
+   WHAT THIS FILE DOES:
+   Complete theming system. Every token defined in Phase 02
+   gets overridden here per theme. Themes work by swapping
+   CSS Custom Property values on a container — no class
+   duplication, no specificity fights, no JS required.
+
+   HOW THEMES WORK:
+   [data-theme="dark"] overrides :root tokens.
+   Anything inside that element automatically picks up the
+   new values because CSS Custom Properties inherit.
+
+   UNIQUE TO AURA (vs Tailwind/Bootstrap):
+   1. 6 full themes (not just dark/light)
+   2. Scoped themes — [data-theme] on ANY element, not just
+      <html>. One component can be dark while page is light.
+   3. OS auto-detect via prefers-color-scheme
+   4. Smooth theme transitions — no flash
+   5. color-scheme property for native UI elements
+
+   THEMES INCLUDED:
+   - light    (default)
+   - dark     (deep violet-tinted dark)
+   - ocean    (deep blue, cyan accents)
+   - aurora   (deep green, violet accents)
+   - ember    (deep warm brown, amber accents)
+   - rose     (deep rose, gold accents)
+   - midnight (pure black, electric blue)
+   ============================================================ */
+
+@layer aura.theme {
+
+  /* ──────────────────────────────────────────────────────────
+     THEME 01 — LIGHT (default, already set in :root by tokens)
+     We restate it explicitly so it can be manually applied
+     via [data-theme="light"] and override any parent dark theme.
+  ────────────────────────────────────────────────────────── */
+
+  [data-theme="light"],
+  .aura-light {
+    color-scheme: light;
+
+    /* Primary palette — same as :root (violet) */
+    --color-primary:         oklch(0.55 0.22 270);
+    --color-primary-hover:   oklch(0.46 0.20 270);
+    --color-primary-active:  oklch(0.37 0.17 270);
+    --color-primary-subtle:  oklch(0.93 0.038 270);
+    --color-primary-muted:   oklch(0.87 0.072 270);
+    --color-on-primary:      oklch(1 0 0);
+
+    /* Surfaces */
+    --surface-bg:      oklch(0.98 0.004 270);
+    --surface-base:    oklch(1.00 0.000 270);
+    --surface-raised:  oklch(0.96 0.005 270);
+    --surface-overlay: oklch(0.93 0.007 270);
+    --surface-sunken:  oklch(0.94 0.006 270);
+    --surface-border:  oklch(0.90 0.007 270);
+    --surface-border-hover: oklch(0.82 0.010 270);
+    --surface-border-focus: var(--color-primary);
+
+    /* Text */
+    --text-primary:   oklch(0.14 0.020 270);
+    --text-secondary: oklch(0.40 0.025 270);
+    --text-muted:     oklch(0.60 0.018 270);
+    --text-disabled:  oklch(0.75 0.010 270);
+    --text-inverse:   oklch(0.98 0.004 270);
+    --text-link:      var(--color-primary);
+
+    /* Shadows — soft for light */
+    --shadow-sm:  0 1px 3px  oklch(0 0 0 / 0.07), 0 1px 2px oklch(0 0 0 / 0.05);
+    --shadow-md:  0 4px 8px  oklch(0 0 0 / 0.08), 0 2px 4px oklch(0 0 0 / 0.06);
+    --shadow-lg:  0 8px 20px oklch(0 0 0 / 0.10), 0 4px 8px oklch(0 0 0 / 0.07);
+    --shadow-xl:  0 16px 40px oklch(0 0 0 / 0.12), 0 8px 16px oklch(0 0 0 / 0.08);
+    --shadow-inner: inset 0 2px 4px oklch(0 0 0 / 0.06);
+    --shadow-glow:
+      0 0 20px color-mix(in oklch, var(--color-primary) 30%, transparent),
+      0 0 50px color-mix(in oklch, var(--color-primary) 10%, transparent);
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     THEME 02 — DARK
+     Deep violet-tinted dark. AURA's signature look.
+  ────────────────────────────────────────────────────────── */
+
+  [data-theme="dark"],
+  .aura-dark {
+    color-scheme: dark;
+
+    --color-primary:         oklch(0.65 0.22 270);
+    --color-primary-hover:   oklch(0.72 0.22 270);
+    --color-primary-active:  oklch(0.58 0.22 270);
+    --color-primary-subtle:  oklch(0.20 0.06 270);
+    --color-primary-muted:   oklch(0.25 0.08 270);
+    --color-on-primary:      oklch(0.98 0.005 270);
+
+    --color-secondary:       oklch(0.72 0.22 330);
+    --color-accent:          oklch(0.82 0.18 185);
+
+    --color-success:         oklch(0.72 0.18 145);
+    --color-success-subtle:  oklch(0.18 0.06 145);
+    --color-warning:         oklch(0.80 0.16 75);
+    --color-warning-subtle:  oklch(0.18 0.06 75);
+    --color-danger:          oklch(0.68 0.20 25);
+    --color-danger-subtle:   oklch(0.18 0.07 25);
+    --color-info:            oklch(0.68 0.16 230);
+    --color-info-subtle:     oklch(0.18 0.06 230);
+
+    --surface-bg:      oklch(0.10 0.014 270);
+    --surface-base:    oklch(0.13 0.016 270);
+    --surface-raised:  oklch(0.17 0.018 270);
+    --surface-overlay: oklch(0.21 0.020 270);
+    --surface-sunken:  oklch(0.08 0.012 270);
+    --surface-border:  oklch(0.28 0.016 270 / 0.65);
+    --surface-border-hover: oklch(0.38 0.018 270 / 0.80);
+    --surface-border-focus: var(--color-primary);
+
+    --text-primary:   oklch(0.94 0.010 270);
+    --text-secondary: oklch(0.70 0.014 270);
+    --text-muted:     oklch(0.48 0.012 270);
+    --text-disabled:  oklch(0.32 0.008 270);
+    --text-inverse:   oklch(0.10 0.014 270);
+    --text-link:      var(--color-primary);
+
+    --ring-offset-color: var(--surface-base);
+
+    --shadow-sm:  0 1px 3px  oklch(0 0 0 / 0.30);
+    --shadow-md:  0 4px 8px  oklch(0 0 0 / 0.40);
+    --shadow-lg:  0 8px 20px oklch(0 0 0 / 0.55);
+    --shadow-xl:  0 16px 40px oklch(0 0 0 / 0.65);
+    --shadow-inner: inset 0 2px 4px oklch(0 0 0 / 0.30);
+    --shadow-glow:
+      0 0 24px color-mix(in oklch, var(--color-primary) 40%, transparent),
+      0 0 64px color-mix(in oklch, var(--color-primary) 18%, transparent);
+    --shadow-glow-lg:
+      0 0 36px color-mix(in oklch, var(--color-primary) 50%, transparent),
+      0 0 90px color-mix(in oklch, var(--color-primary) 24%, transparent);
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     THEME 03 — OCEAN
+     Deep navy blue. Cyan and teal accents.
+     Perfect for: Analytics dashboards, fintech, productivity.
+  ────────────────────────────────────────────────────────── */
+
+  [data-theme="ocean"],
+  .aura-ocean {
+    color-scheme: dark;
+
+    --color-primary:         oklch(0.68 0.19 215);
+    --color-primary-hover:   oklch(0.75 0.19 215);
+    --color-primary-active:  oklch(0.60 0.19 215);
+    --color-primary-subtle:  oklch(0.18 0.07 215);
+    --color-primary-muted:   oklch(0.22 0.09 215);
+    --color-on-primary:      oklch(0.08 0.02 215);
+
+    --color-secondary:       oklch(0.72 0.17 180);
+    --color-accent:          oklch(0.80 0.15 145);
+
+    --color-success:         oklch(0.72 0.18 160);
+    --color-success-subtle:  oklch(0.16 0.06 160);
+    --color-warning:         oklch(0.80 0.16 75);
+    --color-warning-subtle:  oklch(0.16 0.06 75);
+    --color-danger:          oklch(0.65 0.22 15);
+    --color-danger-subtle:   oklch(0.16 0.07 15);
+    --color-info:            oklch(0.68 0.16 215);
+    --color-info-subtle:     oklch(0.16 0.06 215);
+
+    --surface-bg:      oklch(0.09 0.020 230);
+    --surface-base:    oklch(0.12 0.022 228);
+    --surface-raised:  oklch(0.16 0.024 226);
+    --surface-overlay: oklch(0.20 0.025 224);
+    --surface-sunken:  oklch(0.07 0.018 232);
+    --surface-border:  oklch(0.26 0.025 222 / 0.65);
+    --surface-border-hover: oklch(0.36 0.025 220 / 0.80);
+    --surface-border-focus: var(--color-primary);
+
+    --text-primary:   oklch(0.92 0.015 210);
+    --text-secondary: oklch(0.68 0.020 210);
+    --text-muted:     oklch(0.46 0.015 210);
+    --text-disabled:  oklch(0.30 0.010 210);
+    --text-inverse:   oklch(0.09 0.020 230);
+    --text-link:      var(--color-primary);
+
+    --shadow-sm:  0 1px 3px  oklch(0 0 0 / 0.35);
+    --shadow-md:  0 4px 8px  oklch(0 0 0 / 0.45);
+    --shadow-lg:  0 8px 20px oklch(0 0 0 / 0.60);
+    --shadow-xl:  0 16px 40px oklch(0 0 0 / 0.70);
+    --shadow-glow:
+      0 0 24px color-mix(in oklch, var(--color-primary) 40%, transparent),
+      0 0 64px color-mix(in oklch, var(--color-primary) 16%, transparent);
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     THEME 04 — AURORA
+     Deep forest green. Emerald and violet accents.
+     Perfect for: Nature apps, health, sustainability, eco.
+  ────────────────────────────────────────────────────────── */
+
+  [data-theme="aurora"],
+  .aura-aurora {
+    color-scheme: dark;
+
+    --color-primary:         oklch(0.70 0.20 150);
+    --color-primary-hover:   oklch(0.77 0.20 150);
+    --color-primary-active:  oklch(0.62 0.20 150);
+    --color-primary-subtle:  oklch(0.17 0.07 150);
+    --color-primary-muted:   oklch(0.22 0.09 150);
+    --color-on-primary:      oklch(0.08 0.02 150);
+
+    --color-secondary:       oklch(0.65 0.22 290);
+    --color-accent:          oklch(0.75 0.20 330);
+
+    --color-success:         oklch(0.70 0.20 150);
+    --color-success-subtle:  oklch(0.16 0.07 150);
+    --color-warning:         oklch(0.78 0.18 80);
+    --color-warning-subtle:  oklch(0.16 0.06 80);
+    --color-danger:          oklch(0.65 0.22 20);
+    --color-danger-subtle:   oklch(0.16 0.07 20);
+
+    --surface-bg:      oklch(0.09 0.016 155);
+    --surface-base:    oklch(0.12 0.018 153);
+    --surface-raised:  oklch(0.16 0.020 151);
+    --surface-overlay: oklch(0.20 0.022 149);
+    --surface-sunken:  oklch(0.07 0.014 157);
+    --surface-border:  oklch(0.26 0.022 148 / 0.60);
+    --surface-border-hover: oklch(0.36 0.022 146 / 0.80);
+    --surface-border-focus: var(--color-primary);
+
+    --text-primary:   oklch(0.92 0.018 148);
+    --text-secondary: oklch(0.68 0.022 148);
+    --text-muted:     oklch(0.46 0.016 148);
+    --text-disabled:  oklch(0.30 0.010 148);
+    --text-inverse:   oklch(0.09 0.016 155);
+    --text-link:      var(--color-primary);
+
+    --shadow-sm:  0 1px 3px  oklch(0 0 0 / 0.35);
+    --shadow-md:  0 4px 8px  oklch(0 0 0 / 0.45);
+    --shadow-lg:  0 8px 20px oklch(0 0 0 / 0.60);
+    --shadow-glow:
+      0 0 24px color-mix(in oklch, var(--color-primary) 38%, transparent),
+      0 0 64px color-mix(in oklch, var(--color-primary) 15%, transparent);
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     THEME 05 — EMBER
+     Deep warm brown. Amber and orange accents.
+     Perfect for: Food apps, lifestyle, creative tools, blogs.
+  ────────────────────────────────────────────────────────── */
+
+  [data-theme="ember"],
+  .aura-ember {
+    color-scheme: dark;
+
+    --color-primary:         oklch(0.72 0.19 55);
+    --color-primary-hover:   oklch(0.79 0.19 55);
+    --color-primary-active:  oklch(0.64 0.19 55);
+    --color-primary-subtle:  oklch(0.18 0.07 55);
+    --color-primary-muted:   oklch(0.23 0.09 55);
+    --color-on-primary:      oklch(0.08 0.02 55);
+
+    --color-secondary:       oklch(0.68 0.22 30);
+    --color-accent:          oklch(0.82 0.18 80);
+
+    --color-success:         oklch(0.68 0.18 145);
+    --color-success-subtle:  oklch(0.16 0.06 145);
+    --color-warning:         oklch(0.82 0.18 65);
+    --color-warning-subtle:  oklch(0.18 0.07 65);
+    --color-danger:          oklch(0.62 0.24 15);
+    --color-danger-subtle:   oklch(0.16 0.08 15);
+
+    --surface-bg:      oklch(0.09 0.016 40);
+    --surface-base:    oklch(0.12 0.018 42);
+    --surface-raised:  oklch(0.16 0.020 44);
+    --surface-overlay: oklch(0.20 0.022 46);
+    --surface-sunken:  oklch(0.07 0.014 38);
+    --surface-border:  oklch(0.28 0.024 48 / 0.60);
+    --surface-border-hover: oklch(0.38 0.024 50 / 0.80);
+    --surface-border-focus: var(--color-primary);
+
+    --text-primary:   oklch(0.93 0.018 55);
+    --text-secondary: oklch(0.70 0.022 55);
+    --text-muted:     oklch(0.48 0.016 55);
+    --text-disabled:  oklch(0.32 0.010 55);
+    --text-inverse:   oklch(0.09 0.016 40);
+    --text-link:      var(--color-primary);
+
+    --shadow-sm:  0 1px 3px  oklch(0 0 0 / 0.35);
+    --shadow-md:  0 4px 8px  oklch(0 0 0 / 0.45);
+    --shadow-lg:  0 8px 20px oklch(0 0 0 / 0.60);
+    --shadow-glow:
+      0 0 24px color-mix(in oklch, var(--color-primary) 38%, transparent),
+      0 0 64px color-mix(in oklch, var(--color-primary) 15%, transparent);
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     THEME 06 — ROSE
+     Deep rose/magenta. Pink and gold accents.
+     Perfect for: Beauty, fashion, luxury, lifestyle brands.
+  ────────────────────────────────────────────────────────── */
+
+  [data-theme="rose"],
+  .aura-rose {
+    color-scheme: dark;
+
+    --color-primary:         oklch(0.68 0.24 340);
+    --color-primary-hover:   oklch(0.75 0.24 340);
+    --color-primary-active:  oklch(0.60 0.24 340);
+    --color-primary-subtle:  oklch(0.18 0.08 340);
+    --color-primary-muted:   oklch(0.23 0.10 340);
+    --color-on-primary:      oklch(0.98 0.005 340);
+
+    --color-secondary:       oklch(0.72 0.22 20);
+    --color-accent:          oklch(0.82 0.18 75);
+
+    --color-success:         oklch(0.68 0.18 145);
+    --color-success-subtle:  oklch(0.16 0.06 145);
+    --color-warning:         oklch(0.80 0.18 75);
+    --color-warning-subtle:  oklch(0.18 0.07 75);
+    --color-danger:          oklch(0.65 0.26 15);
+    --color-danger-subtle:   oklch(0.16 0.08 15);
+
+    --surface-bg:      oklch(0.09 0.018 340);
+    --surface-base:    oklch(0.12 0.020 338);
+    --surface-raised:  oklch(0.16 0.022 336);
+    --surface-overlay: oklch(0.21 0.024 334);
+    --surface-sunken:  oklch(0.07 0.016 342);
+    --surface-border:  oklch(0.28 0.026 332 / 0.60);
+    --surface-border-hover: oklch(0.38 0.026 330 / 0.80);
+    --surface-border-focus: var(--color-primary);
+
+    --text-primary:   oklch(0.93 0.016 345);
+    --text-secondary: oklch(0.70 0.020 345);
+    --text-muted:     oklch(0.48 0.015 345);
+    --text-disabled:  oklch(0.32 0.010 345);
+    --text-inverse:   oklch(0.09 0.018 340);
+    --text-link:      var(--color-primary);
+
+    --shadow-sm:  0 1px 3px  oklch(0 0 0 / 0.35);
+    --shadow-md:  0 4px 8px  oklch(0 0 0 / 0.45);
+    --shadow-lg:  0 8px 20px oklch(0 0 0 / 0.60);
+    --shadow-glow:
+      0 0 24px color-mix(in oklch, var(--color-primary) 38%, transparent),
+      0 0 64px color-mix(in oklch, var(--color-primary) 15%, transparent);
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     THEME 07 — MIDNIGHT
+     Pure black. Electric blue accents. Zero chroma surfaces.
+     Perfect for: Developer tools, terminals, gaming, tech.
+  ────────────────────────────────────────────────────────── */
+
+  [data-theme="midnight"],
+  .aura-midnight {
+    color-scheme: dark;
+
+    --color-primary:         oklch(0.65 0.25 240);
+    --color-primary-hover:   oklch(0.72 0.25 240);
+    --color-primary-active:  oklch(0.58 0.25 240);
+    --color-primary-subtle:  oklch(0.15 0.08 240);
+    --color-primary-muted:   oklch(0.20 0.10 240);
+    --color-on-primary:      oklch(0.98 0 0);
+
+    --color-secondary:       oklch(0.65 0.22 290);
+    --color-accent:          oklch(0.85 0.20 180);
+
+    --color-success:         oklch(0.70 0.20 145);
+    --color-success-subtle:  oklch(0.14 0.06 145);
+    --color-warning:         oklch(0.80 0.18 75);
+    --color-warning-subtle:  oklch(0.14 0.06 75);
+    --color-danger:          oklch(0.65 0.26 15);
+    --color-danger-subtle:   oklch(0.14 0.08 15);
+
+    /* Pure black / near-black surfaces — no chroma */
+    --surface-bg:      oklch(0.04 0.000 0);
+    --surface-base:    oklch(0.07 0.000 0);
+    --surface-raised:  oklch(0.11 0.002 240);
+    --surface-overlay: oklch(0.15 0.004 240);
+    --surface-sunken:  oklch(0.02 0.000 0);
+    --surface-border:  oklch(0.22 0.006 240 / 0.70);
+    --surface-border-hover: oklch(0.34 0.010 240 / 0.85);
+    --surface-border-focus: var(--color-primary);
+
+    --text-primary:   oklch(0.96 0.005 240);
+    --text-secondary: oklch(0.68 0.010 240);
+    --text-muted:     oklch(0.44 0.008 240);
+    --text-disabled:  oklch(0.28 0.005 240);
+    --text-inverse:   oklch(0.04 0 0);
+    --text-link:      var(--color-primary);
+
+    --shadow-sm:  0 1px 3px  oklch(0 0 0 / 0.50);
+    --shadow-md:  0 4px 8px  oklch(0 0 0 / 0.65);
+    --shadow-lg:  0 8px 20px oklch(0 0 0 / 0.80);
+    --shadow-xl:  0 16px 40px oklch(0 0 0 / 0.90);
+    --shadow-glow:
+      0 0 28px color-mix(in oklch, var(--color-primary) 50%, transparent),
+      0 0 72px color-mix(in oklch, var(--color-primary) 22%, transparent);
+    --shadow-glow-lg:
+      0 0 40px color-mix(in oklch, var(--color-primary) 60%, transparent),
+      0 0 100px color-mix(in oklch, var(--color-primary) 28%, transparent);
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     OS-LEVEL AUTO DARK MODE
+     If no [data-theme] is set, respect the OS preference.
+     This is the "zero config" path — import AURA and it
+     just works with the user's system settings.
+  ────────────────────────────────────────────────────────── */
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]):not([data-theme="light"]) {
+
+      color-scheme: dark;
+
+      --color-primary:         oklch(0.65 0.22 270);
+      --color-primary-hover:   oklch(0.72 0.22 270);
+      --color-primary-active:  oklch(0.58 0.22 270);
+      --color-primary-subtle:  oklch(0.20 0.06 270);
+      --color-primary-muted:   oklch(0.25 0.08 270);
+      --color-on-primary:      oklch(0.98 0.005 270);
+
+      --color-secondary:       oklch(0.72 0.22 330);
+      --color-accent:          oklch(0.82 0.18 185);
+
+      --color-success:         oklch(0.72 0.18 145);
+      --color-success-subtle:  oklch(0.18 0.06 145);
+      --color-warning:         oklch(0.80 0.16 75);
+      --color-warning-subtle:  oklch(0.18 0.06 75);
+      --color-danger:          oklch(0.68 0.20 25);
+      --color-danger-subtle:   oklch(0.18 0.07 25);
+      --color-info:            oklch(0.68 0.16 230);
+      --color-info-subtle:     oklch(0.18 0.06 230);
+
+      --surface-bg:      oklch(0.10 0.014 270);
+      --surface-base:    oklch(0.13 0.016 270);
+      --surface-raised:  oklch(0.17 0.018 270);
+      --surface-overlay: oklch(0.21 0.020 270);
+      --surface-sunken:  oklch(0.08 0.012 270);
+      --surface-border:  oklch(0.28 0.016 270 / 0.65);
+      --surface-border-hover: oklch(0.38 0.018 270 / 0.80);
+
+      --text-primary:   oklch(0.94 0.010 270);
+      --text-secondary: oklch(0.70 0.014 270);
+      --text-muted:     oklch(0.48 0.012 270);
+      --text-disabled:  oklch(0.32 0.008 270);
+      --text-inverse:   oklch(0.10 0.014 270);
+
+      --shadow-sm:  0 1px 3px  oklch(0 0 0 / 0.30);
+      --shadow-md:  0 4px 8px  oklch(0 0 0 / 0.40);
+      --shadow-lg:  0 8px 20px oklch(0 0 0 / 0.55);
+      --shadow-xl:  0 16px 40px oklch(0 0 0 / 0.65);
+      --shadow-glow:
+        0 0 24px color-mix(in oklch, var(--color-primary) 40%, transparent),
+        0 0 64px color-mix(in oklch, var(--color-primary) 18%, transparent);
+    }
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     SCOPED THEMES — AURA's most powerful feature
+     Apply any theme to ANY element, not just <html>.
+     The component inherits the new tokens automatically.
+
+     Example usage:
+       <html data-theme="light">
+         ...
+         <aside data-theme="dark">  ← This sidebar is dark
+           <nav>...</nav>           ← Nav inherits dark theme
+         </aside>
+         ...                        ← Rest of page is light
+       </html>
+
+     This works because CSS Custom Properties inherit down
+     the DOM tree. No JS needed. No class duplication.
+  ────────────────────────────────────────────────────────── */
+
+  /* Scoped theme isolation — ensure border-box and color-scheme
+     are set on the scoped element itself */
+  [data-theme] {
+    background-color: var(--surface-bg);
+    color: var(--text-primary);
+  }
+
+  /* Nested scoped themes should not double-inherit from parent */
+  [data-theme] [data-theme] {
+    isolation: isolate;
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     SMOOTH THEME TRANSITIONS
+     When data-theme changes via JS, animate the swap.
+     Respects prefers-reduced-motion.
+  ────────────────────────────────────────────────────────── */
+
+  @media (prefers-reduced-motion: no-preference) {
+    html.aura-transitioning,
+    html.aura-transitioning *,
+    html.aura-transitioning *::before,
+    html.aura-transitioning *::after {
+      transition:
+        background-color 220ms ease,
+        border-color     220ms ease,
+        color            220ms ease,
+        box-shadow       220ms ease !important;
+    }
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     THEME-AWARE FORCED COLORS (Windows High Contrast)
+     Ensure AURA works in accessibility modes.
+  ────────────────────────────────────────────────────────── */
+
+  @media (forced-colors: active) {
+    :root {
+      --color-primary:         ButtonText;
+      --surface-bg:            Canvas;
+      --surface-base:          Canvas;
+      --surface-border:        ButtonBorder;
+      --text-primary:          CanvasText;
+      --text-secondary:        CanvasText;
+      --text-muted:            GrayText;
+      --text-link:             LinkText;
+    }
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     THEME UTILITY CLASSES
+     Quick theme application without data attributes.
+     Useful for small components or inline theming.
+  ────────────────────────────────────────────────────────── */
+
+  .theme-light    { --aura-scope: light;    }
+  .theme-dark     { --aura-scope: dark;     }
+  .theme-ocean    { --aura-scope: ocean;    }
+  .theme-aurora   { --aura-scope: aurora;   }
+  .theme-ember    { --aura-scope: ember;    }
+  .theme-rose     { --aura-scope: rose;     }
+  .theme-midnight { --aura-scope: midnight; }
+
+} /* end @layer aura.theme */
+
+
+/* ──────────────────────────────────────────────────────────
+   THEME SWITCHER JS HELPER
+   Include this tiny script to enable smooth transitions
+   when switching themes programmatically.
+
+   Usage:
+     import { setTheme } from '@aura/theme'
+     setTheme('dark')       // instant
+     setTheme('ocean', true) // with transition
+
+   Or vanilla:
+     document.documentElement.setAttribute('data-theme', 'ocean')
+────────────────────────────────────────────────────────── */
+
+/*
+  // @aura/theme — theme switcher helper (inline script)
+  window.aura = window.aura || {};
+  window.aura.setTheme = function(theme, animate = true) {
+    const html = document.documentElement;
+    if (animate) {
+      html.classList.add('aura-transitioning');
+      setTimeout(() => html.classList.remove('aura-transitioning'), 300);
+    }
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('aura-theme', theme);
+  };
+  window.aura.getTheme = function() {
+    return localStorage.getItem('aura-theme')
+      || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  };
+  // Auto-restore saved theme on page load
+  (function() {
+    const saved = window.aura.getTheme();
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+*/

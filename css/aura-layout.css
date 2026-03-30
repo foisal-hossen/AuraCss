@@ -1,0 +1,945 @@
+/* ============================================================
+   AURA CSS — Phase 08: Layout System (Part 1 of 2)
+   Version  : 1.0.0
+   Layer    : aura.layout
+   Depends  : Phase 01, 02, 03
+   ============================================================
+   PART 1 COVERS:
+   1.  Display utilities
+   2.  Position utilities
+   3.  Inset / top / right / bottom / left
+   4.  Float & clear
+   5.  Overflow utilities
+   6.  Visibility utilities
+   7.  Flex container utilities
+   8.  Flex item utilities
+   9.  Grid container — Quantum Grid (AURA exclusive)
+   10. Grid item utilities
+   ============================================================ */
+
+@layer aura.layout {
+
+  /* ────────────────────────────────────────────────────────
+     1. DISPLAY UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .block         { display: block; }
+  .inline        { display: inline; }
+  .inline-block  { display: inline-block; }
+  .flex          { display: flex; }
+  .inline-flex   { display: inline-flex; }
+  .grid          { display: grid; }
+  .inline-grid   { display: inline-grid; }
+  .table         { display: table; }
+  .table-row     { display: table-row; }
+  .table-cell    { display: table-cell; }
+  .table-caption { display: table-caption; }
+  .contents      { display: contents; }
+  .list-item     { display: list-item; }
+  .flow-root     { display: flow-root; }
+  .hidden        { display: none; }
+
+  /* Responsive visibility helpers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     2. POSITION UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .static   { position: static; }
+  .fixed    { position: fixed; }
+  .absolute { position: absolute; }
+  .relative { position: relative; }
+  .sticky   { position: sticky; }
+
+  /* Sticky positioning helpers */
+  .sticky-top    { position: sticky; top: 0; }
+  .sticky-bottom { position: sticky; bottom: 0; }
+
+
+  /* ────────────────────────────────────────────────────────
+     3. INSET UTILITIES (top/right/bottom/left)
+  ──────────────────────────────────────────────────────── */
+
+  /* All sides */
+  .inset-0    { inset: 0; }
+  .inset-px   { inset: 1px; }
+  .inset-1    { inset: var(--space-1); }
+  .inset-2    { inset: var(--space-2); }
+  .inset-4    { inset: var(--space-4); }
+  .inset-6    { inset: var(--space-6); }
+  .inset-8    { inset: var(--space-8); }
+  .inset-auto { inset: auto; }
+  .inset-full { inset: 100%; }
+
+  /* Horizontal inset */
+  .inset-x-0    { left: 0; right: 0; }
+  .inset-x-auto { left: auto; right: auto; }
+
+  /* Vertical inset */
+  .inset-y-0    { top: 0; bottom: 0; }
+  .inset-y-auto { top: auto; bottom: auto; }
+
+  /* Individual sides */
+  .top-0    { top: 0; }
+  .top-px   { top: 1px; }
+  .top-1    { top: var(--space-1); }
+  .top-2    { top: var(--space-2); }
+  .top-4    { top: var(--space-4); }
+  .top-6    { top: var(--space-6); }
+  .top-8    { top: var(--space-8); }
+  .top-12   { top: var(--space-12); }
+  .top-16   { top: var(--space-16); }
+  .top-auto { top: auto; }
+  .top-full { top: 100%; }
+  .top-1\/2 { top: 50%; }
+
+  .right-0    { right: 0; }
+  .right-px   { right: 1px; }
+  .right-1    { right: var(--space-1); }
+  .right-2    { right: var(--space-2); }
+  .right-4    { right: var(--space-4); }
+  .right-6    { right: var(--space-6); }
+  .right-8    { right: var(--space-8); }
+  .right-auto { right: auto; }
+  .right-full { right: 100%; }
+  .right-1\/2 { right: 50%; }
+
+  .bottom-0    { bottom: 0; }
+  .bottom-px   { bottom: 1px; }
+  .bottom-1    { bottom: var(--space-1); }
+  .bottom-2    { bottom: var(--space-2); }
+  .bottom-4    { bottom: var(--space-4); }
+  .bottom-6    { bottom: var(--space-6); }
+  .bottom-8    { bottom: var(--space-8); }
+  .bottom-auto { bottom: auto; }
+  .bottom-full { bottom: 100%; }
+  .bottom-1\/2 { bottom: 50%; }
+
+  .left-0    { left: 0; }
+  .left-px   { left: 1px; }
+  .left-1    { left: var(--space-1); }
+  .left-2    { left: var(--space-2); }
+  .left-4    { left: var(--space-4); }
+  .left-6    { left: var(--space-6); }
+  .left-8    { left: var(--space-8); }
+  .left-auto { left: auto; }
+  .left-full { left: 100%; }
+  .left-1\/2 { left: 50%; }
+
+
+  /* ────────────────────────────────────────────────────────
+     4. FLOAT & CLEAR
+  ──────────────────────────────────────────────────────── */
+
+  .float-start { float: inline-start; }
+  .float-end   { float: inline-end; }
+  .float-right { float: right; }
+  .float-left  { float: left; }
+  .float-none  { float: none; }
+
+  .clear-left  { clear: left; }
+  .clear-right { clear: right; }
+  .clear-both  { clear: both; }
+  .clear-none  { clear: none; }
+
+  .clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     5. OVERFLOW UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .overflow-auto    { overflow: auto; }
+  .overflow-hidden  { overflow: hidden; }
+  .overflow-clip    { overflow: clip; }
+  .overflow-visible { overflow: visible; }
+  .overflow-scroll  { overflow: scroll; }
+
+  .overflow-x-auto    { overflow-x: auto; }
+  .overflow-x-hidden  { overflow-x: hidden; }
+  .overflow-x-clip    { overflow-x: clip; }
+  .overflow-x-visible { overflow-x: visible; }
+  .overflow-x-scroll  { overflow-x: scroll; }
+
+  .overflow-y-auto    { overflow-y: auto; }
+  .overflow-y-hidden  { overflow-y: hidden; }
+  .overflow-y-clip    { overflow-y: clip; }
+  .overflow-y-visible { overflow-y: visible; }
+  .overflow-y-scroll  { overflow-y: scroll; }
+
+  /* Overscroll behavior */
+  .overscroll-auto     { overscroll-behavior: auto; }
+  .overscroll-contain  { overscroll-behavior: contain; }
+  .overscroll-none     { overscroll-behavior: none; }
+  .overscroll-x-auto   { overscroll-behavior-x: auto; }
+  .overscroll-x-contain{ overscroll-behavior-x: contain; }
+  .overscroll-x-none   { overscroll-behavior-x: none; }
+  .overscroll-y-auto   { overscroll-behavior-y: auto; }
+  .overscroll-y-contain{ overscroll-behavior-y: contain; }
+  .overscroll-y-none   { overscroll-behavior-y: none; }
+
+
+  /* ────────────────────────────────────────────────────────
+     6. VISIBILITY UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .visible   { visibility: visible; }
+  .invisible { visibility: hidden; }
+  .collapse  { visibility: collapse; }
+
+
+  /* ────────────────────────────────────────────────────────
+     7. FLEX CONTAINER UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  /* Direction */
+  .flex-row         { flex-direction: row; }
+  .flex-row-reverse { flex-direction: row-reverse; }
+  .flex-col         { flex-direction: column; }
+  .flex-col-reverse { flex-direction: column-reverse; }
+
+  /* Wrap */
+  .flex-wrap         { flex-wrap: wrap; }
+  .flex-wrap-reverse { flex-wrap: wrap-reverse; }
+  .flex-nowrap       { flex-wrap: nowrap; }
+
+  /* Justify content */
+  .justify-start    { justify-content: flex-start; }
+  .justify-end      { justify-content: flex-end; }
+  .justify-center   { justify-content: center; }
+  .justify-between  { justify-content: space-between; }
+  .justify-around   { justify-content: space-around; }
+  .justify-evenly   { justify-content: space-evenly; }
+  .justify-stretch  { justify-content: stretch; }
+  .justify-normal   { justify-content: normal; }
+
+  /* Align items */
+  .items-start    { align-items: flex-start; }
+  .items-end      { align-items: flex-end; }
+  .items-center   { align-items: center; }
+  .items-baseline { align-items: baseline; }
+  .items-stretch  { align-items: stretch; }
+
+  /* Align content (multi-line) */
+  .content-start    { align-content: flex-start; }
+  .content-end      { align-content: flex-end; }
+  .content-center   { align-content: center; }
+  .content-between  { align-content: space-between; }
+  .content-around   { align-content: space-around; }
+  .content-evenly   { align-content: space-evenly; }
+  .content-stretch  { align-content: stretch; }
+  .content-baseline { align-content: baseline; }
+
+  /* Justify items */
+  .justify-items-start   { justify-items: start; }
+  .justify-items-end     { justify-items: end; }
+  .justify-items-center  { justify-items: center; }
+  .justify-items-stretch { justify-items: stretch; }
+
+  /* Place content — shorthand justify-content + align-content */
+  .place-content-start   { place-content: start; }
+  .place-content-end     { place-content: end; }
+  .place-content-center  { place-content: center; }
+  .place-content-between { place-content: space-between; }
+  .place-content-around  { place-content: space-around; }
+  .place-content-evenly  { place-content: space-evenly; }
+  .place-content-stretch { place-content: stretch; }
+  .place-content-baseline{ place-content: baseline; }
+
+  /* Place items — shorthand justify-items + align-items */
+  .place-items-start   { place-items: start; }
+  .place-items-end     { place-items: end; }
+  .place-items-center  { place-items: center; }
+  .place-items-stretch { place-items: stretch; }
+  .place-items-baseline{ place-items: baseline; }
+
+  /* Safe alignment — NEW, prevents overflow issues */
+  .items-safe-center   { align-items: safe center; }
+  .justify-safe-center { justify-content: safe center; }
+
+
+  /* ────────────────────────────────────────────────────────
+     8. FLEX ITEM UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  /* Flex shorthand */
+  .flex-1        { flex: 1 1 0%; }
+  .flex-auto     { flex: 1 1 auto; }
+  .flex-initial  { flex: 0 1 auto; }
+  .flex-none     { flex: none; }
+
+  /* Flex grow */
+  .grow          { flex-grow: 1; }
+  .grow-0        { flex-grow: 0; }
+
+  /* Flex shrink */
+  .shrink        { flex-shrink: 1; }
+  .shrink-0      { flex-shrink: 0; }
+
+  /* Flex basis */
+  .basis-auto    { flex-basis: auto; }
+  .basis-0       { flex-basis: 0; }
+  .basis-full    { flex-basis: 100%; }
+  .basis-1\/2    { flex-basis: 50%; }
+  .basis-1\/3    { flex-basis: 33.333333%; }
+  .basis-2\/3    { flex-basis: 66.666667%; }
+  .basis-1\/4    { flex-basis: 25%; }
+  .basis-3\/4    { flex-basis: 75%; }
+
+  /* Align self */
+  .self-auto     { align-self: auto; }
+  .self-start    { align-self: flex-start; }
+  .self-end      { align-self: flex-end; }
+  .self-center   { align-self: center; }
+  .self-stretch  { align-self: stretch; }
+  .self-baseline { align-self: baseline; }
+
+  /* Justify self */
+  .justify-self-auto    { justify-self: auto; }
+  .justify-self-start   { justify-self: start; }
+  .justify-self-end     { justify-self: end; }
+  .justify-self-center  { justify-self: center; }
+  .justify-self-stretch { justify-self: stretch; }
+
+  /* Place self */
+  .place-self-auto    { place-self: auto; }
+  .place-self-start   { place-self: start; }
+  .place-self-end     { place-self: end; }
+  .place-self-center  { place-self: center; }
+  .place-self-stretch { place-self: stretch; }
+
+  /* Order */
+  .order-first { order: -9999; }
+  .order-last  { order: 9999; }
+  .order-none  { order: 0; }
+  .order-1     { order: 1; }
+  .order-2     { order: 2; }
+  .order-3     { order: 3; }
+  .order-4     { order: 4; }
+  .order-5     { order: 5; }
+  .order-6     { order: 6; }
+  .order-7     { order: 7; }
+  .order-8     { order: 8; }
+  .order-9     { order: 9; }
+  .order-10    { order: 10; }
+  .order-11    { order: 11; }
+  .order-12    { order: 12; }
+
+
+  /* ────────────────────────────────────────────────────────
+     9. QUANTUM GRID — AURA's Intelligent Grid System
+     Three tiers of grid utilities:
+
+     Tier A: Explicit column count (like Tailwind)
+     Tier B: Auto-fill (intelligent — AURA exclusive)
+     Tier C: Named layout patterns (Stack, Sidebar, Holy Grail)
+
+     The "Quantum" in Quantum Grid refers to how columns
+     automatically collapse/expand without media queries.
+     Grid items find their own optimal placement.
+  ──────────────────────────────────────────────────────── */
+
+  /* ── Tier A: Explicit Column Count ── */
+  .grid-cols-1  { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .grid-cols-2  { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-cols-3  { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid-cols-4  { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .grid-cols-5  { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .grid-cols-6  { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .grid-cols-7  { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .grid-cols-8  { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .grid-cols-9  { grid-template-columns: repeat(9, minmax(0, 1fr)); }
+  .grid-cols-10 { grid-template-columns: repeat(10, minmax(0, 1fr)); }
+  .grid-cols-11 { grid-template-columns: repeat(11, minmax(0, 1fr)); }
+  .grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .grid-cols-none { grid-template-columns: none; }
+  .grid-cols-subgrid { grid-template-columns: subgrid; }
+
+  /* ── Tier B: Auto-fill Quantum Grid ── */
+  /* Zero breakpoints. Grid decides column count based on min item width.
+     Items will NEVER be smaller than the specified minimum.
+     Add more items — columns auto-adjust. No media queries needed. */
+
+  .grid-auto-160  { grid-template-columns: repeat(auto-fill, minmax(min(160px,  100%), 1fr)); }
+  .grid-auto-200  { grid-template-columns: repeat(auto-fill, minmax(min(200px,  100%), 1fr)); }
+  .grid-auto-220  { grid-template-columns: repeat(auto-fill, minmax(min(220px,  100%), 1fr)); }
+  .grid-auto-240  { grid-template-columns: repeat(auto-fill, minmax(min(240px,  100%), 1fr)); }
+  .grid-auto-260  { grid-template-columns: repeat(auto-fill, minmax(min(260px,  100%), 1fr)); }
+  .grid-auto-280  { grid-template-columns: repeat(auto-fill, minmax(min(280px,  100%), 1fr)); }
+  .grid-auto-300  { grid-template-columns: repeat(auto-fill, minmax(min(300px,  100%), 1fr)); }
+  .grid-auto-320  { grid-template-columns: repeat(auto-fill, minmax(min(320px,  100%), 1fr)); }
+  .grid-auto-360  { grid-template-columns: repeat(auto-fill, minmax(min(360px,  100%), 1fr)); }
+  .grid-auto-400  { grid-template-columns: repeat(auto-fill, minmax(min(400px,  100%), 1fr)); }
+  .grid-auto-480  { grid-template-columns: repeat(auto-fill, minmax(min(480px,  100%), 1fr)); }
+
+  /* Auto-fit variant — stretches last row items to fill available space */
+  .grid-fit-160   { grid-template-columns: repeat(auto-fit, minmax(min(160px,  100%), 1fr)); }
+  .grid-fit-200   { grid-template-columns: repeat(auto-fit, minmax(min(200px,  100%), 1fr)); }
+  .grid-fit-240   { grid-template-columns: repeat(auto-fit, minmax(min(240px,  100%), 1fr)); }
+  .grid-fit-280   { grid-template-columns: repeat(auto-fit, minmax(min(280px,  100%), 1fr)); }
+  .grid-fit-300   { grid-template-columns: repeat(auto-fit, minmax(min(300px,  100%), 1fr)); }
+  .grid-fit-320   { grid-template-columns: repeat(auto-fit, minmax(min(320px,  100%), 1fr)); }
+  .grid-fit-360   { grid-template-columns: repeat(auto-fit, minmax(min(360px,  100%), 1fr)); }
+  .grid-fit-400   { grid-template-columns: repeat(auto-fit, minmax(min(400px,  100%), 1fr)); }
+
+  /* ── Tier C: Named Layout Patterns ── */
+
+  /* Stack — single column, full width */
+  .layout-stack {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  /* Cluster — wrapping inline items */
+  .layout-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  /* Sidebar + Main — content-based ratio */
+  .layout-sidebar {
+    display: grid;
+    grid-template-columns: minmax(min(260px, 100%), 1fr) minmax(0, 3fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .layout-sidebar-right {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(min(260px, 100%), 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  /* Switcher — switches from horizontal to vertical at threshold */
+  .layout-switcher {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+  .layout-switcher > * {
+    flex: 1;
+    min-width: min(280px, 100%);
+  }
+
+  /* Holy Grail — header, sidebar, main, sidebar, footer */
+  .layout-holy-grail {
+    display: grid;
+    grid-template:
+      "header" auto
+      "main"   1fr
+      "footer" auto
+      / 1fr;
+    min-height: 100dvh;
+  }
+
+  @media (min-width: 768px) {
+    .layout-holy-grail {
+      grid-template:
+        "header header  header"  auto
+        "nav    main    aside"   1fr
+        "footer footer  footer"  auto
+        / 200px 1fr     200px;
+    }
+  }
+
+  .layout-holy-grail > [data-area="header"] { grid-area: header; }
+  .layout-holy-grail > [data-area="nav"]    { grid-area: nav; }
+  .layout-holy-grail > [data-area="main"]   { grid-area: main; }
+  .layout-holy-grail > [data-area="aside"]  { grid-area: aside; }
+  .layout-holy-grail > [data-area="footer"] { grid-area: footer; }
+
+  /* Bento Grid — AURA exclusive, popular for dashboards/portfolios */
+  .layout-bento {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    grid-auto-rows: var(--space-48);
+    gap: var(--space-4);
+  }
+
+  .bento-tall    { grid-row: span 2; }
+  .bento-wide    { grid-column: span 2; }
+  .bento-feature { grid-column: span 2; grid-row: span 2; }
+
+
+  /* ────────────────────────────────────────────────────────
+     10. GRID ITEM UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  /* Column span */
+  .col-auto     { grid-column: auto; }
+  .col-span-1   { grid-column: span 1 / span 1; }
+  .col-span-2   { grid-column: span 2 / span 2; }
+  .col-span-3   { grid-column: span 3 / span 3; }
+  .col-span-4   { grid-column: span 4 / span 4; }
+  .col-span-5   { grid-column: span 5 / span 5; }
+  .col-span-6   { grid-column: span 6 / span 6; }
+  .col-span-7   { grid-column: span 7 / span 7; }
+  .col-span-8   { grid-column: span 8 / span 8; }
+  .col-span-9   { grid-column: span 9 / span 9; }
+  .col-span-10  { grid-column: span 10 / span 10; }
+  .col-span-11  { grid-column: span 11 / span 11; }
+  .col-span-12  { grid-column: span 12 / span 12; }
+  .col-span-full{ grid-column: 1 / -1; }
+
+  /* Column start */
+  .col-start-1  { grid-column-start: 1; }
+  .col-start-2  { grid-column-start: 2; }
+  .col-start-3  { grid-column-start: 3; }
+  .col-start-4  { grid-column-start: 4; }
+  .col-start-5  { grid-column-start: 5; }
+  .col-start-6  { grid-column-start: 6; }
+  .col-start-auto { grid-column-start: auto; }
+
+  /* Column end */
+  .col-end-1    { grid-column-end: 1; }
+  .col-end-2    { grid-column-end: 2; }
+  .col-end-3    { grid-column-end: 3; }
+  .col-end-4    { grid-column-end: 4; }
+  .col-end-5    { grid-column-end: 5; }
+  .col-end-6    { grid-column-end: 6; }
+  .col-end-7    { grid-column-end: 7; }
+  .col-end-auto { grid-column-end: auto; }
+
+  /* Row span */
+  .row-auto     { grid-row: auto; }
+  .row-span-1   { grid-row: span 1 / span 1; }
+  .row-span-2   { grid-row: span 2 / span 2; }
+  .row-span-3   { grid-row: span 3 / span 3; }
+  .row-span-4   { grid-row: span 4 / span 4; }
+  .row-span-5   { grid-row: span 5 / span 5; }
+  .row-span-6   { grid-row: span 6 / span 6; }
+  .row-span-full{ grid-row: 1 / -1; }
+
+  /* Row start */
+  .row-start-1  { grid-row-start: 1; }
+  .row-start-2  { grid-row-start: 2; }
+  .row-start-3  { grid-row-start: 3; }
+  .row-start-4  { grid-row-start: 4; }
+  .row-start-auto { grid-row-start: auto; }
+
+  /* Row end */
+  .row-end-1    { grid-row-end: 1; }
+  .row-end-2    { grid-row-end: 2; }
+  .row-end-3    { grid-row-end: 3; }
+  .row-end-4    { grid-row-end: 4; }
+  .row-end-auto { grid-row-end: auto; }
+
+  /* Auto rows / columns */
+  .auto-rows-auto  { grid-auto-rows: auto; }
+  .auto-rows-min   { grid-auto-rows: min-content; }
+  .auto-rows-max   { grid-auto-rows: max-content; }
+  .auto-rows-fr    { grid-auto-rows: minmax(0, 1fr); }
+
+  .auto-cols-auto  { grid-auto-columns: auto; }
+  .auto-cols-min   { grid-auto-columns: min-content; }
+  .auto-cols-max   { grid-auto-columns: max-content; }
+  .auto-cols-fr    { grid-auto-columns: minmax(0, 1fr); }
+
+  /* Grid flow */
+  .grid-flow-row         { grid-auto-flow: row; }
+  .grid-flow-col         { grid-auto-flow: column; }
+  .grid-flow-dense       { grid-auto-flow: dense; }
+  .grid-flow-row-dense   { grid-auto-flow: row dense; }
+  .grid-flow-col-dense   { grid-auto-flow: column dense; }
+
+} /* end @layer aura.layout — Part 1 */
+/* ============================================================
+   AURA CSS — Phase 08: Layout System (Part 2 of 2)
+   ============================================================
+   PART 2 COVERS:
+   11. Container queries — @container support (NEW)
+   12. Scroll snap utilities
+   13. CSS columns (multi-column layout)
+   14. Object fit / object position
+   15. Table layout utilities
+   16. Touch action utilities
+   17. Pointer events & user select
+   18. Cursor utilities
+   19. Resize utilities
+   20. Will-change — performance hints
+   ============================================================ */
+
+@layer aura.layout {
+
+  /* ────────────────────────────────────────────────────────
+     11. CONTAINER QUERIES — NEW
+     Respond to the parent container's size, not the viewport.
+     This is the future of responsive design.
+     Tailwind added @container in v3.2 — AURA has full support
+     including named containers and size query variants.
+
+     HOW TO USE:
+       <div class="container-query">        ← establishes context
+         <div class="@sm:flex @lg:grid-cols-3">  ← responds to parent
+           ...
+         </div>
+       </div>
+  ──────────────────────────────────────────────────────── */
+
+  /* Establish container context */
+  .container-query          { container-type: inline-size; }
+  .container-query-normal   { container-type: normal; }
+  .container-query-size     { container-type: size; }
+
+  /* Named containers */
+  .container-query\/card    { container-type: inline-size; container-name: card; }
+  .container-query\/sidebar { container-type: inline-size; container-name: sidebar; }
+  .container-query\/panel   { container-type: inline-size; container-name: panel; }
+  .container-query\/hero    { container-type: inline-size; container-name: hero; }
+
+  /* Container query breakpoints — mirrors responsive variants
+     but reacts to the CONTAINER width, not viewport width.
+     @sm  = container ≥ 384px
+     @md  = container ≥ 448px
+     @lg  = container ≥ 512px
+     @xl  = container ≥ 576px
+     @2xl = container ≥ 672px
+  */
+
+  /* Display changes at container sizes */
+  @container (min-width: 384px) {
+    .\@sm\:block   { display: block; }
+    .\@sm\:flex    { display: flex; }
+    .\@sm\:grid    { display: grid; }
+    .\@sm\:hidden  { display: none; }
+    .\@sm\:flex-row{ flex-direction: row; }
+    .\@sm\:flex-col{ flex-direction: column; }
+    .\@sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .\@sm\:text-sm { font-size: var(--text-sm); }
+    .\@sm\:text-lg { font-size: var(--text-lg); }
+    .\@sm\:p-4     { padding: var(--space-4); }
+    .\@sm\:p-6     { padding: var(--space-6); }
+    .\@sm\:gap-4   { gap: var(--space-4); }
+    .\@sm\:gap-6   { gap: var(--space-6); }
+  }
+
+  @container (min-width: 448px) {
+    .\@md\:block   { display: block; }
+    .\@md\:flex    { display: flex; }
+    .\@md\:grid    { display: grid; }
+    .\@md\:hidden  { display: none; }
+    .\@md\:flex-row{ flex-direction: row; }
+    .\@md\:flex-col{ flex-direction: column; }
+    .\@md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .\@md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .\@md\:text-base { font-size: var(--text-base); }
+    .\@md\:text-xl   { font-size: var(--text-xl); }
+    .\@md\:p-6     { padding: var(--space-6); }
+    .\@md\:p-8     { padding: var(--space-8); }
+    .\@md\:gap-6   { gap: var(--space-6); }
+    .\@md\:gap-8   { gap: var(--space-8); }
+  }
+
+  @container (min-width: 512px) {
+    .\@lg\:block   { display: block; }
+    .\@lg\:flex    { display: flex; }
+    .\@lg\:grid    { display: grid; }
+    .\@lg\:hidden  { display: none; }
+    .\@lg\:flex-row{ flex-direction: row; }
+    .\@lg\:flex-col{ flex-direction: column; }
+    .\@lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .\@lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .\@lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .\@lg\:text-lg { font-size: var(--text-lg); }
+    .\@lg\:text-2xl{ font-size: var(--text-2xl); }
+    .\@lg\:p-8     { padding: var(--space-8); }
+    .\@lg\:p-10    { padding: var(--space-10); }
+    .\@lg\:gap-8   { gap: var(--space-8); }
+  }
+
+  @container (min-width: 576px) {
+    .\@xl\:block   { display: block; }
+    .\@xl\:flex    { display: flex; }
+    .\@xl\:grid    { display: grid; }
+    .\@xl\:hidden  { display: none; }
+    .\@xl\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .\@xl\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .\@xl\:text-xl { font-size: var(--text-xl); }
+    .\@xl\:p-10    { padding: var(--space-10); }
+    .\@xl\:gap-10  { gap: var(--space-10); }
+  }
+
+  @container (min-width: 672px) {
+    .\@2xl\:block   { display: block; }
+    .\@2xl\:flex    { display: flex; }
+    .\@2xl\:grid    { display: grid; }
+    .\@2xl\:hidden  { display: none; }
+    .\@2xl\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .\@2xl\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .\@2xl\:p-12    { padding: var(--space-12); }
+    .\@2xl\:gap-12  { gap: var(--space-12); }
+  }
+
+  /* Max container queries — respond below a size */
+  @container (max-width: 383px) {
+    .\@max-sm\:hidden  { display: none; }
+    .\@max-sm\:block   { display: block; }
+    .\@max-sm\:flex-col{ flex-direction: column; }
+  }
+
+  @container (max-width: 511px) {
+    .\@max-lg\:hidden  { display: none; }
+    .\@max-lg\:block   { display: block; }
+    .\@max-lg\:flex-col{ flex-direction: column; }
+    .\@max-lg\:grid-cols-1 { grid-template-columns: 1fr; }
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     12. SCROLL SNAP UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  /* Container */
+  .snap-x          { scroll-snap-type: x mandatory; }
+  .snap-y          { scroll-snap-type: y mandatory; }
+  .snap-x-proximity{ scroll-snap-type: x proximity; }
+  .snap-y-proximity{ scroll-snap-type: y proximity; }
+  .snap-both        { scroll-snap-type: both mandatory; }
+  .snap-none        { scroll-snap-type: none; }
+
+  /* Padding — keeps snapped item from hiding under sticky header */
+  .scroll-px-0  { scroll-padding-inline: 0; }
+  .scroll-px-4  { scroll-padding-inline: var(--space-4); }
+  .scroll-px-6  { scroll-padding-inline: var(--space-6); }
+  .scroll-px-8  { scroll-padding-inline: var(--space-8); }
+  .scroll-py-0  { scroll-padding-block: 0; }
+  .scroll-py-4  { scroll-padding-block: var(--space-4); }
+  .scroll-py-6  { scroll-padding-block: var(--space-6); }
+  .scroll-py-8  { scroll-padding-block: var(--space-8); }
+
+  /* Item alignment */
+  .snap-start   { scroll-snap-align: start; }
+  .snap-end     { scroll-snap-align: end; }
+  .snap-center  { scroll-snap-align: center; }
+  .snap-align-none { scroll-snap-align: none; }
+
+  /* Stop behavior */
+  .snap-normal  { scroll-snap-stop: normal; }
+  .snap-always  { scroll-snap-stop: always; }
+
+  /* Scroll margin — offset snap point from element edge */
+  .scroll-mt-0  { scroll-margin-top: 0; }
+  .scroll-mt-4  { scroll-margin-top: var(--space-4); }
+  .scroll-mt-8  { scroll-margin-top: var(--space-8); }
+  .scroll-mt-16 { scroll-margin-top: var(--space-16); }
+  .scroll-ml-0  { scroll-margin-left: 0; }
+  .scroll-ml-4  { scroll-margin-left: var(--space-4); }
+  .scroll-ml-8  { scroll-margin-left: var(--space-8); }
+
+
+  /* ────────────────────────────────────────────────────────
+     13. CSS COLUMNS — Multi-column text layout
+  ──────────────────────────────────────────────────────── */
+
+  .columns-1  { columns: 1; }
+  .columns-2  { columns: 2; }
+  .columns-3  { columns: 3; }
+  .columns-4  { columns: 4; }
+  .columns-5  { columns: 5; }
+  .columns-6  { columns: 6; }
+  .columns-auto{ columns: auto; }
+
+  /* Column width-based (responsive) */
+  .columns-xs   { columns: 16rem; }  /* ~256px min */
+  .columns-sm   { columns: 20rem; }  /* ~320px min */
+  .columns-md   { columns: 24rem; }  /* ~384px min */
+  .columns-lg   { columns: 32rem; }  /* ~512px min */
+  .columns-xl   { columns: 40rem; }  /* ~640px min */
+
+  /* Column gap */
+  .column-gap-4  { column-gap: var(--space-4); }
+  .column-gap-6  { column-gap: var(--space-6); }
+  .column-gap-8  { column-gap: var(--space-8); }
+  .column-gap-10 { column-gap: var(--space-10); }
+
+  /* Column rule (border between columns) */
+  .column-rule         { column-rule: 1px solid var(--surface-border); }
+  .column-rule-2       { column-rule: 2px solid var(--surface-border); }
+  .column-rule-primary { column-rule: 1px solid var(--color-primary); }
+
+  /* Prevent break inside element */
+  .break-inside-auto   { break-inside: auto; }
+  .break-inside-avoid  { break-inside: avoid; }
+  .break-inside-avoid-column { break-inside: avoid-column; }
+  .break-before-auto   { break-before: auto; }
+  .break-before-column { break-before: column; }
+  .break-after-auto    { break-after: auto; }
+  .break-after-column  { break-after: column; }
+
+
+  /* ────────────────────────────────────────────────────────
+     14. OBJECT FIT & OBJECT POSITION
+     For images, videos inside fixed-size containers.
+  ──────────────────────────────────────────────────────── */
+
+  .object-contain  { object-fit: contain; }
+  .object-cover    { object-fit: cover; }
+  .object-fill     { object-fit: fill; }
+  .object-none     { object-fit: none; }
+  .object-scale-down { object-fit: scale-down; }
+
+  .object-center       { object-position: center; }
+  .object-top          { object-position: top; }
+  .object-bottom       { object-position: bottom; }
+  .object-left         { object-position: left; }
+  .object-right        { object-position: right; }
+  .object-left-top     { object-position: left top; }
+  .object-left-bottom  { object-position: left bottom; }
+  .object-right-top    { object-position: right top; }
+  .object-right-bottom { object-position: right bottom; }
+
+
+  /* ────────────────────────────────────────────────────────
+     15. TABLE UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .table-auto  { table-layout: auto; }
+  .table-fixed { table-layout: fixed; }
+
+  .caption-top    { caption-side: top; }
+  .caption-bottom { caption-side: bottom; }
+
+  .border-collapse { border-collapse: collapse; }
+  .border-separate { border-collapse: separate; }
+
+  .border-spacing-0 { border-spacing: 0; }
+  .border-spacing-1 { border-spacing: var(--space-1); }
+  .border-spacing-2 { border-spacing: var(--space-2); }
+  .border-spacing-4 { border-spacing: var(--space-4); }
+
+
+  /* ────────────────────────────────────────────────────────
+     16. TOUCH ACTION
+     Controls how touch events are handled.
+     Important for mobile performance.
+  ──────────────────────────────────────────────────────── */
+
+  .touch-auto         { touch-action: auto; }
+  .touch-none         { touch-action: none; }
+  .touch-pan-x        { touch-action: pan-x; }
+  .touch-pan-left     { touch-action: pan-left; }
+  .touch-pan-right    { touch-action: pan-right; }
+  .touch-pan-y        { touch-action: pan-y; }
+  .touch-pan-up       { touch-action: pan-up; }
+  .touch-pan-down     { touch-action: pan-down; }
+  .touch-pinch-zoom   { touch-action: pinch-zoom; }
+  .touch-manipulation { touch-action: manipulation; }
+
+
+  /* ────────────────────────────────────────────────────────
+     17. POINTER EVENTS & USER SELECT
+  ──────────────────────────────────────────────────────── */
+
+  .pointer-events-none { pointer-events: none; }
+  .pointer-events-auto { pointer-events: auto; }
+
+  .select-none  { user-select: none; }
+  .select-text  { user-select: text; }
+  .select-all   { user-select: all; }
+  .select-auto  { user-select: auto; }
+
+
+  /* ────────────────────────────────────────────────────────
+     18. CURSOR UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .cursor-auto        { cursor: auto; }
+  .cursor-default     { cursor: default; }
+  .cursor-pointer     { cursor: pointer; }
+  .cursor-wait        { cursor: wait; }
+  .cursor-text        { cursor: text; }
+  .cursor-move        { cursor: move; }
+  .cursor-help        { cursor: help; }
+  .cursor-not-allowed { cursor: not-allowed; }
+  .cursor-none        { cursor: none; }
+  .cursor-context-menu{ cursor: context-menu; }
+  .cursor-progress    { cursor: progress; }
+  .cursor-cell        { cursor: cell; }
+  .cursor-crosshair   { cursor: crosshair; }
+  .cursor-vertical-text { cursor: vertical-text; }
+  .cursor-alias       { cursor: alias; }
+  .cursor-copy        { cursor: copy; }
+  .cursor-no-drop     { cursor: no-drop; }
+  .cursor-grab        { cursor: grab; }
+  .cursor-grabbing    { cursor: grabbing; }
+  .cursor-all-scroll  { cursor: all-scroll; }
+  .cursor-col-resize  { cursor: col-resize; }
+  .cursor-row-resize  { cursor: row-resize; }
+  .cursor-n-resize    { cursor: n-resize; }
+  .cursor-e-resize    { cursor: e-resize; }
+  .cursor-s-resize    { cursor: s-resize; }
+  .cursor-w-resize    { cursor: w-resize; }
+  .cursor-zoom-in     { cursor: zoom-in; }
+  .cursor-zoom-out    { cursor: zoom-out; }
+
+
+  /* ────────────────────────────────────────────────────────
+     19. RESIZE UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .resize-none { resize: none; }
+  .resize      { resize: both; }
+  .resize-y    { resize: vertical; }
+  .resize-x    { resize: horizontal; }
+
+
+  /* ────────────────────────────────────────────────────────
+     20. WILL-CHANGE — Performance hints
+     Tell the browser what properties will animate.
+     Use sparingly — only on elements that actually animate.
+     Overusing hurts performance instead of helping.
+  ──────────────────────────────────────────────────────── */
+
+  .will-change-auto      { will-change: auto; }
+  .will-change-scroll    { will-change: scroll-position; }
+  .will-change-contents  { will-change: contents; }
+  .will-change-transform { will-change: transform; }
+  .will-change-opacity   { will-change: opacity; }
+  .will-change-shadow    { will-change: box-shadow; }
+
+  /* Content visibility — rendering performance */
+  .content-auto    { content-visibility: auto; }
+  .content-visible { content-visibility: visible; }
+  .content-hidden  { content-visibility: hidden; }
+
+  /* Contain — browser rendering optimization */
+  .contain-none    { contain: none; }
+  .contain-content { contain: content; }
+  .contain-layout  { contain: layout; }
+  .contain-paint   { contain: paint; }
+  .contain-size    { contain: size; }
+  .contain-style   { contain: style; }
+  .contain-strict  { contain: strict; }
+
+} /* end @layer aura.layout — Phase 08 Part 2 */

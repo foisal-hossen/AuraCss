@@ -1,0 +1,400 @@
+/* ============================================================
+   AURA CSS — Phase 09: Core Utilities
+   Version  : 1.0.0
+   Layer    : aura.utilities
+   Depends  : Phase 01, 02, 03
+   ============================================================
+   NOTE: display, overflow, overscroll, will-change,
+   content-visibility, cursor, touch-action, pointer-events,
+   color-scheme, scroll-snap were covered in Phase 08.
+   This file covers remaining utility categories.
+
+   COVERS:
+   1.  Field-sizing — NEW (auto-resize inputs/textareas)
+   2.  Appearance utilities
+   3.  List style utilities
+   4.  Box decoration break
+   5.  Image rendering
+   6.  Forced color utilities (accessibility)
+   7.  Screen reader utilities
+   8.  Print utilities
+   9.  Isolation
+   10. Misc — box-sizing, vertical-align, clear
+   11. Line clamp — text truncation
+   12. Ratio (padding-based aspect ratio — legacy support)
+   ============================================================ */
+
+@layer aura.utilities {
+
+  /* ────────────────────────────────────────────────────────
+     1. FIELD-SIZING — NEW, missing from Tailwind v3
+     Allows textarea/input to auto-grow with content.
+     No JavaScript needed!
+
+     Usage: <textarea class="field-sizing-content">
+     The textarea grows as the user types.
+  ──────────────────────────────────────────────────────── */
+
+  .field-sizing-fixed   { field-sizing: fixed; }
+  .field-sizing-content { field-sizing: content; }
+
+
+  /* ────────────────────────────────────────────────────────
+     2. APPEARANCE UTILITIES
+     Remove browser-default styling from form elements.
+  ──────────────────────────────────────────────────────── */
+
+  .appearance-none {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .appearance-auto {
+    -webkit-appearance: auto;
+    appearance: auto;
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     3. LIST STYLE UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  /* List style type */
+  .list-none    { list-style-type: none; }
+  .list-disc    { list-style-type: disc; }
+  .list-decimal { list-style-type: decimal; }
+  .list-square  { list-style-type: square; }
+  .list-roman   { list-style-type: upper-roman; }
+  .list-alpha   { list-style-type: lower-alpha; }
+  .list-circle  { list-style-type: circle; }
+
+  /* List style position */
+  .list-inside  { list-style-position: inside; }
+  .list-outside { list-style-position: outside; }
+
+  /* List image */
+  .list-image-none { list-style-image: none; }
+
+
+  /* ────────────────────────────────────────────────────────
+     4. BOX DECORATION BREAK
+     Controls how element decorations behave when
+     the element breaks across multiple lines/columns/pages.
+  ──────────────────────────────────────────────────────── */
+
+  .box-decoration-clone {
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .box-decoration-slice {
+    -webkit-box-decoration-break: slice;
+    box-decoration-break: slice;
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     5. IMAGE RENDERING
+  ──────────────────────────────────────────────────────── */
+
+  .image-auto       { image-rendering: auto; }
+  .image-pixelated  { image-rendering: pixelated; }
+  .image-crisp-edges{
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     6. FORCED COLORS — Windows High Contrast mode
+     Ensure components work in accessibility modes.
+     NEW — missing from Tailwind v3.
+  ──────────────────────────────────────────────────────── */
+
+  @media (forced-colors: active) {
+    .forced-color-adjust-auto { forced-color-adjust: auto; }
+    .forced-color-adjust-none { forced-color-adjust: none; }
+
+    /* Preserve custom colors in high-contrast mode */
+    .preserve-color {
+      forced-color-adjust: none;
+    }
+  }
+
+  /* Outside the media query so classes are always available */
+  .forced-color-adjust-auto { forced-color-adjust: auto; }
+  .forced-color-adjust-none { forced-color-adjust: none; }
+
+
+  /* ────────────────────────────────────────────────────────
+     7. SCREEN READER & ACCESSIBILITY UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  /* Visually hidden but accessible to screen readers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Undo sr-only — make visible again */
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Focus-only visible — shows only when focused (skip nav links) */
+  .sr-only-focusable {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only-focusable:focus,
+  .sr-only-focusable:focus-within {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Skip to main content — common accessibility pattern */
+  .skip-link {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: var(--z-system);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transform: translateY(-120%);
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     8. PRINT UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  @media print {
+
+    .print\:hidden { display: none !important; }
+    .print\:block  { display: block !important; }
+    .print\:flex   { display: flex !important; }
+    .print\:grid   { display: grid !important; }
+    .print\:inline { display: inline !important; }
+
+    /* Force page breaks */
+    .print\:break-before-page   { break-before: page; }
+    .print\:break-after-page    { break-after: page; }
+    .print\:break-inside-avoid  { break-inside: avoid; }
+
+    /* Remove decorative elements in print */
+    .print\:no-shadow   { box-shadow: none !important; }
+    .print\:no-border   { border: none !important; }
+    .print\:bg-white    { background: white !important; }
+    .print\:text-black  { color: black !important; }
+  }
+
+  /* Non-print visibility */
+  .screen-only {
+    display: revert;
+  }
+
+  @media print {
+    .screen-only { display: none !important; }
+  }
+
+  .print-only {
+    display: none;
+  }
+
+  @media print {
+    .print-only { display: revert !important; }
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     9. ISOLATION
+  ──────────────────────────────────────────────────────── */
+
+  .isolate        { isolation: isolate; }
+  .isolation-auto { isolation: auto; }
+
+
+  /* ────────────────────────────────────────────────────────
+     10. BOX SIZING
+  ──────────────────────────────────────────────────────── */
+
+  .box-border  { box-sizing: border-box; }
+  .box-content { box-sizing: content-box; }
+
+
+  /* ────────────────────────────────────────────────────────
+     11. LINE CLAMP — Multi-line text truncation
+     Clamps text to N lines with ellipsis.
+     Works without any JS or plugins.
+  ──────────────────────────────────────────────────────── */
+
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .line-clamp-4 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+
+  .line-clamp-5 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+  }
+
+  .line-clamp-6 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
+  }
+
+  .line-clamp-none {
+    overflow: visible;
+    display: block;
+    -webkit-box-orient: horizontal;
+    -webkit-line-clamp: none;
+    line-clamp: none;
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     12. SAFE AREA INSETS — Mobile notch/home bar support
+     Critical for modern mobile apps (iPhone notch, etc.)
+  ──────────────────────────────────────────────────────── */
+
+  .safe-top    { padding-top: env(safe-area-inset-top); }
+  .safe-right  { padding-right: env(safe-area-inset-right); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .safe-left   { padding-left: env(safe-area-inset-left); }
+
+  .safe-x {
+    padding-left:  env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .safe-y {
+    padding-top:    env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-all {
+    padding-top:    env(safe-area-inset-top);
+    padding-right:  env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left:   env(safe-area-inset-left);
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     13. SUBGRID UTILITIES
+     Pass grid tracks to children.
+     Essential for aligned nested grids.
+  ──────────────────────────────────────────────────────── */
+
+  .subgrid-cols { grid-template-columns: subgrid; }
+  .subgrid-rows { grid-template-rows: subgrid; }
+
+
+  /* ────────────────────────────────────────────────────────
+     14. GAP DECORATION — visual separator patterns
+     AURA exclusive — clean separation without borders.
+  ──────────────────────────────────────────────────────── */
+
+  /* Dot separator between inline items */
+  .sep-dot > * + *::before {
+    content: '·';
+    margin-inline: var(--space-2);
+    color: var(--text-muted);
+    font-weight: normal;
+  }
+
+  /* Slash separator */
+  .sep-slash > * + *::before {
+    content: '/';
+    margin-inline: var(--space-2);
+    color: var(--text-muted);
+    font-weight: normal;
+  }
+
+  /* Pipe separator */
+  .sep-pipe > * + *::before {
+    content: '|';
+    margin-inline: var(--space-2);
+    color: var(--surface-border);
+    font-weight: normal;
+  }
+
+  /* Arrow separator */
+  .sep-arrow > * + *::before {
+    content: '→';
+    margin-inline: var(--space-2);
+    color: var(--text-muted);
+  }
+
+} /* end @layer aura.utilities — Phase 09 */

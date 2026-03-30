@@ -1,0 +1,598 @@
+/* ============================================================
+   AURA CSS — Phase 10: Transform & 3D System (Part 1 of 2)
+   Version  : 1.0.0
+   Layer    : aura.utilities
+   Depends  : Phase 01, 02, 03
+   ============================================================
+   PART 1 COVERS:
+   1.  Transform base setup
+   2.  Translate X/Y utilities
+   3.  Rotate 2D utilities
+   4.  Scale utilities (X, Y, both)
+   5.  Skew utilities
+   6.  Transform origin utilities
+   7.  Transform-box utilities
+
+   WHY @PROPERTY FOR TRANSFORMS?
+   Individual transform functions (translateX, rotate, scale)
+   cannot be individually transitioned in CSS without the
+   compositing approach below. Using CSS custom properties
+   with @property lets each axis be independently animated.
+   ============================================================ */
+
+@layer aura.utilities {
+
+  /* ────────────────────────────────────────────────────────
+     1. TRANSFORM COMPOSITING BASE
+     AURA uses the modern individual transform properties
+     approach — each transform function is independent and
+     can be animated/transitioned separately without
+     interfering with other transform functions.
+  ──────────────────────────────────────────────────────── */
+
+  .transform {
+    transform:
+      translateX(var(--tw-translate-x, 0))
+      translateY(var(--tw-translate-y, 0))
+      rotate(var(--tw-rotate, 0))
+      skewX(var(--tw-skew-x, 0))
+      skewY(var(--tw-skew-y, 0))
+      scaleX(var(--tw-scale-x, 1))
+      scaleY(var(--tw-scale-y, 1));
+  }
+
+  .transform-gpu {
+    transform:
+      translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), 0)
+      rotate(var(--tw-rotate, 0))
+      skewX(var(--tw-skew-x, 0))
+      skewY(var(--tw-skew-y, 0))
+      scaleX(var(--tw-scale-x, 1))
+      scaleY(var(--tw-scale-y, 1));
+  }
+
+  .transform-none { transform: none; }
+
+
+  /* ────────────────────────────────────────────────────────
+     2. TRANSLATE X/Y UTILITIES
+     Individual CSS transform properties (modern approach).
+     These work without .transform class in modern browsers.
+  ──────────────────────────────────────────────────────── */
+
+  /* Translate X */
+  .translate-x-0    { translate: 0 0; }
+  .translate-x-px   { translate: 1px 0; }
+  .translate-x-0-5  { translate: var(--space-0-5) 0; }
+  .translate-x-1    { translate: var(--space-1) 0; }
+  .translate-x-2    { translate: var(--space-2) 0; }
+  .translate-x-3    { translate: var(--space-3) 0; }
+  .translate-x-4    { translate: var(--space-4) 0; }
+  .translate-x-5    { translate: var(--space-5) 0; }
+  .translate-x-6    { translate: var(--space-6) 0; }
+  .translate-x-8    { translate: var(--space-8) 0; }
+  .translate-x-10   { translate: var(--space-10) 0; }
+  .translate-x-12   { translate: var(--space-12) 0; }
+  .translate-x-16   { translate: var(--space-16) 0; }
+  .translate-x-20   { translate: var(--space-20) 0; }
+  .translate-x-24   { translate: var(--space-24) 0; }
+
+  /* Negative X */
+  .-translate-x-px  { translate: -1px 0; }
+  .-translate-x-1   { translate: calc(var(--space-1) * -1) 0; }
+  .-translate-x-2   { translate: calc(var(--space-2) * -1) 0; }
+  .-translate-x-3   { translate: calc(var(--space-3) * -1) 0; }
+  .-translate-x-4   { translate: calc(var(--space-4) * -1) 0; }
+  .-translate-x-5   { translate: calc(var(--space-5) * -1) 0; }
+  .-translate-x-6   { translate: calc(var(--space-6) * -1) 0; }
+  .-translate-x-8   { translate: calc(var(--space-8) * -1) 0; }
+  .-translate-x-12  { translate: calc(var(--space-12) * -1) 0; }
+  .-translate-x-16  { translate: calc(var(--space-16) * -1) 0; }
+
+  /* Percentage X */
+  .translate-x-1\/2  { translate: 50% 0; }
+  .translate-x-full  { translate: 100% 0; }
+  .-translate-x-1\/2 { translate: -50% 0; }
+  .-translate-x-full { translate: -100% 0; }
+
+  /* Translate Y */
+  .translate-y-0    { translate: 0 0; }
+  .translate-y-px   { translate: 0 1px; }
+  .translate-y-0-5  { translate: 0 var(--space-0-5); }
+  .translate-y-1    { translate: 0 var(--space-1); }
+  .translate-y-2    { translate: 0 var(--space-2); }
+  .translate-y-3    { translate: 0 var(--space-3); }
+  .translate-y-4    { translate: 0 var(--space-4); }
+  .translate-y-5    { translate: 0 var(--space-5); }
+  .translate-y-6    { translate: 0 var(--space-6); }
+  .translate-y-8    { translate: 0 var(--space-8); }
+  .translate-y-10   { translate: 0 var(--space-10); }
+  .translate-y-12   { translate: 0 var(--space-12); }
+  .translate-y-16   { translate: 0 var(--space-16); }
+  .translate-y-20   { translate: 0 var(--space-20); }
+  .translate-y-24   { translate: 0 var(--space-24); }
+
+  /* Negative Y */
+  .-translate-y-px  { translate: 0 -1px; }
+  .-translate-y-1   { translate: 0 calc(var(--space-1) * -1); }
+  .-translate-y-2   { translate: 0 calc(var(--space-2) * -1); }
+  .-translate-y-3   { translate: 0 calc(var(--space-3) * -1); }
+  .-translate-y-4   { translate: 0 calc(var(--space-4) * -1); }
+  .-translate-y-5   { translate: 0 calc(var(--space-5) * -1); }
+  .-translate-y-6   { translate: 0 calc(var(--space-6) * -1); }
+  .-translate-y-8   { translate: 0 calc(var(--space-8) * -1); }
+  .-translate-y-12  { translate: 0 calc(var(--space-12) * -1); }
+  .-translate-y-16  { translate: 0 calc(var(--space-16) * -1); }
+
+  /* Percentage Y */
+  .translate-y-1\/2  { translate: 0 50%; }
+  .translate-y-full  { translate: 0 100%; }
+  .-translate-y-1\/2 { translate: 0 -50%; }
+  .-translate-y-full { translate: 0 -100%; }
+
+  /* Center helpers — common pattern */
+  .translate-center  { translate: -50% -50%; }
+  .translate-center-x{ translate: -50% 0; }
+  .translate-center-y{ translate: 0 -50%; }
+
+
+  /* ────────────────────────────────────────────────────────
+     3. ROTATE UTILITIES — 2D
+     Uses individual `rotate` CSS property (modern).
+  ──────────────────────────────────────────────────────── */
+
+  .rotate-0      { rotate: 0deg; }
+  .rotate-1      { rotate: 1deg; }
+  .rotate-2      { rotate: 2deg; }
+  .rotate-3      { rotate: 3deg; }
+  .rotate-6      { rotate: 6deg; }
+  .rotate-12     { rotate: 12deg; }
+  .rotate-15     { rotate: 15deg; }
+  .rotate-30     { rotate: 30deg; }
+  .rotate-45     { rotate: 45deg; }
+  .rotate-60     { rotate: 60deg; }
+  .rotate-90     { rotate: 90deg; }
+  .rotate-120    { rotate: 120deg; }
+  .rotate-135    { rotate: 135deg; }
+  .rotate-150    { rotate: 150deg; }
+  .rotate-180    { rotate: 180deg; }
+
+  /* Negative rotate */
+  .-rotate-1     { rotate: -1deg; }
+  .-rotate-2     { rotate: -2deg; }
+  .-rotate-3     { rotate: -3deg; }
+  .-rotate-6     { rotate: -6deg; }
+  .-rotate-12    { rotate: -12deg; }
+  .-rotate-15    { rotate: -15deg; }
+  .-rotate-30    { rotate: -30deg; }
+  .-rotate-45    { rotate: -45deg; }
+  .-rotate-60    { rotate: -60deg; }
+  .-rotate-90    { rotate: -90deg; }
+  .-rotate-120   { rotate: -120deg; }
+  .-rotate-135   { rotate: -135deg; }
+  .-rotate-150   { rotate: -150deg; }
+  .-rotate-180   { rotate: -180deg; }
+
+
+  /* ────────────────────────────────────────────────────────
+     4. SCALE UTILITIES
+     Uses individual `scale` CSS property (modern).
+  ──────────────────────────────────────────────────────── */
+
+  /* Uniform scale */
+  .scale-0     { scale: 0; }
+  .scale-50    { scale: 0.5; }
+  .scale-75    { scale: 0.75; }
+  .scale-90    { scale: 0.9; }
+  .scale-95    { scale: 0.95; }
+  .scale-100   { scale: 1; }
+  .scale-105   { scale: 1.05; }
+  .scale-110   { scale: 1.10; }
+  .scale-115   { scale: 1.15; }
+  .scale-125   { scale: 1.25; }
+  .scale-150   { scale: 1.50; }
+  .scale-200   { scale: 2; }
+
+  /* Negative scale (flip) */
+  .-scale-x-100 { scale: -1 1; }
+  .-scale-y-100 { scale: 1 -1; }
+
+  /* Scale X only */
+  .scale-x-0   { scale: 0 1; }
+  .scale-x-50  { scale: 0.5 1; }
+  .scale-x-75  { scale: 0.75 1; }
+  .scale-x-90  { scale: 0.9 1; }
+  .scale-x-95  { scale: 0.95 1; }
+  .scale-x-100 { scale: 1 1; }
+  .scale-x-105 { scale: 1.05 1; }
+  .scale-x-110 { scale: 1.10 1; }
+  .scale-x-125 { scale: 1.25 1; }
+  .scale-x-150 { scale: 1.50 1; }
+
+  /* Scale Y only */
+  .scale-y-0   { scale: 1 0; }
+  .scale-y-50  { scale: 1 0.5; }
+  .scale-y-75  { scale: 1 0.75; }
+  .scale-y-90  { scale: 1 0.9; }
+  .scale-y-95  { scale: 1 0.95; }
+  .scale-y-100 { scale: 1 1; }
+  .scale-y-105 { scale: 1 1.05; }
+  .scale-y-110 { scale: 1 1.10; }
+  .scale-y-125 { scale: 1 1.25; }
+  .scale-y-150 { scale: 1 1.50; }
+
+
+  /* ────────────────────────────────────────────────────────
+     5. SKEW UTILITIES
+     Uses transform: skewX/skewY (individual props
+     don't exist for skew yet in CSS).
+  ──────────────────────────────────────────────────────── */
+
+  .skew-x-0   { transform: skewX(0deg); }
+  .skew-x-1   { transform: skewX(1deg); }
+  .skew-x-2   { transform: skewX(2deg); }
+  .skew-x-3   { transform: skewX(3deg); }
+  .skew-x-6   { transform: skewX(6deg); }
+  .skew-x-12  { transform: skewX(12deg); }
+  .-skew-x-1  { transform: skewX(-1deg); }
+  .-skew-x-2  { transform: skewX(-2deg); }
+  .-skew-x-3  { transform: skewX(-3deg); }
+  .-skew-x-6  { transform: skewX(-6deg); }
+  .-skew-x-12 { transform: skewX(-12deg); }
+
+  .skew-y-0   { transform: skewY(0deg); }
+  .skew-y-1   { transform: skewY(1deg); }
+  .skew-y-2   { transform: skewY(2deg); }
+  .skew-y-3   { transform: skewY(3deg); }
+  .skew-y-6   { transform: skewY(6deg); }
+  .skew-y-12  { transform: skewY(12deg); }
+  .-skew-y-1  { transform: skewY(-1deg); }
+  .-skew-y-2  { transform: skewY(-2deg); }
+  .-skew-y-3  { transform: skewY(-3deg); }
+  .-skew-y-6  { transform: skewY(-6deg); }
+  .-skew-y-12 { transform: skewY(-12deg); }
+
+
+  /* ────────────────────────────────────────────────────────
+     6. TRANSFORM ORIGIN
+     Point around which transforms are applied.
+  ──────────────────────────────────────────────────────── */
+
+  .origin-center        { transform-origin: center; }
+  .origin-top           { transform-origin: top; }
+  .origin-top-right     { transform-origin: top right; }
+  .origin-right         { transform-origin: right; }
+  .origin-bottom-right  { transform-origin: bottom right; }
+  .origin-bottom        { transform-origin: bottom; }
+  .origin-bottom-left   { transform-origin: bottom left; }
+  .origin-left          { transform-origin: left; }
+  .origin-top-left      { transform-origin: top left; }
+
+
+  /* ────────────────────────────────────────────────────────
+     7. TRANSFORM BOX
+     Controls the reference box for transforms.
+  ──────────────────────────────────────────────────────── */
+
+  .transform-box-content { transform-box: content-box; }
+  .transform-box-border  { transform-box: border-box; }
+  .transform-box-fill    { transform-box: fill-box; }
+  .transform-box-stroke  { transform-box: stroke-box; }
+  .transform-box-view    { transform-box: view-box; }
+
+} /* end Part 1 */
+/* ============================================================
+   AURA CSS — Phase 10: Transform & 3D System (Part 2 of 2)
+   ============================================================
+   PART 2 COVERS:
+   8.  3D Rotate — rotate-x, rotate-y, rotate-z (NEW)
+   9.  3D Translate — translate-z (NEW)
+   10. 3D Scale — scale-z (NEW)
+   11. Perspective utilities (NEW)
+   12. Transform-style: preserve-3d (NEW)
+   13. Backface-visibility (NEW)
+   14. Transition utilities
+   15. Animation delay/duration utilities
+   ============================================================ */
+
+@layer aura.utilities {
+
+  /* ────────────────────────────────────────────────────────
+     8. 3D ROTATE — NEW, missing from Tailwind v3
+     Tailwind v4 added these — AURA has them with
+     more granular control.
+  ──────────────────────────────────────────────────────── */
+
+  /* Rotate X (tilt forward/back) */
+  .rotate-x-0    { transform: rotateX(0deg); }
+  .rotate-x-6    { transform: rotateX(6deg); }
+  .rotate-x-12   { transform: rotateX(12deg); }
+  .rotate-x-15   { transform: rotateX(15deg); }
+  .rotate-x-30   { transform: rotateX(30deg); }
+  .rotate-x-45   { transform: rotateX(45deg); }
+  .rotate-x-60   { transform: rotateX(60deg); }
+  .rotate-x-75   { transform: rotateX(75deg); }
+  .rotate-x-90   { transform: rotateX(90deg); }
+  .rotate-x-180  { transform: rotateX(180deg); }
+  .-rotate-x-6   { transform: rotateX(-6deg); }
+  .-rotate-x-12  { transform: rotateX(-12deg); }
+  .-rotate-x-15  { transform: rotateX(-15deg); }
+  .-rotate-x-30  { transform: rotateX(-30deg); }
+  .-rotate-x-45  { transform: rotateX(-45deg); }
+  .-rotate-x-60  { transform: rotateX(-60deg); }
+  .-rotate-x-90  { transform: rotateX(-90deg); }
+  .-rotate-x-180 { transform: rotateX(-180deg); }
+
+  /* Rotate Y (left/right spin) */
+  .rotate-y-0    { transform: rotateY(0deg); }
+  .rotate-y-6    { transform: rotateY(6deg); }
+  .rotate-y-12   { transform: rotateY(12deg); }
+  .rotate-y-15   { transform: rotateY(15deg); }
+  .rotate-y-30   { transform: rotateY(30deg); }
+  .rotate-y-45   { transform: rotateY(45deg); }
+  .rotate-y-60   { transform: rotateY(60deg); }
+  .rotate-y-75   { transform: rotateY(75deg); }
+  .rotate-y-90   { transform: rotateY(90deg); }
+  .rotate-y-180  { transform: rotateY(180deg); }
+  .-rotate-y-6   { transform: rotateY(-6deg); }
+  .-rotate-y-12  { transform: rotateY(-12deg); }
+  .-rotate-y-15  { transform: rotateY(-15deg); }
+  .-rotate-y-30  { transform: rotateY(-30deg); }
+  .-rotate-y-45  { transform: rotateY(-45deg); }
+  .-rotate-y-60  { transform: rotateY(-60deg); }
+  .-rotate-y-90  { transform: rotateY(-90deg); }
+  .-rotate-y-180 { transform: rotateY(-180deg); }
+
+  /* Rotate Z — same as 2D rotate but explicit */
+  .rotate-z-0    { transform: rotateZ(0deg); }
+  .rotate-z-45   { transform: rotateZ(45deg); }
+  .rotate-z-90   { transform: rotateZ(90deg); }
+  .rotate-z-180  { transform: rotateZ(180deg); }
+  .-rotate-z-45  { transform: rotateZ(-45deg); }
+  .-rotate-z-90  { transform: rotateZ(-90deg); }
+  .-rotate-z-180 { transform: rotateZ(-180deg); }
+
+
+  /* ────────────────────────────────────────────────────────
+     9. 3D TRANSLATE Z — NEW
+     Move elements toward/away from viewer in 3D space.
+     Requires perspective on a parent for visible effect.
+  ──────────────────────────────────────────────────────── */
+
+  .translate-z-0    { transform: translateZ(0); }
+  .translate-z-px   { transform: translateZ(1px); }
+  .translate-z-1    { transform: translateZ(var(--space-1)); }
+  .translate-z-2    { transform: translateZ(var(--space-2)); }
+  .translate-z-4    { transform: translateZ(var(--space-4)); }
+  .translate-z-8    { transform: translateZ(var(--space-8)); }
+  .translate-z-12   { transform: translateZ(var(--space-12)); }
+  .translate-z-16   { transform: translateZ(var(--space-16)); }
+  .translate-z-24   { transform: translateZ(var(--space-24)); }
+  .-translate-z-1   { transform: translateZ(calc(var(--space-1) * -1)); }
+  .-translate-z-2   { transform: translateZ(calc(var(--space-2) * -1)); }
+  .-translate-z-4   { transform: translateZ(calc(var(--space-4) * -1)); }
+  .-translate-z-8   { transform: translateZ(calc(var(--space-8) * -1)); }
+  .-translate-z-16  { transform: translateZ(calc(var(--space-16) * -1)); }
+  .-translate-z-24  { transform: translateZ(calc(var(--space-24) * -1)); }
+
+
+  /* ────────────────────────────────────────────────────────
+     10. SCALE Z — NEW
+  ──────────────────────────────────────────────────────── */
+
+  .scale-z-0    { transform: scaleZ(0); }
+  .scale-z-50   { transform: scaleZ(0.5); }
+  .scale-z-75   { transform: scaleZ(0.75); }
+  .scale-z-90   { transform: scaleZ(0.9); }
+  .scale-z-100  { transform: scaleZ(1); }
+  .scale-z-105  { transform: scaleZ(1.05); }
+  .scale-z-110  { transform: scaleZ(1.10); }
+  .scale-z-125  { transform: scaleZ(1.25); }
+  .scale-z-150  { transform: scaleZ(1.50); }
+
+
+  /* ────────────────────────────────────────────────────────
+     11. PERSPECTIVE — NEW
+     Adds depth to 3D transforms on children.
+     Apply to the PARENT element, not the transformed child.
+
+     Usage:
+       <div class="perspective-500">         ← parent
+         <div class="rotate-y-45 transform-3d">  ← child
+           ...
+         </div>
+       </div>
+  ──────────────────────────────────────────────────────── */
+
+  .perspective-none  { perspective: none; }
+  .perspective-xs    { perspective: 200px; }
+  .perspective-sm    { perspective: 400px; }
+  .perspective       { perspective: 600px; }
+  .perspective-md    { perspective: 800px; }
+  .perspective-lg    { perspective: 1000px; }
+  .perspective-xl    { perspective: 1500px; }
+  .perspective-2xl   { perspective: 2000px; }
+
+  /* Perspective origin — where the viewer's eye is */
+  .perspective-origin-center        { perspective-origin: center; }
+  .perspective-origin-top           { perspective-origin: top; }
+  .perspective-origin-top-right     { perspective-origin: top right; }
+  .perspective-origin-right         { perspective-origin: right; }
+  .perspective-origin-bottom-right  { perspective-origin: bottom right; }
+  .perspective-origin-bottom        { perspective-origin: bottom; }
+  .perspective-origin-bottom-left   { perspective-origin: bottom left; }
+  .perspective-origin-left          { perspective-origin: left; }
+  .perspective-origin-top-left      { perspective-origin: top left; }
+
+
+  /* ────────────────────────────────────────────────────────
+     12. TRANSFORM-STYLE — NEW
+     Controls whether children are in 3D space.
+     Required for card flip, 3D cube, and similar effects.
+  ──────────────────────────────────────────────────────── */
+
+  .transform-flat  { transform-style: flat; }
+  .transform-3d    { transform-style: preserve-3d; }
+
+
+  /* ────────────────────────────────────────────────────────
+     13. BACKFACE VISIBILITY — NEW
+     Controls whether back of a 3D-rotated element is visible.
+     Essential for card flip animations.
+  ──────────────────────────────────────────────────────── */
+
+  .backface-visible { backface-visibility: visible; }
+  .backface-hidden  { backface-visibility: hidden; }
+
+
+  /* ────────────────────────────────────────────────────────
+     CARD FLIP PRESET — AURA Exclusive
+     Ready-to-use card flip component using all 3D utilities.
+     Zero extra CSS needed.
+
+     HTML:
+       <div class="flip-card perspective-lg">
+         <div class="flip-inner transform-3d">
+           <div class="flip-front backface-hidden">Front</div>
+           <div class="flip-back  backface-hidden rotate-y-180">Back</div>
+         </div>
+       </div>
+  ──────────────────────────────────────────────────────── */
+
+  .flip-card {
+    perspective: var(--flip-perspective, 1000px);
+  }
+
+  .flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform var(--duration-slow) var(--ease-smooth);
+  }
+
+  .flip-card:hover .flip-inner,
+  .flip-card.flipped .flip-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-front,
+  .flip-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .flip-back {
+    transform: rotateY(180deg);
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     14. TRANSITION UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  /* Transition property */
+  .transition-none    { transition-property: none; }
+  .transition-all     { transition-property: all; transition-duration: var(--duration-base); transition-timing-function: var(--ease-out); }
+  .transition         { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter; transition-duration: var(--duration-base); transition-timing-function: var(--ease-out); }
+  .transition-colors  { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-duration: var(--duration-base); transition-timing-function: var(--ease-out); }
+  .transition-opacity { transition-property: opacity; transition-duration: var(--duration-base); transition-timing-function: var(--ease-out); }
+  .transition-shadow  { transition-property: box-shadow; transition-duration: var(--duration-base); transition-timing-function: var(--ease-out); }
+  .transition-transform { transition-property: transform, translate, rotate, scale; transition-duration: var(--duration-base); transition-timing-function: var(--ease-out); }
+
+  /* Transition duration */
+  .duration-0         { transition-duration: 0ms; }
+  .duration-instant   { transition-duration: var(--duration-instant); }
+  .duration-fast      { transition-duration: var(--duration-fast); }
+  .duration-75        { transition-duration: 75ms; }
+  .duration-100       { transition-duration: 100ms; }
+  .duration-150       { transition-duration: 150ms; }
+  .duration-base      { transition-duration: var(--duration-base); }
+  .duration-200       { transition-duration: 200ms; }
+  .duration-300       { transition-duration: 300ms; }
+  .duration-slow      { transition-duration: var(--duration-slow); }
+  .duration-400       { transition-duration: 400ms; }
+  .duration-500       { transition-duration: 500ms; }
+  .duration-slower    { transition-duration: var(--duration-slower); }
+  .duration-700       { transition-duration: 700ms; }
+  .duration-slowest   { transition-duration: var(--duration-slowest); }
+  .duration-1000      { transition-duration: 1000ms; }
+
+  /* Transition timing */
+  .ease-linear  { transition-timing-function: var(--ease-linear); }
+  .ease-in      { transition-timing-function: var(--ease-in); }
+  .ease-out     { transition-timing-function: var(--ease-out); }
+  .ease-in-out  { transition-timing-function: var(--ease-inout); }
+  .ease-smooth  { transition-timing-function: var(--ease-smooth); }
+  .ease-spring  { transition-timing-function: var(--ease-spring); }
+  .ease-bounce  { transition-timing-function: var(--ease-bounce); }
+  .ease-snappy  { transition-timing-function: var(--ease-snappy); }
+
+  /* Transition delay */
+  .delay-0    { transition-delay: 0ms; }
+  .delay-75   { transition-delay: 75ms; }
+  .delay-100  { transition-delay: 100ms; }
+  .delay-150  { transition-delay: 150ms; }
+  .delay-200  { transition-delay: 200ms; }
+  .delay-300  { transition-delay: 300ms; }
+  .delay-500  { transition-delay: 500ms; }
+  .delay-700  { transition-delay: 700ms; }
+  .delay-1000 { transition-delay: 1000ms; }
+
+
+  /* ────────────────────────────────────────────────────────
+     15. ANIMATION DELAY & DURATION
+     For keyframe animations (aura-motion.css has keyframes).
+  ──────────────────────────────────────────────────────── */
+
+  /* Animation duration */
+  .animate-duration-75     { animation-duration: 75ms; }
+  .animate-duration-100    { animation-duration: 100ms; }
+  .animate-duration-150    { animation-duration: 150ms; }
+  .animate-duration-200    { animation-duration: 200ms; }
+  .animate-duration-300    { animation-duration: 300ms; }
+  .animate-duration-500    { animation-duration: 500ms; }
+  .animate-duration-700    { animation-duration: 700ms; }
+  .animate-duration-1000   { animation-duration: 1000ms; }
+  .animate-duration-1500   { animation-duration: 1500ms; }
+  .animate-duration-2000   { animation-duration: 2000ms; }
+
+  /* Animation delay */
+  .animate-delay-0         { animation-delay: 0ms; }
+  .animate-delay-75        { animation-delay: 75ms; }
+  .animate-delay-100       { animation-delay: 100ms; }
+  .animate-delay-150       { animation-delay: 150ms; }
+  .animate-delay-200       { animation-delay: 200ms; }
+  .animate-delay-300       { animation-delay: 300ms; }
+  .animate-delay-500       { animation-delay: 500ms; }
+  .animate-delay-700       { animation-delay: 700ms; }
+  .animate-delay-1000      { animation-delay: 1000ms; }
+
+  /* Animation iteration */
+  .animate-once     { animation-iteration-count: 1; }
+  .animate-twice    { animation-iteration-count: 2; }
+  .animate-thrice   { animation-iteration-count: 3; }
+  .animate-infinite { animation-iteration-count: infinite; }
+
+  /* Animation direction */
+  .animate-normal    { animation-direction: normal; }
+  .animate-reverse   { animation-direction: reverse; }
+  .animate-alternate { animation-direction: alternate; }
+  .animate-alt-reverse { animation-direction: alternate-reverse; }
+
+  /* Animation fill mode */
+  .animate-fill-none    { animation-fill-mode: none; }
+  .animate-fill-forward { animation-fill-mode: forwards; }
+  .animate-fill-back    { animation-fill-mode: backwards; }
+  .animate-fill-both    { animation-fill-mode: both; }
+
+  /* Animation play state */
+  .animate-running { animation-play-state: running; }
+  .animate-paused  { animation-play-state: paused; }
+
+  /* Pause on hover — great for carousels */
+  .pause-on-hover:hover * { animation-play-state: paused; }
+
+} /* end @layer aura.utilities — Phase 10 Part 2 */

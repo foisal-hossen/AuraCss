@@ -1,0 +1,402 @@
+/* ============================================================
+   AURA CSS — Phase 07: Elevation & Depth
+   Version  : 1.0.0
+   Layer    : aura.utilities
+   Depends  : Phase 01, 02, 03
+   ============================================================
+   WHAT THIS FILE DOES:
+   Visual depth system. Shadows, borders, outlines, rings,
+   dividers, and z-index — all reading from the token system.
+
+   COVERS:
+   1.  Box shadow scale
+   2.  Glow shadows — AURA exclusive
+   3.  Inset shadows
+   4.  Shadow color modifiers
+   5.  Border width utilities
+   6.  Border style utilities
+   7.  Border radius utilities
+   8.  Divide utilities (borders between children)
+   9.  Outline utilities
+   10. Z-index utilities
+   ============================================================ */
+
+@layer aura.utilities {
+
+  /* ────────────────────────────────────────────────────────
+     1. BOX SHADOW SCALE
+     Reads from --shadow-* tokens (Phase 02).
+     Dark theme automatically gets darker, heavier shadows.
+  ──────────────────────────────────────────────────────── */
+
+  .shadow-none  { box-shadow: none; }
+  .shadow-xs    { box-shadow: var(--shadow-xs); }
+  .shadow-sm    { box-shadow: var(--shadow-sm); }
+  .shadow       { box-shadow: var(--shadow-md); }
+  .shadow-md    { box-shadow: var(--shadow-md); }
+  .shadow-lg    { box-shadow: var(--shadow-lg); }
+  .shadow-xl    { box-shadow: var(--shadow-xl); }
+  .shadow-2xl   { box-shadow: var(--shadow-2xl); }
+  .shadow-inner { box-shadow: var(--shadow-inner); }
+  .shadow-inner-md { box-shadow: var(--shadow-inner-md); }
+
+
+  /* ────────────────────────────────────────────────────────
+     2. GLOW SHADOWS — AURA Exclusive
+     Token-aware — automatically uses current theme color.
+     Switches across all 7 themes with zero extra code.
+  ──────────────────────────────────────────────────────── */
+
+  .shadow-glow     { box-shadow: var(--shadow-glow); }
+  .shadow-glow-sm  { box-shadow: var(--shadow-glow-sm); }
+  .shadow-glow-lg  { box-shadow: var(--shadow-glow-lg); }
+
+  /* Per-color glows */
+  .shadow-glow-primary {
+    box-shadow:
+      0 0 20px color-mix(in oklch, var(--color-primary) 35%, transparent),
+      0 0 50px color-mix(in oklch, var(--color-primary) 15%, transparent);
+  }
+  .shadow-glow-secondary {
+    box-shadow:
+      0 0 20px color-mix(in oklch, var(--color-secondary) 35%, transparent),
+      0 0 50px color-mix(in oklch, var(--color-secondary) 15%, transparent);
+  }
+  .shadow-glow-accent {
+    box-shadow:
+      0 0 20px color-mix(in oklch, var(--color-accent) 35%, transparent),
+      0 0 50px color-mix(in oklch, var(--color-accent) 15%, transparent);
+  }
+  .shadow-glow-success {
+    box-shadow:
+      0 0 20px color-mix(in oklch, var(--color-success) 35%, transparent),
+      0 0 50px color-mix(in oklch, var(--color-success) 15%, transparent);
+  }
+  .shadow-glow-danger {
+    box-shadow:
+      0 0 20px color-mix(in oklch, var(--color-danger) 35%, transparent),
+      0 0 50px color-mix(in oklch, var(--color-danger) 15%, transparent);
+  }
+  .shadow-glow-warning {
+    box-shadow:
+      0 0 20px color-mix(in oklch, var(--color-warning) 35%, transparent),
+      0 0 50px color-mix(in oklch, var(--color-warning) 15%, transparent);
+  }
+
+  /* Glow on hover — common interaction pattern */
+  .hover\:shadow-glow:hover     { box-shadow: var(--shadow-glow); }
+  .hover\:shadow-glow-sm:hover  { box-shadow: var(--shadow-glow-sm); }
+  .hover\:shadow-glow-lg:hover  { box-shadow: var(--shadow-glow-lg); }
+  .hover\:shadow-lg:hover       { box-shadow: var(--shadow-lg); }
+  .hover\:shadow-xl:hover       { box-shadow: var(--shadow-xl); }
+  .hover\:shadow-none:hover     { box-shadow: none; }
+
+
+  /* ────────────────────────────────────────────────────────
+     3. SHADOW TRANSITIONS
+     Smooth shadow changes on hover/focus.
+  ──────────────────────────────────────────────────────── */
+
+  .shadow-transition {
+    transition: box-shadow var(--duration-base) var(--ease-out);
+  }
+
+  /* Lift effect — combines transform + shadow */
+  .lift {
+    transition:
+      transform  var(--duration-base) var(--ease-spring),
+      box-shadow var(--duration-base) var(--ease-out);
+  }
+  .lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .lift-sm {
+    transition:
+      transform  var(--duration-fast) var(--ease-spring),
+      box-shadow var(--duration-fast) var(--ease-out);
+  }
+  .lift-sm:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .lift-lg {
+    transition:
+      transform  var(--duration-slow) var(--ease-spring),
+      box-shadow var(--duration-slow) var(--ease-out);
+  }
+  .lift-lg:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* Glow lift — lift + glow */
+  .lift-glow {
+    transition:
+      transform  var(--duration-base) var(--ease-spring),
+      box-shadow var(--duration-base) var(--ease-out);
+  }
+  .lift-glow:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glow);
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     4. BORDER WIDTH UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .border-0   { border-width: 0; }
+  .border     { border-width: 1px; }
+  .border-2   { border-width: 2px; }
+  .border-4   { border-width: 4px; }
+  .border-8   { border-width: 8px; }
+
+  /* Per-side border width */
+  .border-t-0 { border-top-width: 0; }
+  .border-t   { border-top-width: 1px; }
+  .border-t-2 { border-top-width: 2px; }
+  .border-t-4 { border-top-width: 4px; }
+
+  .border-b-0 { border-bottom-width: 0; }
+  .border-b   { border-bottom-width: 1px; }
+  .border-b-2 { border-bottom-width: 2px; }
+  .border-b-4 { border-bottom-width: 4px; }
+
+  .border-l-0 { border-left-width: 0; }
+  .border-l   { border-left-width: 1px; }
+  .border-l-2 { border-left-width: 2px; }
+  .border-l-4 { border-left-width: 4px; }
+
+  .border-r-0 { border-right-width: 0; }
+  .border-r   { border-right-width: 1px; }
+  .border-r-2 { border-right-width: 2px; }
+  .border-r-4 { border-right-width: 4px; }
+
+  /* Logical border widths */
+  .border-s-0 { border-inline-start-width: 0; }
+  .border-s   { border-inline-start-width: 1px; }
+  .border-s-2 { border-inline-start-width: 2px; }
+  .border-s-4 { border-inline-start-width: 4px; }
+
+  .border-e-0 { border-inline-end-width: 0; }
+  .border-e   { border-inline-end-width: 1px; }
+  .border-e-2 { border-inline-end-width: 2px; }
+  .border-e-4 { border-inline-end-width: 4px; }
+
+  .border-x-0 { border-inline-width: 0; }
+  .border-x   { border-inline-width: 1px; }
+  .border-x-2 { border-inline-width: 2px; }
+  .border-x-4 { border-inline-width: 4px; }
+
+  .border-y-0 { border-block-width: 0; }
+  .border-y   { border-block-width: 1px; }
+  .border-y-2 { border-block-width: 2px; }
+  .border-y-4 { border-block-width: 4px; }
+
+
+  /* ────────────────────────────────────────────────────────
+     5. BORDER STYLE UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .border-solid  { border-style: solid; }
+  .border-dashed { border-style: dashed; }
+  .border-dotted { border-style: dotted; }
+  .border-double { border-style: double; }
+  .border-hidden { border-style: hidden; }
+  .border-none   { border-style: none; }
+
+
+  /* ────────────────────────────────────────────────────────
+     6. BORDER RADIUS UTILITIES
+     Reads from --radius-* tokens (Phase 02).
+  ──────────────────────────────────────────────────────── */
+
+  .rounded-none  { border-radius: var(--radius-none); }
+  .rounded-xs    { border-radius: var(--radius-xs); }
+  .rounded-sm    { border-radius: var(--radius-sm); }
+  .rounded       { border-radius: var(--radius-md); }
+  .rounded-md    { border-radius: var(--radius-md); }
+  .rounded-lg    { border-radius: var(--radius-lg); }
+  .rounded-xl    { border-radius: var(--radius-xl); }
+  .rounded-2xl   { border-radius: var(--radius-2xl); }
+  .rounded-3xl   { border-radius: var(--radius-3xl); }
+  .rounded-4xl   { border-radius: var(--radius-4xl); }
+  .rounded-full  { border-radius: var(--radius-full); }
+
+  /* Semantic radius */
+  .rounded-btn     { border-radius: var(--radius-btn); }
+  .rounded-card    { border-radius: var(--radius-card); }
+  .rounded-input   { border-radius: var(--radius-input); }
+  .rounded-badge   { border-radius: var(--radius-badge); }
+  .rounded-modal   { border-radius: var(--radius-modal); }
+  .rounded-tooltip { border-radius: var(--radius-tooltip); }
+
+  /* Per-side radius */
+  .rounded-t-none { border-top-left-radius: 0; border-top-right-radius: 0; }
+  .rounded-t-sm   { border-top-left-radius: var(--radius-sm); border-top-right-radius: var(--radius-sm); }
+  .rounded-t      { border-top-left-radius: var(--radius-md); border-top-right-radius: var(--radius-md); }
+  .rounded-t-md   { border-top-left-radius: var(--radius-md); border-top-right-radius: var(--radius-md); }
+  .rounded-t-lg   { border-top-left-radius: var(--radius-lg); border-top-right-radius: var(--radius-lg); }
+  .rounded-t-xl   { border-top-left-radius: var(--radius-xl); border-top-right-radius: var(--radius-xl); }
+  .rounded-t-full { border-top-left-radius: var(--radius-full); border-top-right-radius: var(--radius-full); }
+
+  .rounded-b-none { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .rounded-b-sm   { border-bottom-left-radius: var(--radius-sm); border-bottom-right-radius: var(--radius-sm); }
+  .rounded-b      { border-bottom-left-radius: var(--radius-md); border-bottom-right-radius: var(--radius-md); }
+  .rounded-b-lg   { border-bottom-left-radius: var(--radius-lg); border-bottom-right-radius: var(--radius-lg); }
+  .rounded-b-xl   { border-bottom-left-radius: var(--radius-xl); border-bottom-right-radius: var(--radius-xl); }
+  .rounded-b-full { border-bottom-left-radius: var(--radius-full); border-bottom-right-radius: var(--radius-full); }
+
+  .rounded-l-none { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+  .rounded-l-sm   { border-top-left-radius: var(--radius-sm); border-bottom-left-radius: var(--radius-sm); }
+  .rounded-l      { border-top-left-radius: var(--radius-md); border-bottom-left-radius: var(--radius-md); }
+  .rounded-l-lg   { border-top-left-radius: var(--radius-lg); border-bottom-left-radius: var(--radius-lg); }
+  .rounded-l-xl   { border-top-left-radius: var(--radius-xl); border-bottom-left-radius: var(--radius-xl); }
+  .rounded-l-full { border-top-left-radius: var(--radius-full); border-bottom-left-radius: var(--radius-full); }
+
+  .rounded-r-none { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+  .rounded-r-sm   { border-top-right-radius: var(--radius-sm); border-bottom-right-radius: var(--radius-sm); }
+  .rounded-r      { border-top-right-radius: var(--radius-md); border-bottom-right-radius: var(--radius-md); }
+  .rounded-r-lg   { border-top-right-radius: var(--radius-lg); border-bottom-right-radius: var(--radius-lg); }
+  .rounded-r-xl   { border-top-right-radius: var(--radius-xl); border-bottom-right-radius: var(--radius-xl); }
+  .rounded-r-full { border-top-right-radius: var(--radius-full); border-bottom-right-radius: var(--radius-full); }
+
+  /* Individual corners */
+  .rounded-tl-none { border-top-left-radius: 0; }
+  .rounded-tl-sm   { border-top-left-radius: var(--radius-sm); }
+  .rounded-tl      { border-top-left-radius: var(--radius-md); }
+  .rounded-tl-lg   { border-top-left-radius: var(--radius-lg); }
+  .rounded-tl-xl   { border-top-left-radius: var(--radius-xl); }
+  .rounded-tl-full { border-top-left-radius: var(--radius-full); }
+
+  .rounded-tr-none { border-top-right-radius: 0; }
+  .rounded-tr-sm   { border-top-right-radius: var(--radius-sm); }
+  .rounded-tr      { border-top-right-radius: var(--radius-md); }
+  .rounded-tr-lg   { border-top-right-radius: var(--radius-lg); }
+  .rounded-tr-xl   { border-top-right-radius: var(--radius-xl); }
+  .rounded-tr-full { border-top-right-radius: var(--radius-full); }
+
+  .rounded-bl-none { border-bottom-left-radius: 0; }
+  .rounded-bl-sm   { border-bottom-left-radius: var(--radius-sm); }
+  .rounded-bl      { border-bottom-left-radius: var(--radius-md); }
+  .rounded-bl-lg   { border-bottom-left-radius: var(--radius-lg); }
+  .rounded-bl-xl   { border-bottom-left-radius: var(--radius-xl); }
+  .rounded-bl-full { border-bottom-left-radius: var(--radius-full); }
+
+  .rounded-br-none { border-bottom-right-radius: 0; }
+  .rounded-br-sm   { border-bottom-right-radius: var(--radius-sm); }
+  .rounded-br      { border-bottom-right-radius: var(--radius-md); }
+  .rounded-br-lg   { border-bottom-right-radius: var(--radius-lg); }
+  .rounded-br-xl   { border-bottom-right-radius: var(--radius-xl); }
+  .rounded-br-full { border-bottom-right-radius: var(--radius-full); }
+
+
+  /* ────────────────────────────────────────────────────────
+     7. DIVIDE UTILITIES
+     Adds borders between child elements.
+     Cleaner than adding margin/border to each child.
+  ──────────────────────────────────────────────────────── */
+
+  /* Divide Y — horizontal lines between rows */
+  .divide-y > * + *   { border-top-width: 1px; border-top-style: solid; border-top-color: var(--surface-border); }
+  .divide-y-2 > * + * { border-top-width: 2px; border-top-style: solid; border-top-color: var(--surface-border); }
+  .divide-y-4 > * + * { border-top-width: 4px; border-top-style: solid; border-top-color: var(--surface-border); }
+  .divide-y-0 > * + * { border-top-width: 0; }
+
+  /* Divide X — vertical lines between columns */
+  .divide-x > * + *   { border-left-width: 1px; border-left-style: solid; border-left-color: var(--surface-border); }
+  .divide-x-2 > * + * { border-left-width: 2px; border-left-style: solid; border-left-color: var(--surface-border); }
+  .divide-x-4 > * + * { border-left-width: 4px; border-left-style: solid; border-left-color: var(--surface-border); }
+  .divide-x-0 > * + * { border-left-width: 0; }
+
+  /* Divide style */
+  .divide-solid  > * + * { border-style: solid; }
+  .divide-dashed > * + * { border-style: dashed; }
+  .divide-dotted > * + * { border-style: dotted; }
+
+  /* Divide color */
+  .divide-border   > * + * { border-color: var(--surface-border); }
+  .divide-primary  > * + * { border-color: var(--color-primary); }
+  .divide-white    > * + * { border-color: oklch(1 0 0); }
+  .divide-black    > * + * { border-color: oklch(0 0 0); }
+  .divide-transparent > * + * { border-color: transparent; }
+
+  /* Divide opacity */
+  .divide-border\/50 > * + * {
+    border-color: color-mix(in oklch, var(--surface-border) 50%, transparent);
+  }
+  .divide-border\/30 > * + * {
+    border-color: color-mix(in oklch, var(--surface-border) 30%, transparent);
+  }
+
+  /* Reverse divide — for flex-row-reverse/col-reverse */
+  .divide-y-reverse > * + * {
+    border-top-width: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--surface-border);
+  }
+  .divide-x-reverse > * + * {
+    border-left-width: 0;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: var(--surface-border);
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     8. OUTLINE UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .outline-none    { outline: none; }
+  .outline         { outline: 1px solid var(--color-primary); }
+  .outline-0       { outline-width: 0; }
+  .outline-1       { outline-width: 1px; }
+  .outline-2       { outline-width: 2px; }
+  .outline-4       { outline-width: 4px; }
+  .outline-8       { outline-width: 8px; }
+
+  .outline-solid   { outline-style: solid; }
+  .outline-dashed  { outline-style: dashed; }
+  .outline-dotted  { outline-style: dotted; }
+  .outline-double  { outline-style: double; }
+
+  .outline-offset-0 { outline-offset: 0; }
+  .outline-offset-1 { outline-offset: 1px; }
+  .outline-offset-2 { outline-offset: 2px; }
+  .outline-offset-4 { outline-offset: 4px; }
+  .outline-offset-8 { outline-offset: 8px; }
+
+
+  /* ────────────────────────────────────────────────────────
+     9. Z-INDEX UTILITIES
+     Reads from --z-* tokens. Semantic names prevent
+     z-index wars in large team projects.
+  ──────────────────────────────────────────────────────── */
+
+  .z-auto     { z-index: auto; }
+  .z-0        { z-index: 0; }
+  .z-10       { z-index: 10; }
+  .z-20       { z-index: 20; }
+  .z-30       { z-index: 30; }
+  .z-40       { z-index: 40; }
+  .z-50       { z-index: 50; }
+
+  /* Semantic z-index — use these in real projects */
+  .z-below    { z-index: var(--z-below); }    /* -1  */
+  .z-base     { z-index: var(--z-base); }     /*  0  */
+  .z-raised   { z-index: var(--z-raised); }   /*  10 */
+  .z-sticky   { z-index: var(--z-sticky); }   /* 100 */
+  .z-fixed    { z-index: var(--z-fixed); }    /* 200 */
+  .z-overlay  { z-index: var(--z-overlay); }  /* 300 */
+  .z-dropdown { z-index: var(--z-dropdown); } /* 400 */
+  .z-modal    { z-index: var(--z-modal); }    /* 500 */
+  .z-popover  { z-index: var(--z-popover); }  /* 600 */
+  .z-toast    { z-index: var(--z-toast); }    /* 700 */
+  .z-tooltip  { z-index: var(--z-tooltip); }  /* 800 */
+  .z-system   { z-index: var(--z-system); }   /* 900 */
+
+} /* end @layer aura.utilities — Phase 07 */

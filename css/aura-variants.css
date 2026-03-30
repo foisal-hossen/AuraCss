@@ -1,0 +1,865 @@
+/* ============================================================
+   AURA CSS — Phase 11: Variant System (Part 1 of 2)
+   Version  : 1.0.0
+   Layer    : aura.variants
+   Depends  : Phase 01, 02, 03
+   ============================================================
+   WHAT IS A VARIANT?
+   A variant is a prefix that applies a utility only under
+   a specific condition — hover, focus, dark mode, nth-child,
+   has-*, etc.
+
+   HOW AURA VARIANTS WORK:
+   Unlike Tailwind (which generates every combination at
+   build time), AURA variants are pre-composed CSS classes
+   using modern CSS selectors. The most commonly needed
+   combinations are covered. Custom combinations can be
+   added in aura.overrides layer.
+
+   PART 1 COVERS:
+   1.  Hover variants
+   2.  Focus variants
+   3.  Focus-within variants
+   4.  Focus-visible variants
+   5.  Active variants
+   6.  Visited variants
+   7.  Disabled variants
+   8.  Checked variants
+   9.  Indeterminate variants
+   10. Required / Optional variants
+   11. Valid / Invalid variants
+   12. Placeholder variants
+   ============================================================ */
+
+@layer aura.variants {
+
+  /* ────────────────────────────────────────────────────────
+     1. HOVER VARIANTS
+     Most commonly needed hover states.
+  ──────────────────────────────────────────────────────── */
+
+  /* Colors */
+  .hover\:bg-primary:hover         { background-color: var(--color-primary); }
+  .hover\:bg-primary-hover:hover   { background-color: var(--color-primary-hover); }
+  .hover\:bg-primary-subtle:hover  { background-color: var(--color-primary-subtle); }
+  .hover\:bg-secondary:hover       { background-color: var(--color-secondary); }
+  .hover\:bg-accent:hover          { background-color: var(--color-accent); }
+  .hover\:bg-raised:hover          { background-color: var(--surface-raised); }
+  .hover\:bg-overlay:hover         { background-color: var(--surface-overlay); }
+  .hover\:bg-transparent:hover     { background-color: transparent; }
+  .hover\:bg-white:hover           { background-color: oklch(1 0 0); }
+  .hover\:bg-black:hover           { background-color: oklch(0 0 0); }
+
+  /* Background opacity on hover */
+  .hover\:bg-primary\/10:hover  { background-color: color-mix(in oklch, var(--color-primary) 10%, transparent); }
+  .hover\:bg-primary\/15:hover  { background-color: color-mix(in oklch, var(--color-primary) 15%, transparent); }
+  .hover\:bg-primary\/20:hover  { background-color: color-mix(in oklch, var(--color-primary) 20%, transparent); }
+  .hover\:bg-primary\/25:hover  { background-color: color-mix(in oklch, var(--color-primary) 25%, transparent); }
+  .hover\:bg-white\/10:hover    { background-color: oklch(1 0 0 / 0.10); }
+  .hover\:bg-white\/20:hover    { background-color: oklch(1 0 0 / 0.20); }
+
+  /* Text color */
+  .hover\:text-primary:hover    { color: var(--color-primary); }
+  .hover\:text-secondary:hover  { color: var(--color-secondary); }
+  .hover\:text-accent:hover     { color: var(--color-accent); }
+  .hover\:text-white:hover      { color: oklch(1 0 0); }
+  .hover\:text-inherit:hover    { color: inherit; }
+  .hover\:text-t1:hover         { color: var(--text-primary); }
+  .hover\:text-t2:hover         { color: var(--text-secondary); }
+
+  /* Border */
+  .hover\:border-primary:hover    { border-color: var(--color-primary); }
+  .hover\:border-secondary:hover  { border-color: var(--color-secondary); }
+  .hover\:border-accent:hover     { border-color: var(--color-accent); }
+  .hover\:border-transparent:hover{ border-color: transparent; }
+  .hover\:border-white:hover      { border-color: oklch(1 0 0); }
+  .hover\:border-border:hover     { border-color: var(--surface-border); }
+
+  /* Border opacity */
+  .hover\:border-primary\/30:hover { border-color: color-mix(in oklch, var(--color-primary) 30%, transparent); }
+  .hover\:border-primary\/50:hover { border-color: color-mix(in oklch, var(--color-primary) 50%, transparent); }
+
+  /* Opacity */
+  .hover\:opacity-0:hover    { opacity: 0; }
+  .hover\:opacity-25:hover   { opacity: 0.25; }
+  .hover\:opacity-50:hover   { opacity: 0.5; }
+  .hover\:opacity-75:hover   { opacity: 0.75; }
+  .hover\:opacity-80:hover   { opacity: 0.8; }
+  .hover\:opacity-90:hover   { opacity: 0.9; }
+  .hover\:opacity-100:hover  { opacity: 1; }
+
+  /* Transform */
+  .hover\:scale-95:hover     { scale: 0.95; }
+  .hover\:scale-100:hover    { scale: 1; }
+  .hover\:scale-105:hover    { scale: 1.05; }
+  .hover\:scale-110:hover    { scale: 1.10; }
+  .hover\:-translate-y-1:hover { translate: 0 calc(var(--space-1) * -1); }
+  .hover\:-translate-y-2:hover { translate: 0 calc(var(--space-2) * -1); }
+  .hover\:-translate-y-3:hover { translate: 0 calc(var(--space-3) * -1); }
+  .hover\:translate-y-1:hover  { translate: 0 var(--space-1); }
+  .hover\:rotate-3:hover       { rotate: 3deg; }
+  .hover\:rotate-6:hover       { rotate: 6deg; }
+  .hover\:-rotate-3:hover      { rotate: -3deg; }
+  .hover\:-rotate-6:hover      { rotate: -6deg; }
+  .hover\:rotate-180:hover     { rotate: 180deg; }
+
+  /* Decoration */
+  .hover\:underline:hover     { text-decoration-line: underline; }
+  .hover\:no-underline:hover  { text-decoration-line: none; }
+  .hover\:line-through:hover  { text-decoration-line: line-through; }
+
+  /* Cursor on hover */
+  .hover\:cursor-pointer:hover  { cursor: pointer; }
+  .hover\:cursor-not-allowed:hover { cursor: not-allowed; }
+  .hover\:cursor-grab:hover     { cursor: grab; }
+
+  /* Display */
+  .hover\:block:hover  { display: block; }
+  .hover\:hidden:hover { display: none; }
+
+  /* Shadow */
+  .hover\:shadow-none:hover  { box-shadow: none; }
+  .hover\:shadow-sm:hover    { box-shadow: var(--shadow-sm); }
+  .hover\:shadow:hover       { box-shadow: var(--shadow-md); }
+  .hover\:shadow-md:hover    { box-shadow: var(--shadow-md); }
+  .hover\:shadow-lg:hover    { box-shadow: var(--shadow-lg); }
+  .hover\:shadow-xl:hover    { box-shadow: var(--shadow-xl); }
+  .hover\:shadow-glow:hover  { box-shadow: var(--shadow-glow); }
+  .hover\:shadow-glow-sm:hover { box-shadow: var(--shadow-glow-sm); }
+  .hover\:shadow-glow-lg:hover { box-shadow: var(--shadow-glow-lg); }
+
+  /* Border width */
+  .hover\:border:hover   { border-width: 1px; }
+  .hover\:border-2:hover { border-width: 2px; }
+  .hover\:border-0:hover { border-width: 0; }
+
+  /* Border radius */
+  .hover\:rounded:hover    { border-radius: var(--radius-md); }
+  .hover\:rounded-full:hover { border-radius: var(--radius-full); }
+
+  /* Outline */
+  .hover\:outline-none:hover { outline: none; }
+  .hover\:outline:hover      { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+
+  /* Gradient */
+  .hover\:bg-gradient-aura:hover {
+    background-image: linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+  }
+
+  /* Text gradient */
+  .hover\:text-gradient:hover {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     2. FOCUS VARIANTS
+  ──────────────────────────────────────────────────────── */
+
+  .focus\:bg-primary:focus        { background-color: var(--color-primary); }
+  .focus\:bg-raised:focus         { background-color: var(--surface-raised); }
+  .focus\:bg-primary-subtle:focus { background-color: var(--color-primary-subtle); }
+  .focus\:text-primary:focus      { color: var(--color-primary); }
+  .focus\:border-primary:focus    { border-color: var(--color-primary); }
+  .focus\:border-secondary:focus  { border-color: var(--color-secondary); }
+  .focus\:border-accent:focus     { border-color: var(--color-accent); }
+  .focus\:border-danger:focus     { border-color: var(--color-danger); }
+  .focus\:outline-none:focus      { outline: none; }
+  .focus\:outline:focus           { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  .focus\:outline-primary:focus   { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  .focus\:outline-danger:focus    { outline: 2px solid var(--color-danger); outline-offset: 2px; }
+  .focus\:shadow-glow:focus       { box-shadow: var(--shadow-glow); }
+  .focus\:ring-primary:focus {
+    box-shadow:
+      0 0 0 var(--ring-offset-width, 2px) var(--ring-offset-color, var(--surface-base)),
+      0 0 0 calc(var(--ring-offset-width, 2px) + var(--ring-width, 2px)) var(--color-primary);
+  }
+  .focus\:ring-danger:focus {
+    box-shadow:
+      0 0 0 var(--ring-offset-width, 2px) var(--ring-offset-color, var(--surface-base)),
+      0 0 0 calc(var(--ring-offset-width, 2px) + var(--ring-width, 2px)) var(--color-danger);
+  }
+  .focus\:scale-105:focus   { scale: 1.05; }
+  .focus\:opacity-100:focus { opacity: 1; }
+
+
+  /* ────────────────────────────────────────────────────────
+     3. FOCUS-WITHIN VARIANTS
+     Applied to parent when any child has focus.
+     Great for form groups, search bars.
+  ──────────────────────────────────────────────────────── */
+
+  .focus-within\:border-primary:focus-within  { border-color: var(--color-primary); }
+  .focus-within\:border-danger:focus-within   { border-color: var(--color-danger); }
+  .focus-within\:shadow-glow:focus-within     { box-shadow: var(--shadow-glow); }
+  .focus-within\:bg-raised:focus-within       { background-color: var(--surface-raised); }
+  .focus-within\:text-primary:focus-within    { color: var(--color-primary); }
+  .focus-within\:opacity-100:focus-within     { opacity: 1; }
+  .focus-within\:ring-primary:focus-within {
+    box-shadow:
+      0 0 0 2px var(--surface-base),
+      0 0 0 4px var(--color-primary);
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     4. FOCUS-VISIBLE VARIANTS
+     Only applies when focused via keyboard (not mouse).
+     Preferred for accessibility — avoids showing focus
+     rings on mouse click.
+  ──────────────────────────────────────────────────────── */
+
+  .focus-visible\:outline-none:focus-visible    { outline: none; }
+  .focus-visible\:outline:focus-visible         { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  .focus-visible\:outline-primary:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  .focus-visible\:border-primary:focus-visible  { border-color: var(--color-primary); }
+  .focus-visible\:ring-primary:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--surface-base),
+      0 0 0 4px var(--color-primary);
+  }
+  .focus-visible\:ring-offset-2:focus-visible   { outline-offset: 2px; }
+  .focus-visible\:shadow-glow:focus-visible     { box-shadow: var(--shadow-glow); }
+  .focus-visible\:bg-raised:focus-visible       { background-color: var(--surface-raised); }
+
+
+  /* ────────────────────────────────────────────────────────
+     5. ACTIVE VARIANTS
+     Pressed/clicking state.
+  ──────────────────────────────────────────────────────── */
+
+  .active\:scale-95:active        { scale: 0.95; }
+  .active\:scale-98:active        { scale: 0.98; }
+  .active\:scale-100:active       { scale: 1; }
+  .active\:translate-y-px:active  { translate: 0 1px; }
+  .active\:bg-primary:active      { background-color: var(--color-primary); }
+  .active\:bg-primary-hover:active{ background-color: var(--color-primary-hover); }
+  .active\:bg-raised:active       { background-color: var(--surface-raised); }
+  .active\:text-primary:active    { color: var(--color-primary); }
+  .active\:opacity-80:active      { opacity: 0.8; }
+  .active\:shadow-none:active     { box-shadow: none; }
+  .active\:shadow-inner:active    { box-shadow: var(--shadow-inner); }
+
+
+  /* ────────────────────────────────────────────────────────
+     6. VISITED VARIANTS
+  ──────────────────────────────────────────────────────── */
+
+  .visited\:text-primary:visited   { color: var(--color-primary); }
+  .visited\:text-muted:visited     { color: var(--text-muted); }
+  .visited\:opacity-75:visited     { opacity: 0.75; }
+  .visited\:underline:visited      { text-decoration-line: underline; }
+
+
+  /* ────────────────────────────────────────────────────────
+     7. DISABLED VARIANTS
+     Applies when element has [disabled] or [aria-disabled].
+  ──────────────────────────────────────────────────────── */
+
+  .disabled\:opacity-40:disabled,
+  .disabled\:opacity-40[aria-disabled="true"] { opacity: 0.4; }
+
+  .disabled\:opacity-50:disabled,
+  .disabled\:opacity-50[aria-disabled="true"] { opacity: 0.5; }
+
+  .disabled\:cursor-not-allowed:disabled,
+  .disabled\:cursor-not-allowed[aria-disabled="true"] { cursor: not-allowed; }
+
+  .disabled\:pointer-events-none:disabled,
+  .disabled\:pointer-events-none[aria-disabled="true"] { pointer-events: none; }
+
+  .disabled\:bg-raised:disabled,
+  .disabled\:bg-raised[aria-disabled="true"] { background-color: var(--surface-raised); }
+
+  .disabled\:text-muted:disabled,
+  .disabled\:text-muted[aria-disabled="true"] { color: var(--text-muted); }
+
+  .disabled\:border-border:disabled,
+  .disabled\:border-border[aria-disabled="true"] { border-color: var(--surface-border); }
+
+  .disabled\:shadow-none:disabled,
+  .disabled\:shadow-none[aria-disabled="true"] { box-shadow: none; }
+
+
+  /* ────────────────────────────────────────────────────────
+     8. CHECKED VARIANTS — checkboxes, radios
+  ──────────────────────────────────────────────────────── */
+
+  .checked\:bg-primary:checked     { background-color: var(--color-primary); }
+  .checked\:bg-success:checked     { background-color: var(--color-success); }
+  .checked\:border-primary:checked { border-color: var(--color-primary); }
+  .checked\:border-success:checked { border-color: var(--color-success); }
+  .checked\:text-primary:checked   { color: var(--color-primary); }
+  .checked\:opacity-100:checked    { opacity: 1; }
+  .checked\:scale-100:checked      { scale: 1; }
+  .checked\:shadow-glow:checked    { box-shadow: var(--shadow-glow); }
+
+
+  /* ────────────────────────────────────────────────────────
+     9. INDETERMINATE VARIANTS
+  ──────────────────────────────────────────────────────── */
+
+  .indeterminate\:bg-warning:indeterminate     { background-color: var(--color-warning); }
+  .indeterminate\:border-warning:indeterminate { border-color: var(--color-warning); }
+  .indeterminate\:opacity-100:indeterminate    { opacity: 1; }
+
+
+  /* ────────────────────────────────────────────────────────
+     10. REQUIRED / OPTIONAL VARIANTS
+  ──────────────────────────────────────────────────────── */
+
+  .required\:border-danger:required  { border-color: var(--color-danger); }
+  .optional\:border-border:optional  { border-color: var(--surface-border); }
+  .required\:text-danger:required    { color: var(--color-danger); }
+
+
+  /* ────────────────────────────────────────────────────────
+     11. VALID / INVALID VARIANTS — form validation
+  ──────────────────────────────────────────────────────── */
+
+  .valid\:border-success:valid        { border-color: var(--color-success); }
+  .valid\:bg-success-subtle:valid     { background-color: var(--color-success-subtle); }
+  .valid\:text-success:valid          { color: var(--color-success); }
+  .valid\:shadow-glow-success:valid   {
+    box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-success) 25%, transparent);
+  }
+
+  .invalid\:border-danger:invalid     { border-color: var(--color-danger); }
+  .invalid\:bg-danger-subtle:invalid  { background-color: var(--color-danger-subtle); }
+  .invalid\:text-danger:invalid       { color: var(--color-danger); }
+  .invalid\:shadow-glow-danger:invalid{
+    box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-danger) 25%, transparent);
+  }
+
+  /* Only show validation state after user interaction */
+  .user-valid\:border-success:user-valid   { border-color: var(--color-success); }
+  .user-invalid\:border-danger:user-invalid{ border-color: var(--color-danger); }
+
+
+  /* ────────────────────────────────────────────────────────
+     12. PLACEHOLDER VARIANTS — input placeholder styling
+  ──────────────────────────────────────────────────────── */
+
+  .placeholder\:text-muted::placeholder      { color: var(--text-muted); }
+  .placeholder\:text-secondary::placeholder  { color: var(--text-secondary); }
+  .placeholder\:text-primary::placeholder    { color: var(--text-primary); }
+  .placeholder\:opacity-50::placeholder      { opacity: 0.5; }
+  .placeholder\:opacity-75::placeholder      { opacity: 0.75; }
+  .placeholder\:italic::placeholder          { font-style: italic; }
+  .placeholder\:font-light::placeholder      { font-weight: var(--font-light); }
+
+} /* end Part 1 */
+/* ============================================================
+   AURA CSS — Phase 11: Variant System (Part 2 of 2)
+   ============================================================
+   PART 2 COVERS:
+   13. Group variants — style child based on parent state
+   14. Peer variants — style sibling based on sibling state
+   15. has-* variants — style parent based on child (NEW)
+   16. in-* variants — style based on ancestor (NEW)
+   17. nth-child variants (NEW)
+   18. first / last / odd / even variants
+   19. open: variant — dialog, details, popover (NEW)
+   20. inert: variant (NEW)
+   21. descendant: variant (NEW)
+   22. aria-* variants — ARIA attribute styling
+   23. data-* variants — custom data attribute styling
+   24. motion variants — prefers-reduced-motion
+   25. print variant
+   26. forced-colors variant
+   27. rtl / ltr direction variants
+   28. dark / theme variants
+   ============================================================ */
+
+@layer aura.variants {
+
+  /* ────────────────────────────────────────────────────────
+     13. GROUP VARIANTS
+     Apply styles to a child when its PARENT has a state.
+
+     Usage:
+       <div class="group hover:bg-raised">
+         <span class="group-hover:text-primary">...</span>
+         <svg  class="group-hover:scale-110">...</svg>
+       </div>
+  ──────────────────────────────────────────────────────── */
+
+  /* Mark the parent */
+  .group { }
+
+  /* Child styles when parent is hovered */
+  .group:hover .group-hover\:block           { display: block; }
+  .group:hover .group-hover\:flex            { display: flex; }
+  .group:hover .group-hover\:hidden          { display: none; }
+  .group:hover .group-hover\:visible         { visibility: visible; }
+  .group:hover .group-hover\:invisible       { visibility: hidden; }
+  .group:hover .group-hover\:opacity-0       { opacity: 0; }
+  .group:hover .group-hover\:opacity-100     { opacity: 1; }
+  .group:hover .group-hover\:opacity-75      { opacity: 0.75; }
+  .group:hover .group-hover\:scale-100       { scale: 1; }
+  .group:hover .group-hover\:scale-105       { scale: 1.05; }
+  .group:hover .group-hover\:scale-110       { scale: 1.10; }
+  .group:hover .group-hover\:-translate-y-1  { translate: 0 calc(var(--space-1) * -1); }
+  .group:hover .group-hover\:translate-x-1   { translate: var(--space-1) 0; }
+  .group:hover .group-hover\:translate-x-2   { translate: var(--space-2) 0; }
+  .group:hover .group-hover\:rotate-180      { rotate: 180deg; }
+  .group:hover .group-hover\:rotate-90       { rotate: 90deg; }
+  .group:hover .group-hover\:text-primary    { color: var(--color-primary); }
+  .group:hover .group-hover\:text-secondary  { color: var(--color-secondary); }
+  .group:hover .group-hover\:text-white      { color: oklch(1 0 0); }
+  .group:hover .group-hover\:text-t1         { color: var(--text-primary); }
+  .group:hover .group-hover\:bg-primary      { background-color: var(--color-primary); }
+  .group:hover .group-hover\:bg-raised       { background-color: var(--surface-raised); }
+  .group:hover .group-hover\:border-primary  { border-color: var(--color-primary); }
+  .group:hover .group-hover\:underline       { text-decoration-line: underline; }
+  .group:hover .group-hover\:shadow-glow     { box-shadow: var(--shadow-glow); }
+
+  /* Child styles when parent is focused */
+  .group:focus .group-focus\:opacity-100     { opacity: 1; }
+  .group:focus .group-focus\:text-primary    { color: var(--color-primary); }
+  .group:focus .group-focus\:border-primary  { border-color: var(--color-primary); }
+
+  /* Child styles when parent is focus-within */
+  .group:focus-within .group-focus-within\:opacity-100   { opacity: 1; }
+  .group:focus-within .group-focus-within\:text-primary  { color: var(--color-primary); }
+  .group:focus-within .group-focus-within\:border-primary{ border-color: var(--color-primary); }
+
+  /* Child styles when parent is active */
+  .group:active .group-active\:scale-95      { scale: 0.95; }
+  .group:active .group-active\:opacity-80    { opacity: 0.8; }
+
+  /* Named groups — for nested groups */
+  .group\/nav:hover .group-hover\/nav\:text-primary   { color: var(--color-primary); }
+  .group\/card:hover .group-hover\/card\:opacity-100  { opacity: 1; }
+  .group\/item:hover .group-hover\/item\:bg-raised    { background-color: var(--surface-raised); }
+
+
+  /* ────────────────────────────────────────────────────────
+     14. PEER VARIANTS
+     Apply styles to a sibling based on another sibling's state.
+
+     Usage:
+       <input class="peer" type="checkbox">
+       <label class="peer-checked:text-primary">Label</label>
+  ──────────────────────────────────────────────────────── */
+
+  /* Mark the peer trigger */
+  .peer { }
+
+  /* Sibling when peer is checked */
+  .peer:checked ~ .peer-checked\:block           { display: block; }
+  .peer:checked ~ .peer-checked\:flex            { display: flex; }
+  .peer:checked ~ .peer-checked\:hidden          { display: none; }
+  .peer:checked ~ .peer-checked\:opacity-100     { opacity: 1; }
+  .peer:checked ~ .peer-checked\:opacity-0       { opacity: 0; }
+  .peer:checked ~ .peer-checked\:text-primary    { color: var(--color-primary); }
+  .peer:checked ~ .peer-checked\:bg-primary-subtle{ background-color: var(--color-primary-subtle); }
+  .peer:checked ~ .peer-checked\:border-primary  { border-color: var(--color-primary); }
+  .peer:checked ~ .peer-checked\:scale-100       { scale: 1; }
+  .peer:checked ~ .peer-checked\:font-bold       { font-weight: var(--font-bold); }
+
+  /* Sibling when peer is focused */
+  .peer:focus ~ .peer-focus\:border-primary      { border-color: var(--color-primary); }
+  .peer:focus ~ .peer-focus\:text-primary        { color: var(--color-primary); }
+  .peer:focus ~ .peer-focus\:opacity-100         { opacity: 1; }
+
+  /* Sibling when peer is hovered */
+  .peer:hover ~ .peer-hover\:opacity-100         { opacity: 1; }
+  .peer:hover ~ .peer-hover\:visible             { visibility: visible; }
+  .peer:hover ~ .peer-hover\:text-primary        { color: var(--color-primary); }
+
+  /* Sibling when peer is invalid */
+  .peer:invalid ~ .peer-invalid\:block           { display: block; }
+  .peer:invalid ~ .peer-invalid\:text-danger     { color: var(--color-danger); }
+  .peer:invalid ~ .peer-invalid\:border-danger   { border-color: var(--color-danger); }
+
+  /* Sibling when peer is valid */
+  .peer:valid ~ .peer-valid\:hidden              { display: none; }
+  .peer:valid ~ .peer-valid\:text-success        { color: var(--color-success); }
+
+  /* Sibling when peer is disabled */
+  .peer:disabled ~ .peer-disabled\:opacity-40    { opacity: 0.4; }
+  .peer:disabled ~ .peer-disabled\:cursor-not-allowed { cursor: not-allowed; }
+
+  /* Named peers */
+  .peer\/toggle:checked ~ .peer-checked\/toggle\:block    { display: block; }
+  .peer\/toggle:checked ~ .peer-checked\/toggle\:hidden   { display: none; }
+  .peer\/input:focus    ~ .peer-focus\/input\:text-primary { color: var(--color-primary); }
+
+
+  /* ────────────────────────────────────────────────────────
+     15. HAS-* VARIANTS — NEW (CSS :has() pseudo-class)
+     Style a parent based on its CHILDREN.
+     This was impossible in CSS before :has().
+     Tailwind added this in v3.4.
+
+     Usage:
+       <div class="has-[:checked]:bg-primary-subtle">
+         <input type="checkbox">
+       </div>
+  ──────────────────────────────────────────────────────── */
+
+  /* Parent when it HAS a checked child */
+  .has-\[\:checked\]\:bg-primary-subtle:has(:checked)   { background-color: var(--color-primary-subtle); }
+  .has-\[\:checked\]\:border-primary:has(:checked)      { border-color: var(--color-primary); }
+  .has-\[\:checked\]\:text-primary:has(:checked)        { color: var(--color-primary); }
+  .has-\[\:checked\]\:shadow-glow:has(:checked)         { box-shadow: var(--shadow-glow); }
+  .has-\[\:checked\]\:ring-primary:has(:checked) {
+    box-shadow: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-primary);
+  }
+
+  /* Parent when it HAS a focused child */
+  .has-\[\:focus\]\:border-primary:has(:focus)          { border-color: var(--color-primary); }
+  .has-\[\:focus\]\:shadow-glow:has(:focus)             { box-shadow: var(--shadow-glow); }
+  .has-\[\:focus-visible\]\:border-primary:has(:focus-visible) { border-color: var(--color-primary); }
+
+  /* Parent when it HAS an invalid child */
+  .has-\[\:invalid\]\:border-danger:has(:invalid)       { border-color: var(--color-danger); }
+  .has-\[\:invalid\]\:bg-danger-subtle:has(:invalid)    { background-color: var(--color-danger-subtle); }
+  .has-\[\:invalid\]\:text-danger:has(:invalid)         { color: var(--color-danger); }
+
+  /* Parent when it HAS a disabled child */
+  .has-\[\:disabled\]\:opacity-50:has(:disabled)        { opacity: 0.5; }
+  .has-\[\:disabled\]\:cursor-not-allowed:has(:disabled){ cursor: not-allowed; }
+
+  /* Parent when it has specific element types */
+  .has-\[img\]\:p-0:has(img)                            { padding: 0; }
+  .has-\[img\]\:rounded-lg:has(img)                     { border-radius: var(--radius-lg); }
+
+  /* Container when it HAS children (not empty) */
+  .has-\[\*\]\:block:has(*)                             { display: block; }
+  .not-has-\[\*\]\:hidden:not(:has(*))                  { display: none; }
+
+
+  /* ────────────────────────────────────────────────────────
+     16. IN-* VARIANTS — Style based on ancestor (NEW)
+     Similar to group but uses :is() for flexible ancestor.
+  ──────────────────────────────────────────────────────── */
+
+  /* Style when inside a dark theme ancestor */
+  [data-theme="dark"] .in-dark\:bg-base   { background-color: var(--surface-base); }
+  [data-theme="dark"] .in-dark\:text-t1   { color: var(--text-primary); }
+  [data-theme="dark"] .in-dark\:border-border { border-color: var(--surface-border); }
+  [data-theme="dark"] .in-dark\:invert    { filter: invert(1); }
+
+  /* Style when inside any dark theme */
+  [class*="aura-dark"] .in-dark\:text-t1  { color: var(--text-primary); }
+  [class*="aura-dark"] .in-dark\:bg-base  { background-color: var(--surface-base); }
+
+
+  /* ────────────────────────────────────────────────────────
+     17. NTH-CHILD VARIANTS — NEW in Tailwind v4
+  ──────────────────────────────────────────────────────── */
+
+  /* Odd children */
+  .nth-odd\:bg-raised:nth-child(odd)           { background-color: var(--surface-raised); }
+  .nth-odd\:bg-primary-subtle:nth-child(odd)   { background-color: var(--color-primary-subtle); }
+
+  /* Even children */
+  .nth-even\:bg-raised:nth-child(even)         { background-color: var(--surface-raised); }
+  .nth-even\:bg-base:nth-child(even)           { background-color: var(--surface-base); }
+
+  /* First / last via nth */
+  .nth-\[1\]\:font-bold:nth-child(1)           { font-weight: var(--font-bold); }
+  .nth-\[2\]\:text-secondary:nth-child(2)      { color: var(--text-secondary); }
+  .nth-last-\[1\]\:border-b-0:nth-last-child(1){ border-bottom-width: 0; }
+  .nth-last-\[2\]\:border-b-0:nth-last-child(2){ border-bottom-width: 0; }
+
+
+  /* ────────────────────────────────────────────────────────
+     18. FIRST / LAST / ONLY / ODD / EVEN
+  ──────────────────────────────────────────────────────── */
+
+  /* First child */
+  .first\:mt-0:first-child            { margin-top: 0; }
+  .first\:pt-0:first-child            { padding-top: 0; }
+  .first\:border-t-0:first-child      { border-top-width: 0; }
+  .first\:rounded-t-lg:first-child    { border-top-left-radius: var(--radius-lg); border-top-right-radius: var(--radius-lg); }
+  .first\:rounded-l-lg:first-child    { border-top-left-radius: var(--radius-lg); border-bottom-left-radius: var(--radius-lg); }
+
+  /* Last child */
+  .last\:mb-0:last-child              { margin-bottom: 0; }
+  .last\:pb-0:last-child              { padding-bottom: 0; }
+  .last\:border-b-0:last-child        { border-bottom-width: 0; }
+  .last\:border-r-0:last-child        { border-right-width: 0; }
+  .last\:rounded-b-lg:last-child      { border-bottom-left-radius: var(--radius-lg); border-bottom-right-radius: var(--radius-lg); }
+  .last\:rounded-r-lg:last-child      { border-top-right-radius: var(--radius-lg); border-bottom-right-radius: var(--radius-lg); }
+
+  /* Only child */
+  .only\:rounded-lg:only-child        { border-radius: var(--radius-lg); }
+  .only\:border-0:only-child          { border-width: 0; }
+
+  /* Odd / even */
+  .odd\:bg-raised:nth-child(odd)      { background-color: var(--surface-raised); }
+  .odd\:bg-base:nth-child(odd)        { background-color: var(--surface-base); }
+  .even\:bg-raised:nth-child(even)    { background-color: var(--surface-raised); }
+  .even\:bg-base:nth-child(even)      { background-color: var(--surface-base); }
+
+  /* Not first / not last */
+  .not-first\:mt-4:not(:first-child)  { margin-top: var(--space-4); }
+  .not-last\:mb-4:not(:last-child)    { margin-bottom: var(--space-4); }
+  .not-last\:border-b:not(:last-child){ border-bottom-width: 1px; border-bottom-color: var(--surface-border); }
+
+
+  /* ────────────────────────────────────────────────────────
+     19. OPEN: VARIANT — NEW in Tailwind v4
+     For <details>, <dialog>, and Popover API elements.
+  ──────────────────────────────────────────────────────── */
+
+  .open\:block:is([open], :popover-open)          { display: block; }
+  .open\:flex:is([open], :popover-open)           { display: flex; }
+  .open\:grid:is([open], :popover-open)           { display: grid; }
+  .open\:opacity-100:is([open], :popover-open)    { opacity: 1; }
+  .open\:opacity-0:not([open]):not(:popover-open) { opacity: 0; }
+  .open\:rotate-180:is([open], :popover-open)     { rotate: 180deg; }
+  .open\:rotate-90:is([open], :popover-open)      { rotate: 90deg; }
+  .open\:scale-100:is([open], :popover-open)      { scale: 1; }
+  .open\:bg-raised:is([open], :popover-open)      { background-color: var(--surface-raised); }
+  .open\:text-primary:is([open], :popover-open)   { color: var(--color-primary); }
+  .open\:border-primary:is([open], :popover-open) { border-color: var(--color-primary); }
+
+  /* Summary arrow rotation for details */
+  details[open] .details-open\:rotate-180        { rotate: 180deg; }
+  details[open] .details-open\:rotate-90         { rotate: 90deg; }
+
+
+  /* ────────────────────────────────────────────────────────
+     20. INERT: VARIANT — NEW in Tailwind v4
+     Styles non-interactive elements (inert attribute).
+  ──────────────────────────────────────────────────────── */
+
+  .inert\:opacity-50[inert]              { opacity: 0.5; }
+  .inert\:cursor-not-allowed[inert]      { cursor: not-allowed; }
+  .inert\:pointer-events-none[inert]     { pointer-events: none; }
+  .inert\:select-none[inert]             { user-select: none; }
+  .inert\:grayscale[inert]               { filter: grayscale(1); }
+  .inert\:blur-sm[inert]                 { filter: blur(var(--blur-sm)); }
+
+
+  /* ────────────────────────────────────────────────────────
+     21. DESCENDANT: VARIANT — NEW in Tailwind v4
+     Apply styles to all descendants.
+  ──────────────────────────────────────────────────────── */
+
+  .descendant\:text-sm *                 { font-size: var(--text-sm); }
+  .descendant\:text-base *               { font-size: var(--text-base); }
+  .descendant\:leading-relaxed *         { line-height: var(--leading-relaxed); }
+  .descendant\:text-secondary *          { color: var(--text-secondary); }
+  .descendant\:no-underline *            { text-decoration: none; }
+
+
+  /* ────────────────────────────────────────────────────────
+     22. ARIA-* VARIANTS
+     Style based on ARIA attributes.
+  ──────────────────────────────────────────────────────── */
+
+  /* aria-selected */
+  .aria-selected\:bg-primary-subtle[aria-selected="true"]  { background-color: var(--color-primary-subtle); }
+  .aria-selected\:text-primary[aria-selected="true"]       { color: var(--color-primary); }
+  .aria-selected\:border-primary[aria-selected="true"]     { border-color: var(--color-primary); }
+  .aria-selected\:font-semibold[aria-selected="true"]      { font-weight: var(--font-semibold); }
+
+  /* aria-checked */
+  .aria-checked\:bg-primary[aria-checked="true"]           { background-color: var(--color-primary); }
+  .aria-checked\:text-white[aria-checked="true"]           { color: oklch(1 0 0); }
+
+  /* aria-expanded */
+  .aria-expanded\:rotate-180[aria-expanded="true"]         { rotate: 180deg; }
+  .aria-expanded\:rotate-90[aria-expanded="true"]          { rotate: 90deg; }
+  .aria-expanded\:bg-raised[aria-expanded="true"]          { background-color: var(--surface-raised); }
+  .aria-expanded\:text-primary[aria-expanded="true"]       { color: var(--color-primary); }
+  .aria-expanded\:border-primary[aria-expanded="true"]     { border-color: var(--color-primary); }
+
+  /* aria-disabled */
+  .aria-disabled\:opacity-50[aria-disabled="true"]         { opacity: 0.5; }
+  .aria-disabled\:cursor-not-allowed[aria-disabled="true"] { cursor: not-allowed; }
+  .aria-disabled\:pointer-events-none[aria-disabled="true"]{ pointer-events: none; }
+
+  /* aria-hidden */
+  .aria-hidden\:hidden[aria-hidden="true"]                 { display: none; }
+
+  /* aria-current */
+  .aria-current\:bg-primary-subtle[aria-current]           { background-color: var(--color-primary-subtle); }
+  .aria-current\:text-primary[aria-current]                { color: var(--color-primary); }
+  .aria-current\:font-semibold[aria-current]               { font-weight: var(--font-semibold); }
+  .aria-current\:border-primary[aria-current]              { border-color: var(--color-primary); }
+  .aria-current-page\:bg-primary-subtle[aria-current="page"]{ background-color: var(--color-primary-subtle); }
+  .aria-current-page\:text-primary[aria-current="page"]    { color: var(--color-primary); }
+
+  /* aria-pressed */
+  .aria-pressed\:bg-primary[aria-pressed="true"]           { background-color: var(--color-primary); }
+  .aria-pressed\:text-white[aria-pressed="true"]           { color: oklch(1 0 0); }
+  .aria-pressed\:shadow-inner[aria-pressed="true"]         { box-shadow: var(--shadow-inner); }
+
+  /* aria-required */
+  .aria-required\:border-danger[aria-required="true"]      { border-color: var(--color-danger); }
+  .aria-required\:text-danger[aria-required="true"]        { color: var(--color-danger); }
+
+  /* aria-invalid */
+  .aria-invalid\:border-danger[aria-invalid="true"]        { border-color: var(--color-danger); }
+  .aria-invalid\:ring-danger[aria-invalid="true"] {
+    box-shadow: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-danger);
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     23. DATA-* VARIANTS
+     Style based on custom data attributes.
+  ──────────────────────────────────────────────────────── */
+
+  /* data-state (common in headless UI libraries) */
+  .data-\[state\=open\]\:block[data-state="open"]            { display: block; }
+  .data-\[state\=open\]\:flex[data-state="open"]             { display: flex; }
+  .data-\[state\=open\]\:grid[data-state="open"]             { display: grid; }
+  .data-\[state\=closed\]\:hidden[data-state="closed"]       { display: none; }
+  .data-\[state\=open\]\:opacity-100[data-state="open"]      { opacity: 1; }
+  .data-\[state\=closed\]\:opacity-0[data-state="closed"]    { opacity: 0; }
+  .data-\[state\=open\]\:rotate-180[data-state="open"]       { rotate: 180deg; }
+  .data-\[state\=open\]\:text-primary[data-state="open"]     { color: var(--color-primary); }
+  .data-\[state\=active\]\:bg-primary-subtle[data-state="active"] { background-color: var(--color-primary-subtle); }
+  .data-\[state\=active\]\:text-primary[data-state="active"]      { color: var(--color-primary); }
+  .data-\[state\=active\]\:font-semibold[data-state="active"]     { font-weight: var(--font-semibold); }
+  .data-\[state\=checked\]\:bg-primary[data-state="checked"]      { background-color: var(--color-primary); }
+
+  /* data-disabled */
+  .data-\[disabled\]\:opacity-50[data-disabled]              { opacity: 0.5; }
+  .data-\[disabled\]\:cursor-not-allowed[data-disabled]      { cursor: not-allowed; }
+
+  /* data-highlighted (radix, ark, etc.) */
+  .data-\[highlighted\]\:bg-raised[data-highlighted]         { background-color: var(--surface-raised); }
+  .data-\[highlighted\]\:text-primary[data-highlighted]      { color: var(--color-primary); }
+
+  /* data-selected */
+  .data-\[selected\]\:bg-primary-subtle[data-selected]       { background-color: var(--color-primary-subtle); }
+  .data-\[selected\]\:text-primary[data-selected]            { color: var(--color-primary); }
+
+
+  /* ────────────────────────────────────────────────────────
+     24. MOTION VARIANTS
+  ──────────────────────────────────────────────────────── */
+
+  @media (prefers-reduced-motion: reduce) {
+    .motion-reduce\:transition-none     { transition: none; }
+    .motion-reduce\:animate-none        { animation: none; }
+    .motion-reduce\:transform-none      { transform: none; }
+    .motion-reduce\:duration-0          { transition-duration: 0ms; animation-duration: 0ms; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .motion-safe\:transition    {
+      transition-property: color, background-color, border-color, transform, opacity, box-shadow;
+      transition-duration: var(--duration-base);
+      transition-timing-function: var(--ease-out);
+    }
+    .motion-safe\:animate-spin  { animation: aura-spin 1s linear infinite; }
+    .motion-safe\:animate-pulse { animation: aura-pulse 2s ease-in-out infinite; }
+    .motion-safe\:animate-bounce{ animation: aura-bounce 1s infinite; }
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     25. PRINT VARIANT
+  ──────────────────────────────────────────────────────── */
+
+  @media print {
+    .print\:hidden    { display: none !important; }
+    .print\:block     { display: block !important; }
+    .print\:flex      { display: flex !important; }
+    .print\:text-black{ color: oklch(0 0 0) !important; }
+    .print\:bg-white  { background: oklch(1 0 0) !important; }
+    .print\:shadow-none{ box-shadow: none !important; }
+  }
+
+  .screen\:block { display: block; }
+  @media print { .screen\:block { display: none !important; } }
+
+
+  /* ────────────────────────────────────────────────────────
+     26. FORCED-COLORS VARIANT
+  ──────────────────────────────────────────────────────── */
+
+  @media (forced-colors: active) {
+    .forced-colors\:border-2              { border-width: 2px; }
+    .forced-colors\:text-\[ButtonText\]   { color: ButtonText; }
+    .forced-colors\:bg-\[ButtonFace\]     { background-color: ButtonFace; }
+    .forced-colors\:outline-\[Highlight\] { outline-color: Highlight; }
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     27. RTL / LTR DIRECTION VARIANTS
+  ──────────────────────────────────────────────────────── */
+
+  /* LTR */
+  [dir="ltr"] .ltr\:block          { display: block; }
+  [dir="ltr"] .ltr\:text-left      { text-align: left; }
+  [dir="ltr"] .ltr\:text-right     { text-align: right; }
+  [dir="ltr"] .ltr\:ml-auto        { margin-left: auto; }
+  [dir="ltr"] .ltr\:mr-auto        { margin-right: auto; }
+  [dir="ltr"] .ltr\:pl-4           { padding-left: var(--space-4); }
+  [dir="ltr"] .ltr\:pr-4           { padding-right: var(--space-4); }
+  [dir="ltr"] .ltr\:left-0         { left: 0; }
+  [dir="ltr"] .ltr\:right-auto     { right: auto; }
+  [dir="ltr"] .ltr\:border-l-4     { border-left-width: 4px; }
+  [dir="ltr"] .ltr\:rounded-l-lg   { border-top-left-radius: var(--radius-lg); border-bottom-left-radius: var(--radius-lg); }
+  [dir="ltr"] .ltr\:translate-x-full  { translate: 100% 0; }
+  [dir="ltr"] .ltr\:-translate-x-full { translate: -100% 0; }
+
+  /* RTL */
+  [dir="rtl"] .rtl\:block          { display: block; }
+  [dir="rtl"] .rtl\:text-right     { text-align: right; }
+  [dir="rtl"] .rtl\:text-left      { text-align: left; }
+  [dir="rtl"] .rtl\:mr-auto        { margin-right: auto; }
+  [dir="rtl"] .rtl\:ml-auto        { margin-left: auto; }
+  [dir="rtl"] .rtl\:pr-4           { padding-right: var(--space-4); }
+  [dir="rtl"] .rtl\:pl-4           { padding-left: var(--space-4); }
+  [dir="rtl"] .rtl\:right-0        { right: 0; }
+  [dir="rtl"] .rtl\:left-auto      { left: auto; }
+  [dir="rtl"] .rtl\:border-r-4     { border-right-width: 4px; }
+  [dir="rtl"] .rtl\:rounded-r-lg   { border-top-right-radius: var(--radius-lg); border-bottom-right-radius: var(--radius-lg); }
+  [dir="rtl"] .rtl\:rotate-180     { rotate: 180deg; }
+  [dir="rtl"] .rtl\:scale-x-\[-1\] { scale: -1 1; }
+  [dir="rtl"] .rtl\:translate-x-full  { translate: 100% 0; }
+  [dir="rtl"] .rtl\:-translate-x-full { translate: -100% 0; }
+
+
+  /* ────────────────────────────────────────────────────────
+     28. DARK / THEME VARIANTS
+     Applied when a specific theme is active.
+  ──────────────────────────────────────────────────────── */
+
+  [data-theme="dark"] .dark\:block                { display: block; }
+  [data-theme="dark"] .dark\:hidden               { display: none; }
+  [data-theme="dark"] .dark\:flex                 { display: flex; }
+  [data-theme="dark"] .dark\:bg-base              { background-color: var(--surface-base); }
+  [data-theme="dark"] .dark\:bg-raised            { background-color: var(--surface-raised); }
+  [data-theme="dark"] .dark\:bg-primary-subtle    { background-color: var(--color-primary-subtle); }
+  [data-theme="dark"] .dark\:text-t1              { color: var(--text-primary); }
+  [data-theme="dark"] .dark\:text-t2              { color: var(--text-secondary); }
+  [data-theme="dark"] .dark\:text-white           { color: oklch(1 0 0); }
+  [data-theme="dark"] .dark\:border-border        { border-color: var(--surface-border); }
+  [data-theme="dark"] .dark\:opacity-100          { opacity: 1; }
+  [data-theme="dark"] .dark\:shadow-lg            { box-shadow: var(--shadow-lg); }
+  [data-theme="dark"] .dark\:invert               { filter: invert(1); }
+  [data-theme="dark"] .dark\:invert-0             { filter: invert(0); }
+
+  /* OS dark mode variant (when no data-theme set) */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .os-dark\:bg-base     { background-color: var(--surface-base); }
+    :root:not([data-theme]) .os-dark\:text-t1     { color: var(--text-primary); }
+    :root:not([data-theme]) .os-dark\:hidden      { display: none; }
+    :root:not([data-theme]) .os-dark\:block       { display: block; }
+    :root:not([data-theme]) .os-dark\:invert      { filter: invert(1); }
+  }
+
+  /* Per-theme variants */
+  [data-theme="ocean"]    .ocean\:text-accent     { color: var(--color-accent); }
+  [data-theme="aurora"]   .aurora\:text-primary   { color: var(--color-primary); }
+  [data-theme="ember"]    .ember\:text-primary    { color: var(--color-primary); }
+  [data-theme="rose"]     .rose\:text-primary     { color: var(--color-primary); }
+  [data-theme="midnight"] .midnight\:text-accent  { color: var(--color-accent); }
+
+} /* end @layer aura.variants — Phase 11 */

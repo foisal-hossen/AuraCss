@@ -1,0 +1,476 @@
+/* ============================================================
+   AURA CSS — Phase 02: Design Token System
+   Version  : 1.0.0
+   Layer    : aura.tokens
+   Depends  : aura-core.css (Phase 01)
+   ============================================================
+   WHAT THIS FILE DOES:
+   Complete design token system using CSS Custom Properties.
+   All tokens live on :root so they're globally available.
+   Tokens are the single source of truth — every other layer
+   reads from here. Never hardcode values anywhere else.
+
+   TOKEN CATEGORIES:
+   1.  OKLCH Color Palette    (brand + neutrals)
+   2.  Semantic Colors        (purpose-based aliases)
+   3.  Surface Colors         (bg, base, raised, overlay)
+   4.  Text Colors            (primary, secondary, muted)
+   5.  Border & Ring Colors
+   6.  Fluid Spacing Scale    (clamp-based, no breakpoints)
+   7.  Typography Scale       (fluid type, font stacks)
+   8.  Border Radius Scale
+   9.  Shadow Scale
+   10. Z-Index Scale
+   11. Easing & Duration
+   12. Breakpoints            (for JS use — CSS uses fluid)
+   ============================================================ */
+
+@layer aura.tokens {
+
+  :root {
+
+    /* ──────────────────────────────────────────────────────
+       1. OKLCH COLOR PALETTE
+       Why OKLCH? Perceptually uniform — oklch(0.5 0.2 H) looks
+       equally bright at every hue. HEX/HSL can't do this.
+       Format: oklch(Lightness Chroma Hue)
+       L: 0–1 (0=black, 1=white)
+       C: 0–0.4 (0=grey, 0.4=max saturation)
+       H: 0–360 (degrees on color wheel)
+    ────────────────────────────────────────────────────── */
+
+    /* Primary — Violet/Purple (Hue 270) */
+    --aura-50:  oklch(0.97 0.018 270);
+    --aura-100: oklch(0.93 0.038 270);
+    --aura-200: oklch(0.87 0.072 270);
+    --aura-300: oklch(0.78 0.120 270);
+    --aura-400: oklch(0.68 0.170 270);
+    --aura-500: oklch(0.55 0.220 270);  /* ← Brand primary */
+    --aura-600: oklch(0.46 0.200 270);
+    --aura-700: oklch(0.37 0.170 270);
+    --aura-800: oklch(0.27 0.120 270);
+    --aura-900: oklch(0.18 0.075 270);
+    --aura-950: oklch(0.11 0.040 270);
+
+    /* Secondary — Rose/Pink (Hue 330) */
+    --aura-secondary-50:  oklch(0.97 0.018 330);
+    --aura-secondary-100: oklch(0.93 0.040 330);
+    --aura-secondary-200: oklch(0.87 0.080 330);
+    --aura-secondary-300: oklch(0.78 0.140 330);
+    --aura-secondary-400: oklch(0.68 0.190 330);
+    --aura-secondary-500: oklch(0.65 0.220 330);
+    --aura-secondary-600: oklch(0.55 0.200 330);
+    --aura-secondary-700: oklch(0.44 0.170 330);
+    --aura-secondary-800: oklch(0.33 0.120 330);
+    --aura-secondary-900: oklch(0.22 0.075 330);
+
+    /* Accent — Cyan/Teal (Hue 185) */
+    --aura-accent-50:  oklch(0.97 0.020 185);
+    --aura-accent-100: oklch(0.92 0.055 185);
+    --aura-accent-200: oklch(0.85 0.100 185);
+    --aura-accent-300: oklch(0.76 0.150 185);
+    --aura-accent-400: oklch(0.68 0.185 185);
+    --aura-accent-500: oklch(0.72 0.185 185);
+    --aura-accent-600: oklch(0.58 0.160 185);
+    --aura-accent-700: oklch(0.46 0.130 185);
+    --aura-accent-800: oklch(0.34 0.090 185);
+    --aura-accent-900: oklch(0.22 0.055 185);
+
+    /* Neutral — Low-chroma violet-tinted grays */
+    --neutral-50:  oklch(0.98 0.004 270);
+    --neutral-100: oklch(0.96 0.006 270);
+    --neutral-200: oklch(0.92 0.008 270);
+    --neutral-300: oklch(0.85 0.010 270);
+    --neutral-400: oklch(0.72 0.012 270);
+    --neutral-500: oklch(0.58 0.012 270);
+    --neutral-600: oklch(0.44 0.010 270);
+    --neutral-700: oklch(0.32 0.008 270);
+    --neutral-800: oklch(0.22 0.006 270);
+    --neutral-900: oklch(0.14 0.005 270);
+    --neutral-950: oklch(0.08 0.003 270);
+
+    /* ──────────────────────────────────────────────────────
+       2. SEMANTIC COLORS
+       Never use palette tokens directly in components.
+       Always use semantic tokens — they swap with themes.
+    ────────────────────────────────────────────────────── */
+
+    --color-primary:         var(--aura-500);
+    --color-primary-hover:   var(--aura-600);
+    --color-primary-active:  var(--aura-700);
+    --color-primary-subtle:  var(--aura-100);
+    --color-primary-muted:   var(--aura-200);
+    --color-on-primary:      oklch(1 0 0);
+
+    --color-secondary:       var(--aura-secondary-500);
+    --color-secondary-hover: var(--aura-secondary-600);
+    --color-on-secondary:    oklch(1 0 0);
+
+    --color-accent:          var(--aura-accent-500);
+    --color-accent-hover:    var(--aura-accent-600);
+    --color-on-accent:       oklch(0.1 0 0);
+
+    /* Status Colors */
+    --color-success:         oklch(0.65 0.200 145);
+    --color-success-hover:   oklch(0.55 0.200 145);
+    --color-success-subtle:  oklch(0.95 0.060 145);
+    --color-on-success:      oklch(1 0 0);
+
+    --color-warning:         oklch(0.75 0.180 75);
+    --color-warning-hover:   oklch(0.65 0.180 75);
+    --color-warning-subtle:  oklch(0.97 0.060 75);
+    --color-on-warning:      oklch(0.15 0.04 75);
+
+    --color-danger:          oklch(0.60 0.220 25);
+    --color-danger-hover:    oklch(0.50 0.220 25);
+    --color-danger-subtle:   oklch(0.96 0.060 25);
+    --color-on-danger:       oklch(1 0 0);
+
+    --color-info:            oklch(0.60 0.180 230);
+    --color-info-hover:      oklch(0.50 0.180 230);
+    --color-info-subtle:     oklch(0.95 0.055 230);
+    --color-on-info:         oklch(1 0 0);
+
+    /* ──────────────────────────────────────────────────────
+       3. SURFACE COLORS (Light Theme default)
+    ────────────────────────────────────────────────────── */
+
+    --surface-bg:      var(--neutral-50);    /* Page background */
+    --surface-base:    oklch(1 0 0);         /* White cards, panels */
+    --surface-raised:  var(--neutral-100);   /* Slightly elevated */
+    --surface-overlay: var(--neutral-200);   /* Dropdowns, popovers */
+    --surface-sunken:  oklch(0.94 0.006 270);/* Input backgrounds */
+
+    --surface-border:       var(--neutral-200);
+    --surface-border-hover: var(--neutral-300);
+    --surface-border-focus: var(--color-primary);
+
+    /* ──────────────────────────────────────────────────────
+       4. TEXT COLORS
+    ────────────────────────────────────────────────────── */
+
+    --text-primary:   var(--neutral-900);
+    --text-secondary: var(--neutral-600);
+    --text-muted:     var(--neutral-400);
+    --text-disabled:  var(--neutral-300);
+    --text-inverse:   var(--neutral-50);
+    --text-link:      var(--color-primary);
+    --text-link-hover: var(--color-primary-hover);
+
+    /* ──────────────────────────────────────────────────────
+       5. BORDER & RING
+    ────────────────────────────────────────────────────── */
+
+    --ring-color:        var(--color-primary);
+    --ring-offset-color: var(--surface-base);
+    --ring-width:        2px;
+    --ring-offset-width: 2px;
+
+    /* ──────────────────────────────────────────────────────
+       6. FLUID SPACING SCALE
+       Formula: clamp(min, preferred, max)
+       preferred = fluid value that grows with viewport
+       No breakpoints needed — scales continuously.
+       Base unit ~1rem = 16px
+    ────────────────────────────────────────────────────── */
+
+    --space-px:  1px;
+    --space-0:   0;
+    --space-0-5: clamp(0.12rem, 0.10rem + 0.10vw, 0.15rem);  /*  ~2px  */
+    --space-1:   clamp(0.22rem, 0.20rem + 0.12vw, 0.28rem);  /*  ~4px  */
+    --space-1-5: clamp(0.34rem, 0.30rem + 0.18vw, 0.42rem);  /*  ~6px  */
+    --space-2:   clamp(0.44rem, 0.38rem + 0.22vw, 0.55rem);  /*  ~8px  */
+    --space-2-5: clamp(0.56rem, 0.48rem + 0.28vw, 0.68rem);  /* ~10px  */
+    --space-3:   clamp(0.66rem, 0.58rem + 0.30vw, 0.82rem);  /* ~12px  */
+    --space-3-5: clamp(0.78rem, 0.68rem + 0.35vw, 0.96rem);  /* ~14px  */
+    --space-4:   clamp(0.90rem, 0.78rem + 0.48vw, 1.10rem);  /* ~16px  */
+    --space-5:   clamp(1.10rem, 0.96rem + 0.58vw, 1.35rem);  /* ~20px  */
+    --space-6:   clamp(1.30rem, 1.14rem + 0.72vw, 1.60rem);  /* ~24px  */
+    --space-7:   clamp(1.55rem, 1.34rem + 0.84vw, 1.90rem);  /* ~28px  */
+    --space-8:   clamp(1.80rem, 1.55rem + 1.00vw, 2.20rem);  /* ~32px  */
+    --space-9:   clamp(2.05rem, 1.76rem + 1.14vw, 2.50rem);  /* ~36px  */
+    --space-10:  clamp(2.30rem, 1.98rem + 1.28vw, 2.80rem);  /* ~40px  */
+    --space-11:  clamp(2.55rem, 2.20rem + 1.42vw, 3.10rem);  /* ~44px  */
+    --space-12:  clamp(2.80rem, 2.40rem + 1.60vw, 3.45rem);  /* ~48px  */
+    --space-14:  clamp(3.30rem, 2.84rem + 1.84vw, 4.00rem);  /* ~56px  */
+    --space-16:  clamp(3.80rem, 3.26rem + 2.10vw, 4.65rem);  /* ~64px  */
+    --space-20:  clamp(4.80rem, 4.12rem + 2.68vw, 5.85rem);  /* ~80px  */
+    --space-24:  clamp(5.75rem, 4.94rem + 3.20vw, 7.05rem);  /* ~96px  */
+    --space-28:  clamp(6.70rem, 5.76rem + 3.72vw, 8.20rem);  /* ~112px */
+    --space-32:  clamp(7.65rem, 6.58rem + 4.24vw, 9.35rem);  /* ~128px */
+    --space-36:  clamp(8.60rem, 7.40rem + 4.80vw, 10.5rem);  /* ~144px */
+    --space-40:  clamp(9.55rem, 8.22rem + 5.30vw, 11.7rem);  /* ~160px */
+    --space-48:  clamp(11.5rem, 9.86rem + 6.38vw, 14.0rem);  /* ~192px */
+    --space-56:  clamp(13.4rem, 11.5rem + 7.44vw, 16.4rem);  /* ~224px */
+    --space-64:  clamp(15.3rem, 13.1rem + 8.50vw, 18.7rem);  /* ~256px */
+    --space-72:  clamp(17.2rem, 14.8rem + 9.56vw, 21.0rem);  /* ~288px */
+    --space-80:  clamp(19.1rem, 16.5rem + 10.6vw, 23.4rem);  /* ~320px */
+    --space-96:  clamp(23.0rem, 19.8rem + 12.8vw, 28.1rem);  /* ~384px */
+
+    /* Semantic spacing aliases */
+    --space-xs:  var(--space-2);    /*  ~8px  */
+    --space-sm:  var(--space-4);    /* ~16px  */
+    --space-md:  var(--space-6);    /* ~24px  */
+    --space-lg:  var(--space-8);    /* ~32px  */
+    --space-xl:  var(--space-12);   /* ~48px  */
+    --space-2xl: var(--space-16);   /* ~64px  */
+    --space-3xl: var(--space-24);   /* ~96px  */
+
+    /* ──────────────────────────────────────────────────────
+       7. TYPOGRAPHY SCALE
+    ────────────────────────────────────────────────────── */
+
+    /* Font Families */
+    --font-sans:    "Cabinet Grotesk", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Syne", "Playfair Display", Georgia, serif;
+    --font-mono:    "DM Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+    --font-serif:   "Instrument Serif", "Lora", Georgia, serif;
+
+    /* Fluid Type Scale */
+    --text-2xs: clamp(0.60rem, 0.56rem + 0.20vw, 0.70rem);   /* ~10px */
+    --text-xs:  clamp(0.70rem, 0.65rem + 0.26vw, 0.80rem);   /* ~12px */
+    --text-sm:  clamp(0.82rem, 0.77rem + 0.30vw, 0.94rem);   /* ~14px */
+    --text-base:clamp(1.00rem, 0.94rem + 0.32vw, 1.12rem);   /* ~16px */
+    --text-md:  clamp(1.10rem, 1.02rem + 0.40vw, 1.28rem);   /* ~18px */
+    --text-lg:  clamp(1.22rem, 1.12rem + 0.52vw, 1.50rem);   /* ~22px */
+    --text-xl:  clamp(1.42rem, 1.28rem + 0.70vw, 1.80rem);   /* ~26px */
+    --text-2xl: clamp(1.70rem, 1.50rem + 1.00vw, 2.25rem);   /* ~32px */
+    --text-3xl: clamp(2.10rem, 1.80rem + 1.50vw, 3.00rem);   /* ~42px */
+    --text-4xl: clamp(2.60rem, 2.10rem + 2.50vw, 4.00rem);   /* ~56px */
+    --text-5xl: clamp(3.20rem, 2.50rem + 3.50vw, 5.50rem);   /* ~72px */
+    --text-6xl: clamp(4.00rem, 3.00rem + 5.00vw, 7.50rem);   /* ~96px */
+    --text-7xl: clamp(4.80rem, 3.50rem + 6.50vw, 9.50rem);   /* ~120px */
+
+    /* Font Weights */
+    --font-thin:       100;
+    --font-extralight: 200;
+    --font-light:      300;
+    --font-normal:     400;
+    --font-medium:     500;
+    --font-semibold:   600;
+    --font-bold:       700;
+    --font-extrabold:  800;
+    --font-black:      900;
+
+    /* Line Heights */
+    --leading-none:    1;
+    --leading-tight:   1.15;
+    --leading-snug:    1.35;
+    --leading-normal:  1.55;
+    --leading-relaxed: 1.70;
+    --leading-loose:   1.90;
+
+    /* Letter Spacing */
+    --tracking-tighter: -0.06em;
+    --tracking-tight:   -0.03em;
+    --tracking-normal:   0em;
+    --tracking-wide:     0.03em;
+    --tracking-wider:    0.07em;
+    --tracking-widest:   0.15em;
+
+    /* ──────────────────────────────────────────────────────
+       8. BORDER RADIUS SCALE
+    ────────────────────────────────────────────────────── */
+
+    --radius-none:  0;
+    --radius-xs:    3px;
+    --radius-sm:    6px;
+    --radius-md:    10px;
+    --radius-lg:    16px;
+    --radius-xl:    22px;
+    --radius-2xl:   32px;
+    --radius-3xl:   48px;
+    --radius-4xl:   64px;
+    --radius-full:  9999px;
+
+    /* Semantic radius aliases */
+    --radius-btn:    var(--radius-full);
+    --radius-card:   var(--radius-lg);
+    --radius-input:  var(--radius-md);
+    --radius-badge:  var(--radius-full);
+    --radius-modal:  var(--radius-xl);
+    --radius-tooltip:var(--radius-sm);
+
+    /* ──────────────────────────────────────────────────────
+       9. SHADOW SCALE
+       Layered shadows for natural depth. Color-aware.
+    ────────────────────────────────────────────────────── */
+
+    /* Elevation shadows */
+    --shadow-xs:
+      0 1px 2px oklch(0 0 0 / 0.04);
+    --shadow-sm:
+      0 1px 3px oklch(0 0 0 / 0.07),
+      0 1px 2px oklch(0 0 0 / 0.05);
+    --shadow-md:
+      0 4px 8px  oklch(0 0 0 / 0.08),
+      0 2px 4px  oklch(0 0 0 / 0.06);
+    --shadow-lg:
+      0 8px 20px oklch(0 0 0 / 0.10),
+      0 4px 8px  oklch(0 0 0 / 0.07);
+    --shadow-xl:
+      0 16px 40px oklch(0 0 0 / 0.12),
+      0 8px  16px oklch(0 0 0 / 0.08);
+    --shadow-2xl:
+      0 24px 64px oklch(0 0 0 / 0.15),
+      0 12px 24px oklch(0 0 0 / 0.10);
+
+    /* Inset shadow */
+    --shadow-inner:
+      inset 0 2px 4px oklch(0 0 0 / 0.08);
+    --shadow-inner-md:
+      inset 0 4px 8px oklch(0 0 0 / 0.12);
+
+    /* Glow shadows — color-aware */
+    --shadow-glow-sm:
+      0 0 12px color-mix(in oklch, var(--color-primary) 25%, transparent),
+      0 0 28px color-mix(in oklch, var(--color-primary) 10%, transparent);
+    --shadow-glow:
+      0 0 20px color-mix(in oklch, var(--color-primary) 35%, transparent),
+      0 0 50px color-mix(in oklch, var(--color-primary) 15%, transparent);
+    --shadow-glow-lg:
+      0 0 32px color-mix(in oklch, var(--color-primary) 45%, transparent),
+      0 0 80px color-mix(in oklch, var(--color-primary) 20%, transparent);
+
+    /* Colored glows */
+    --shadow-glow-secondary:
+      0 0 20px color-mix(in oklch, var(--color-secondary) 35%, transparent);
+    --shadow-glow-accent:
+      0 0 20px color-mix(in oklch, var(--color-accent) 35%, transparent);
+    --shadow-glow-success:
+      0 0 20px color-mix(in oklch, var(--color-success) 35%, transparent);
+    --shadow-glow-danger:
+      0 0 20px color-mix(in oklch, var(--color-danger) 35%, transparent);
+
+    /* ──────────────────────────────────────────────────────
+       10. Z-INDEX SCALE
+       Semantic names prevent z-index wars in teams.
+    ────────────────────────────────────────────────────── */
+
+    --z-below:     -1;
+    --z-base:       0;
+    --z-raised:     10;
+    --z-sticky:     100;
+    --z-fixed:      200;
+    --z-overlay:    300;
+    --z-dropdown:   400;
+    --z-modal:      500;
+    --z-popover:    600;
+    --z-toast:      700;
+    --z-tooltip:    800;
+    --z-system:     900;
+    --z-debug:      9999;
+
+    /* ──────────────────────────────────────────────────────
+       11. EASING & DURATION
+    ────────────────────────────────────────────────────── */
+
+    /* Easing functions */
+    --ease-linear:  linear;
+    --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+    --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+    --ease-inout:   cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-smooth:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-bounce:  cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    --ease-snappy:  cubic-bezier(0.22, 1, 0.36, 1);
+
+    /* Duration scale */
+    --duration-instant:  50ms;
+    --duration-fast:     100ms;
+    --duration-base:     180ms;
+    --duration-slow:     300ms;
+    --duration-slower:   450ms;
+    --duration-slowest:  700ms;
+    --duration-lazy:     1000ms;
+
+    /* Transition shorthands */
+    --transition-base:   all var(--duration-base) var(--ease-out);
+    --transition-fast:   all var(--duration-fast) var(--ease-out);
+    --transition-color:  color var(--duration-base) var(--ease-out),
+                         background-color var(--duration-base) var(--ease-out),
+                         border-color var(--duration-base) var(--ease-out);
+    --transition-transform: transform var(--duration-base) var(--ease-spring);
+    --transition-opacity:   opacity var(--duration-base) var(--ease-out);
+    --transition-shadow:    box-shadow var(--duration-base) var(--ease-out);
+
+    /* ──────────────────────────────────────────────────────
+       12. BREAKPOINTS (JS use via env() or CSS custom media)
+       These don't gate responsive CSS — use fluid values
+       instead. These are for JS or rare edge-case overrides.
+    ────────────────────────────────────────────────────── */
+
+    --breakpoint-sm:  640px;
+    --breakpoint-md:  768px;
+    --breakpoint-lg:  1024px;
+    --breakpoint-xl:  1280px;
+    --breakpoint-2xl: 1536px;
+
+    /* ──────────────────────────────────────────────────────
+       13. COMPONENT SIZE TOKENS
+       Consistent sizing across all components.
+    ────────────────────────────────────────────────────── */
+
+    /* Button heights */
+    --btn-height-xs:  28px;
+    --btn-height-sm:  34px;
+    --btn-height-md:  40px;
+    --btn-height-lg:  48px;
+    --btn-height-xl:  56px;
+
+    /* Input heights */
+    --input-height-sm: 34px;
+    --input-height-md: 40px;
+    --input-height-lg: 48px;
+
+    /* Navigation */
+    --nav-height:         64px;
+    --nav-height-mobile:  56px;
+    --sidebar-width:      260px;
+    --sidebar-width-sm:   64px;
+
+    /* Container max-widths */
+    --container-xs:  480px;
+    --container-sm:  640px;
+    --container-md:  768px;
+    --container-lg:  1024px;
+    --container-xl:  1280px;
+    --container-2xl: 1440px;
+    --container-full:100%;
+
+    /* ──────────────────────────────────────────────────────
+       14. OPACITY SCALE
+    ────────────────────────────────────────────────────── */
+
+    --opacity-0:    0;
+    --opacity-5:    0.05;
+    --opacity-10:   0.10;
+    --opacity-20:   0.20;
+    --opacity-25:   0.25;
+    --opacity-30:   0.30;
+    --opacity-40:   0.40;
+    --opacity-50:   0.50;
+    --opacity-60:   0.60;
+    --opacity-70:   0.70;
+    --opacity-75:   0.75;
+    --opacity-80:   0.80;
+    --opacity-90:   0.90;
+    --opacity-95:   0.95;
+    --opacity-100:  1;
+
+    /* ──────────────────────────────────────────────────────
+       15. BLUR SCALE
+    ────────────────────────────────────────────────────── */
+
+    --blur-none:  0;
+    --blur-xs:    2px;
+    --blur-sm:    4px;
+    --blur-md:    8px;
+    --blur-lg:    16px;
+    --blur-xl:    24px;
+    --blur-2xl:   40px;
+    --blur-3xl:   64px;
+
+  } /* end :root */
+
+} /* end @layer aura.tokens */

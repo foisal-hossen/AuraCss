@@ -1,0 +1,480 @@
+/* ============================================================
+   AURA CSS — Phase 01: Core Engine
+   Version  : 1.0.0
+   Layer    : Foundation
+   Depends  : Nothing (this is the root)
+   ============================================================
+   WHAT THIS FILE DOES:
+   1. Establishes CSS @layer order (cascade control)
+   2. Registers @property for type-safe CSS variables
+   3. Applies modern opinionated reset
+   4. Sets sensible base defaults on html/body
+   ============================================================ */
+
+
+/* ────────────────────────────────────────────────────────────
+   SECTION 1 — CASCADE LAYER ORDER
+   Declare ALL layers upfront so specificity is predictable.
+   Later layers win over earlier ones — regardless of where
+   rules are defined in the source.
+   ──────────────────────────────────────────────────────────── */
+
+@layer aura.reset,
+       aura.tokens,
+       aura.theme,
+       aura.base,
+       aura.layout,
+       aura.typography,
+       aura.utilities,
+       aura.components,
+       aura.visual,
+       aura.motion,
+       aura.variants,
+       aura.overrides;
+
+/*
+  Layer hierarchy (lowest → highest priority):
+  reset → tokens → theme → base → layout → typography
+  → utilities → components → visual → motion → variants → overrides
+
+  WHY THIS MATTERS:
+  A utility class (.text-sm) will always beat a component
+  rule (button { font-size: ... }) without needing !important.
+  This is predictable, debuggable cascade — no specificity hacks.
+*/
+
+
+/* ────────────────────────────────────────────────────────────
+   SECTION 2 — @PROPERTY REGISTRATIONS
+   Registered custom properties give browsers:
+   - Type information (color, length, number…)
+   - Inheritance control
+   - Initial values
+   - ANIMATABILITY (this is the big win — gradients can
+     animate because the browser knows the type)
+   ──────────────────────────────────────────────────────────── */
+
+/* Color properties — animatable, non-inherited */
+@property --aura-color-primary {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: oklch(0.55 0.22 270);
+}
+
+@property --aura-color-secondary {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: oklch(0.65 0.22 330);
+}
+
+@property --aura-color-accent {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: oklch(0.85 0.18 180);
+}
+
+@property --aura-color-success {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: oklch(0.65 0.20 145);
+}
+
+@property --aura-color-warning {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: oklch(0.75 0.18 75);
+}
+
+@property --aura-color-danger {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: oklch(0.60 0.22 25);
+}
+
+@property --aura-color-info {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: oklch(0.60 0.18 230);
+}
+
+/* Surface colors — inherited (so children pick up theme) */
+@property --aura-surface-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(0.98 0.005 270);
+}
+
+@property --aura-surface-base {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(1 0 0);
+}
+
+@property --aura-surface-raised {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(0.97 0.005 270);
+}
+
+/* Text colors — inherited */
+@property --aura-text-primary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(0.15 0.02 270);
+}
+
+@property --aura-text-secondary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(0.40 0.03 270);
+}
+
+@property --aura-text-muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(0.60 0.02 270);
+}
+
+/* Number/length properties — animatable */
+@property --aura-radius {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 12px;
+}
+
+@property --aura-shadow-strength {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --aura-blur-amount {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 16px;
+}
+
+/* Gradient positions — animatable (key for gradient transitions) */
+@property --aura-gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 135deg;
+}
+
+@property --aura-gradient-stop-1 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --aura-gradient-stop-2 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   SECTION 3 — MODERN CSS RESET
+   Opinionated but minimal. We only reset what causes
+   cross-browser pain. We don't strip everything — some
+   browser defaults are useful (e.g. display:block on block
+   elements, margin on body).
+   ──────────────────────────────────────────────────────────── */
+
+@layer aura.reset {
+
+  /* Universal box-sizing — prevents width calculation surprises */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Remove all margin/padding/border from everything */
+  * {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  /* Prevent font inflation on mobile */
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    tab-size: 4;
+  }
+
+  /* Smooth scrolling — respects user preference */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Remove list styles — they'll be re-added where needed */
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  /* Images/media — sensible defaults */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Form elements — inherit font from parent */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+    background: transparent;
+  }
+
+  /* Remove button browser styles */
+  button {
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* Prevent text overflow on headings and paragraphs */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  /* Anchor defaults */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Table defaults */
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  /* Textarea — prevent horizontal resize (usually unwanted) */
+  textarea {
+    resize: vertical;
+  }
+
+  /* Hidden attribute — ensure it works everywhere */
+  [hidden] {
+    display: none !important;
+  }
+
+  /* Summary — consistent cursor */
+  summary {
+    cursor: pointer;
+  }
+
+  /* Abbr — consistent underline */
+  abbr[title] {
+    text-decoration: underline dotted;
+    cursor: help;
+  }
+
+  /* Code/pre — preserve formatting */
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: ui-monospace, monospace;
+    font-size: 1em;
+  }
+
+  /* Remove outline on non-keyboard focus (mouse click) */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* But keep it for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--aura-color-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Blockquote */
+  blockquote,
+  q {
+    quotes: none;
+  }
+
+  blockquote::before,
+  blockquote::after,
+  q::before,
+  q::after {
+    content: none;
+  }
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   SECTION 4 — BASE STYLES
+   Sensible defaults for html and body. These live in
+   aura.base layer so tokens/theme can override them.
+   ──────────────────────────────────────────────────────────── */
+
+@layer aura.base {
+
+  html {
+    /* Root font size — controls rem scale */
+    font-size: 100%; /* = 16px in most browsers */
+
+    /* Smooth font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
+    /* Prevent FOUC on theme switch */
+    color-scheme: light dark;
+  }
+
+  body {
+    /* These pull from token layer */
+    background-color: var(--aura-surface-bg);
+    color: var(--aura-text-primary);
+
+    /* Fallback font stack until tokens load */
+    font-family:
+      "Cabinet Grotesk",
+      "DM Sans",
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      sans-serif;
+
+    font-size: 1rem;
+    line-height: 1.6;
+    min-height: 100dvh;
+
+    /* Prevent horizontal scroll from overflow bugs */
+    overflow-x: hidden;
+  }
+
+  /* Heading hierarchy — font weight only, size comes from typography layer */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  /* Paragraph spacing */
+  p {
+    line-height: 1.7;
+  }
+
+  /* Link base */
+  a {
+    text-underline-offset: 4px;
+    transition: opacity 120ms ease;
+  }
+
+  a:hover {
+    opacity: 0.8;
+  }
+
+  /* Strong/em */
+  strong, b { font-weight: 700; }
+  em, i { font-style: italic; }
+
+  /* Selection highlight */
+  ::selection {
+    background-color: color-mix(in oklch, var(--aura-color-primary) 25%, transparent);
+    color: var(--aura-text-primary);
+  }
+
+  /* Scrollbar — subtle, themed */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklch, var(--aura-color-primary) 30%, transparent);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklch, var(--aura-color-primary) 50%, transparent);
+  }
+
+  /* Placeholder text */
+  ::placeholder {
+    color: var(--aura-text-muted);
+    opacity: 1;
+  }
+
+  /* HR */
+  hr {
+    border: none;
+    border-top: 1px solid color-mix(in oklch, var(--aura-text-primary) 12%, transparent);
+    margin-block: 1rem;
+  }
+
+  /* Images — prevent dragging by default */
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  /* Ensure interactive elements are keyboard accessible */
+  button,
+  [role="button"],
+  [tabindex]:not([tabindex="-1"]) {
+    cursor: pointer;
+  }
+
+  /* Disabled state */
+  [disabled],
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* Reduce motion globally if user prefers */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Print — hide decorative stuff */
+  @media print {
+    *,
+    *::before,
+    *::after {
+      background: transparent !important;
+      color: black !important;
+      box-shadow: none !important;
+    }
+  }
+}

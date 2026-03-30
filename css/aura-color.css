@@ -1,0 +1,891 @@
+/* ============================================================
+   AURA CSS — Phase 05: Color System (Part 1 of 2)
+   Version  : 1.0.0
+   Layer    : aura.utilities (color sub-section)
+   Depends  : Phase 01, 02, 03
+   ============================================================
+   PART 1 COVERS:
+   1.  Background color utilities
+   2.  Background opacity modifier
+   3.  Text color utilities (full palette)
+   4.  Border color utilities
+   5.  Outline color utilities
+   6.  Ring color utilities
+   7.  Caret color utilities
+   8.  Accent color utilities
+   9.  Fill / Stroke (SVG)
+   10. color-mix() opacity modifiers
+   ============================================================ */
+   /* ============================================================
+   PART 2 COVERS:
+   11. Background gradient utilities
+   12. Gradient direction & stops
+   13. Mesh gradient — AURA exclusive
+   14. Background size / position / repeat / attachment
+   15. Background clip
+   16. Mix blend mode
+   17. Backdrop filter colors
+   18. Opacity utilities
+   19. Color scheme utility
+   20. color-mix() helper classes
+   ============================================================ */
+
+@layer aura.utilities {
+
+  /* ────────────────────────────────────────────────────────
+     1. BACKGROUND COLOR — Semantic
+  ──────────────────────────────────────────────────────── */
+
+  /* Surfaces */
+  .bg-bg        { background-color: var(--surface-bg); }
+  .bg-base      { background-color: var(--surface-base); }
+  .bg-raised    { background-color: var(--surface-raised); }
+  .bg-overlay   { background-color: var(--surface-overlay); }
+  .bg-sunken    { background-color: var(--surface-sunken); }
+
+  /* Brand */
+  .bg-primary         { background-color: var(--color-primary); }
+  .bg-primary-hover   { background-color: var(--color-primary-hover); }
+  .bg-primary-subtle  { background-color: var(--color-primary-subtle); }
+  .bg-primary-muted   { background-color: var(--color-primary-muted); }
+
+  .bg-secondary       { background-color: var(--color-secondary); }
+  .bg-accent          { background-color: var(--color-accent); }
+
+  /* Status */
+  .bg-success         { background-color: var(--color-success); }
+  .bg-success-subtle  { background-color: var(--color-success-subtle); }
+  .bg-warning         { background-color: var(--color-warning); }
+  .bg-warning-subtle  { background-color: var(--color-warning-subtle); }
+  .bg-danger          { background-color: var(--color-danger); }
+  .bg-danger-subtle   { background-color: var(--color-danger-subtle); }
+  .bg-info            { background-color: var(--color-info); }
+  .bg-info-subtle     { background-color: var(--color-info-subtle); }
+
+  /* Neutral */
+  .bg-white       { background-color: oklch(1 0 0); }
+  .bg-black       { background-color: oklch(0 0 0); }
+  .bg-transparent { background-color: transparent; }
+  .bg-current     { background-color: currentColor; }
+  .bg-inherit     { background-color: inherit; }
+
+
+  /* ────────────────────────────────────────────────────────
+     2. BACKGROUND — OKLCH Palette Steps
+     Direct access to the full AURA color scale.
+     Useful when semantic tokens aren't specific enough.
+  ──────────────────────────────────────────────────────── */
+
+  /* Primary scale */
+  .bg-primary-50   { background-color: var(--aura-50); }
+  .bg-primary-100  { background-color: var(--aura-100); }
+  .bg-primary-200  { background-color: var(--aura-200); }
+  .bg-primary-300  { background-color: var(--aura-300); }
+  .bg-primary-400  { background-color: var(--aura-400); }
+  .bg-primary-500  { background-color: var(--aura-500); }
+  .bg-primary-600  { background-color: var(--aura-600); }
+  .bg-primary-700  { background-color: var(--aura-700); }
+  .bg-primary-800  { background-color: var(--aura-800); }
+  .bg-primary-900  { background-color: var(--aura-900); }
+  .bg-primary-950  { background-color: var(--aura-950); }
+
+  /* Neutral scale */
+  .bg-neutral-50   { background-color: var(--neutral-50); }
+  .bg-neutral-100  { background-color: var(--neutral-100); }
+  .bg-neutral-200  { background-color: var(--neutral-200); }
+  .bg-neutral-300  { background-color: var(--neutral-300); }
+  .bg-neutral-400  { background-color: var(--neutral-400); }
+  .bg-neutral-500  { background-color: var(--neutral-500); }
+  .bg-neutral-600  { background-color: var(--neutral-600); }
+  .bg-neutral-700  { background-color: var(--neutral-700); }
+  .bg-neutral-800  { background-color: var(--neutral-800); }
+  .bg-neutral-900  { background-color: var(--neutral-900); }
+  .bg-neutral-950  { background-color: var(--neutral-950); }
+
+
+  /* ────────────────────────────────────────────────────────
+     3. BACKGROUND OPACITY MODIFIER — color-mix()
+     UNIQUE TO AURA — Tailwind uses separate opacity class.
+     AURA uses color-mix() so it composites correctly in HDR.
+
+     Usage: .bg-primary.bg-op-20
+     Result: background = 20% primary color, 80% transparent
+  ──────────────────────────────────────────────────────── */
+
+  .bg-op-5   { background-color: color-mix(in oklch, currentColor  5%, transparent); }
+  .bg-op-10  { background-color: color-mix(in oklch, currentColor 10%, transparent); }
+  .bg-op-15  { background-color: color-mix(in oklch, currentColor 15%, transparent); }
+  .bg-op-20  { background-color: color-mix(in oklch, currentColor 20%, transparent); }
+  .bg-op-25  { background-color: color-mix(in oklch, currentColor 25%, transparent); }
+  .bg-op-30  { background-color: color-mix(in oklch, currentColor 30%, transparent); }
+  .bg-op-40  { background-color: color-mix(in oklch, currentColor 40%, transparent); }
+  .bg-op-50  { background-color: color-mix(in oklch, currentColor 50%, transparent); }
+  .bg-op-60  { background-color: color-mix(in oklch, currentColor 60%, transparent); }
+  .bg-op-70  { background-color: color-mix(in oklch, currentColor 70%, transparent); }
+  .bg-op-80  { background-color: color-mix(in oklch, currentColor 80%, transparent); }
+  .bg-op-90  { background-color: color-mix(in oklch, currentColor 90%, transparent); }
+
+  /* Inline opacity variants for primary */
+  .bg-primary\/5   { background-color: color-mix(in oklch, var(--color-primary)  5%, transparent); }
+  .bg-primary\/10  { background-color: color-mix(in oklch, var(--color-primary) 10%, transparent); }
+  .bg-primary\/15  { background-color: color-mix(in oklch, var(--color-primary) 15%, transparent); }
+  .bg-primary\/20  { background-color: color-mix(in oklch, var(--color-primary) 20%, transparent); }
+  .bg-primary\/25  { background-color: color-mix(in oklch, var(--color-primary) 25%, transparent); }
+  .bg-primary\/30  { background-color: color-mix(in oklch, var(--color-primary) 30%, transparent); }
+  .bg-primary\/40  { background-color: color-mix(in oklch, var(--color-primary) 40%, transparent); }
+  .bg-primary\/50  { background-color: color-mix(in oklch, var(--color-primary) 50%, transparent); }
+  .bg-primary\/60  { background-color: color-mix(in oklch, var(--color-primary) 60%, transparent); }
+  .bg-primary\/75  { background-color: color-mix(in oklch, var(--color-primary) 75%, transparent); }
+
+  .bg-secondary\/10 { background-color: color-mix(in oklch, var(--color-secondary) 10%, transparent); }
+  .bg-secondary\/20 { background-color: color-mix(in oklch, var(--color-secondary) 20%, transparent); }
+  .bg-secondary\/30 { background-color: color-mix(in oklch, var(--color-secondary) 30%, transparent); }
+
+  .bg-accent\/10    { background-color: color-mix(in oklch, var(--color-accent) 10%, transparent); }
+  .bg-accent\/20    { background-color: color-mix(in oklch, var(--color-accent) 20%, transparent); }
+  .bg-accent\/30    { background-color: color-mix(in oklch, var(--color-accent) 30%, transparent); }
+
+  .bg-success\/10   { background-color: color-mix(in oklch, var(--color-success) 10%, transparent); }
+  .bg-success\/20   { background-color: color-mix(in oklch, var(--color-success) 20%, transparent); }
+  .bg-warning\/10   { background-color: color-mix(in oklch, var(--color-warning) 10%, transparent); }
+  .bg-warning\/20   { background-color: color-mix(in oklch, var(--color-warning) 20%, transparent); }
+  .bg-danger\/10    { background-color: color-mix(in oklch, var(--color-danger) 10%, transparent); }
+  .bg-danger\/20    { background-color: color-mix(in oklch, var(--color-danger) 20%, transparent); }
+
+
+  /* ────────────────────────────────────────────────────────
+     4. TEXT COLOR — Full palette
+     (Semantic text colors are in aura-typography.css)
+     This section adds palette-step text colors.
+  ──────────────────────────────────────────────────────── */
+
+  .text-primary-50  { color: var(--aura-50); }
+  .text-primary-100 { color: var(--aura-100); }
+  .text-primary-200 { color: var(--aura-200); }
+  .text-primary-300 { color: var(--aura-300); }
+  .text-primary-400 { color: var(--aura-400); }
+  .text-primary-500 { color: var(--aura-500); }
+  .text-primary-600 { color: var(--aura-600); }
+  .text-primary-700 { color: var(--aura-700); }
+  .text-primary-800 { color: var(--aura-800); }
+  .text-primary-900 { color: var(--aura-900); }
+
+  .text-neutral-50  { color: var(--neutral-50); }
+  .text-neutral-100 { color: var(--neutral-100); }
+  .text-neutral-200 { color: var(--neutral-200); }
+  .text-neutral-300 { color: var(--neutral-300); }
+  .text-neutral-400 { color: var(--neutral-400); }
+  .text-neutral-500 { color: var(--neutral-500); }
+  .text-neutral-600 { color: var(--neutral-600); }
+  .text-neutral-700 { color: var(--neutral-700); }
+  .text-neutral-800 { color: var(--neutral-800); }
+  .text-neutral-900 { color: var(--neutral-900); }
+
+  /* Text opacity variants */
+  .text-primary\/50  { color: color-mix(in oklch, var(--color-primary) 50%, transparent); }
+  .text-primary\/75  { color: color-mix(in oklch, var(--color-primary) 75%, transparent); }
+  .text-secondary\/50{ color: color-mix(in oklch, var(--color-secondary) 50%, transparent); }
+  .text-accent\/75   { color: color-mix(in oklch, var(--color-accent) 75%, transparent); }
+
+
+  /* ────────────────────────────────────────────────────────
+     5. BORDER COLOR UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .border-border        { border-color: var(--surface-border); }
+  .border-border-hover  { border-color: var(--surface-border-hover); }
+  .border-border-focus  { border-color: var(--surface-border-focus); }
+
+  .border-primary       { border-color: var(--color-primary); }
+  .border-primary-subtle{ border-color: var(--color-primary-subtle); }
+  .border-secondary     { border-color: var(--color-secondary); }
+  .border-accent        { border-color: var(--color-accent); }
+
+  .border-success       { border-color: var(--color-success); }
+  .border-warning       { border-color: var(--color-warning); }
+  .border-danger        { border-color: var(--color-danger); }
+  .border-info          { border-color: var(--color-info); }
+
+  .border-white         { border-color: oklch(1 0 0); }
+  .border-black         { border-color: oklch(0 0 0); }
+  .border-transparent   { border-color: transparent; }
+  .border-current       { border-color: currentColor; }
+  .border-inherit       { border-color: inherit; }
+
+  /* Border opacity variants */
+  .border-primary\/20  { border-color: color-mix(in oklch, var(--color-primary) 20%, transparent); }
+  .border-primary\/30  { border-color: color-mix(in oklch, var(--color-primary) 30%, transparent); }
+  .border-primary\/40  { border-color: color-mix(in oklch, var(--color-primary) 40%, transparent); }
+  .border-primary\/50  { border-color: color-mix(in oklch, var(--color-primary) 50%, transparent); }
+  .border-white\/10    { border-color: oklch(1 0 0 / 0.10); }
+  .border-white\/20    { border-color: oklch(1 0 0 / 0.20); }
+  .border-white\/30    { border-color: oklch(1 0 0 / 0.30); }
+  .border-white\/50    { border-color: oklch(1 0 0 / 0.50); }
+  .border-black\/10    { border-color: oklch(0 0 0 / 0.10); }
+  .border-black\/20    { border-color: oklch(0 0 0 / 0.20); }
+
+
+  /* ────────────────────────────────────────────────────────
+     6. OUTLINE COLOR
+  ──────────────────────────────────────────────────────── */
+
+  .outline-primary   { outline-color: var(--color-primary); }
+  .outline-secondary { outline-color: var(--color-secondary); }
+  .outline-accent    { outline-color: var(--color-accent); }
+  .outline-success   { outline-color: var(--color-success); }
+  .outline-warning   { outline-color: var(--color-warning); }
+  .outline-danger    { outline-color: var(--color-danger); }
+  .outline-white     { outline-color: oklch(1 0 0); }
+  .outline-black     { outline-color: oklch(0 0 0); }
+  .outline-current   { outline-color: currentColor; }
+  .outline-inherit   { outline-color: inherit; }
+
+
+  /* ────────────────────────────────────────────────────────
+     7. RING COLOR UTILITIES
+     Ring = box-shadow outline (keyboard focus, selection)
+  ──────────────────────────────────────────────────────── */
+
+  .ring-primary   {
+    --ring-color: var(--color-primary);
+    box-shadow:
+      0 0 0 var(--ring-offset-width, 2px) var(--ring-offset-color, var(--surface-base)),
+      0 0 0 calc(var(--ring-offset-width, 2px) + var(--ring-width, 2px)) var(--ring-color);
+  }
+
+  .ring-secondary {
+    --ring-color: var(--color-secondary);
+    box-shadow:
+      0 0 0 var(--ring-offset-width, 2px) var(--ring-offset-color, var(--surface-base)),
+      0 0 0 calc(var(--ring-offset-width, 2px) + var(--ring-width, 2px)) var(--ring-color);
+  }
+
+  .ring-accent {
+    --ring-color: var(--color-accent);
+    box-shadow:
+      0 0 0 var(--ring-offset-width, 2px) var(--ring-offset-color, var(--surface-base)),
+      0 0 0 calc(var(--ring-offset-width, 2px) + var(--ring-width, 2px)) var(--ring-color);
+  }
+
+  .ring-success {
+    --ring-color: var(--color-success);
+    box-shadow:
+      0 0 0 var(--ring-offset-width, 2px) var(--ring-offset-color, var(--surface-base)),
+      0 0 0 calc(var(--ring-offset-width, 2px) + var(--ring-width, 2px)) var(--ring-color);
+  }
+
+  .ring-danger {
+    --ring-color: var(--color-danger);
+    box-shadow:
+      0 0 0 var(--ring-offset-width, 2px) var(--ring-offset-color, var(--surface-base)),
+      0 0 0 calc(var(--ring-offset-width, 2px) + var(--ring-width, 2px)) var(--ring-color);
+  }
+
+  .ring-warning {
+    --ring-color: var(--color-warning);
+    box-shadow:
+      0 0 0 var(--ring-offset-width, 2px) var(--ring-offset-color, var(--surface-base)),
+      0 0 0 calc(var(--ring-offset-width, 2px) + var(--ring-width, 2px)) var(--ring-color);
+  }
+
+  .ring-white {
+    --ring-color: oklch(1 0 0);
+    box-shadow:
+      0 0 0 var(--ring-offset-width, 2px) var(--ring-offset-color, var(--surface-base)),
+      0 0 0 calc(var(--ring-offset-width, 2px) + var(--ring-width, 2px)) var(--ring-color);
+  }
+
+  /* Ring width control */
+  .ring-0 { --ring-width: 0px; }
+  .ring-1 { --ring-width: 1px; }
+  .ring-2 { --ring-width: 2px; }
+  .ring-4 { --ring-width: 4px; }
+
+  /* Ring offset */
+  .ring-offset-0 { --ring-offset-width: 0px; }
+  .ring-offset-1 { --ring-offset-width: 1px; }
+  .ring-offset-2 { --ring-offset-width: 2px; }
+  .ring-offset-4 { --ring-offset-width: 4px; }
+
+  .ring-offset-bg     { --ring-offset-color: var(--surface-bg); }
+  .ring-offset-base   { --ring-offset-color: var(--surface-base); }
+  .ring-offset-white  { --ring-offset-color: oklch(1 0 0); }
+  .ring-offset-black  { --ring-offset-color: oklch(0 0 0); }
+
+
+  /* ────────────────────────────────────────────────────────
+     8. CARET COLOR — input cursor color
+  ──────────────────────────────────────────────────────── */
+
+  .caret-primary   { caret-color: var(--color-primary); }
+  .caret-secondary { caret-color: var(--color-secondary); }
+  .caret-accent    { caret-color: var(--color-accent); }
+  .caret-success   { caret-color: var(--color-success); }
+  .caret-danger    { caret-color: var(--color-danger); }
+  .caret-warning   { caret-color: var(--color-warning); }
+  .caret-white     { caret-color: oklch(1 0 0); }
+  .caret-black     { caret-color: oklch(0 0 0); }
+  .caret-current   { caret-color: currentColor; }
+  .caret-auto      { caret-color: auto; }
+
+
+  /* ────────────────────────────────────────────────────────
+     9. ACCENT COLOR — native form controls
+     Checkbox, radio, range, progress tint
+  ──────────────────────────────────────────────────────── */
+
+  .accent-primary   { accent-color: var(--color-primary); }
+  .accent-secondary { accent-color: var(--color-secondary); }
+  .accent-accent    { accent-color: var(--color-accent); }
+  .accent-success   { accent-color: var(--color-success); }
+  .accent-danger    { accent-color: var(--color-danger); }
+  .accent-warning   { accent-color: var(--color-warning); }
+  .accent-auto      { accent-color: auto; }
+
+
+  /* ────────────────────────────────────────────────────────
+     10. SVG FILL & STROKE
+  ──────────────────────────────────────────────────────── */
+
+  /* Fill */
+  .fill-primary   { fill: var(--color-primary); }
+  .fill-secondary { fill: var(--color-secondary); }
+  .fill-accent    { fill: var(--color-accent); }
+  .fill-success   { fill: var(--color-success); }
+  .fill-danger    { fill: var(--color-danger); }
+  .fill-warning   { fill: var(--color-warning); }
+  .fill-current   { fill: currentColor; }
+  .fill-white     { fill: oklch(1 0 0); }
+  .fill-black     { fill: oklch(0 0 0); }
+  .fill-none      { fill: none; }
+  .fill-inherit   { fill: inherit; }
+
+  /* Stroke */
+  .stroke-primary   { stroke: var(--color-primary); }
+  .stroke-secondary { stroke: var(--color-secondary); }
+  .stroke-accent    { stroke: var(--color-accent); }
+  .stroke-success   { stroke: var(--color-success); }
+  .stroke-danger    { stroke: var(--color-danger); }
+  .stroke-warning   { stroke: var(--color-warning); }
+  .stroke-current   { stroke: currentColor; }
+  .stroke-white     { stroke: oklch(1 0 0); }
+  .stroke-black     { stroke: oklch(0 0 0); }
+  .stroke-none      { stroke: none; }
+  .stroke-inherit   { stroke: inherit; }
+
+  /* Stroke width */
+  .stroke-0 { stroke-width: 0; }
+  .stroke-1 { stroke-width: 1; }
+  .stroke-2 { stroke-width: 2; }
+
+} /* end Part 1 */
+/* ============================================================
+
+
+   AURA CSS — Phase 05: Color System (Part 2 of 2)
+
+
+   ============================================================*/
+   /* ────────────────────────────────────────────────────────
+     11. BACKGROUND GRADIENTS — Linear
+  ──────────────────────────────────────────────────────── */
+@layer aura.utilities {
+  /* Direction */
+  .bg-gradient-to-t   { background-image: linear-gradient(to top,    var(--gradient-from, transparent), var(--gradient-to, transparent)); }
+  .bg-gradient-to-tr  { background-image: linear-gradient(to top right, var(--gradient-from, transparent), var(--gradient-to, transparent)); }
+  .bg-gradient-to-r   { background-image: linear-gradient(to right,  var(--gradient-from, transparent), var(--gradient-to, transparent)); }
+  .bg-gradient-to-br  { background-image: linear-gradient(to bottom right, var(--gradient-from, transparent), var(--gradient-to, transparent)); }
+  .bg-gradient-to-b   { background-image: linear-gradient(to bottom, var(--gradient-from, transparent), var(--gradient-to, transparent)); }
+  .bg-gradient-to-bl  { background-image: linear-gradient(to bottom left, var(--gradient-from, transparent), var(--gradient-to, transparent)); }
+  .bg-gradient-to-l   { background-image: linear-gradient(to left,   var(--gradient-from, transparent), var(--gradient-to, transparent)); }
+  .bg-gradient-to-tl  { background-image: linear-gradient(to top left, var(--gradient-from, transparent), var(--gradient-to, transparent)); }
+
+  /* From stops */
+  .from-primary     { --gradient-from: var(--color-primary); }
+  .from-secondary   { --gradient-from: var(--color-secondary); }
+  .from-accent      { --gradient-from: var(--color-accent); }
+  .from-success     { --gradient-from: var(--color-success); }
+  .from-warning     { --gradient-from: var(--color-warning); }
+  .from-danger      { --gradient-from: var(--color-danger); }
+  .from-white       { --gradient-from: oklch(1 0 0); }
+  .from-black       { --gradient-from: oklch(0 0 0); }
+  .from-transparent { --gradient-from: transparent; }
+  .from-bg          { --gradient-from: var(--surface-bg); }
+  .from-base        { --gradient-from: var(--surface-base); }
+
+  /* OKLCH scale froms */
+  .from-primary-100 { --gradient-from: var(--aura-100); }
+  .from-primary-300 { --gradient-from: var(--aura-300); }
+  .from-primary-500 { --gradient-from: var(--aura-500); }
+  .from-primary-700 { --gradient-from: var(--aura-700); }
+  .from-primary-900 { --gradient-from: var(--aura-900); }
+
+  /* Via stops (three-stop gradients) */
+  .via-primary     {
+    background-image: linear-gradient(
+      var(--gradient-dir, to right),
+      var(--gradient-from, transparent),
+      var(--color-primary),
+      var(--gradient-to, transparent)
+    );
+  }
+  .via-secondary   {
+    background-image: linear-gradient(
+      var(--gradient-dir, to right),
+      var(--gradient-from, transparent),
+      var(--color-secondary),
+      var(--gradient-to, transparent)
+    );
+  }
+  .via-accent {
+    background-image: linear-gradient(
+      var(--gradient-dir, to right),
+      var(--gradient-from, transparent),
+      var(--color-accent),
+      var(--gradient-to, transparent)
+    );
+  }
+  .via-transparent {
+    background-image: linear-gradient(
+      var(--gradient-dir, to right),
+      var(--gradient-from, transparent),
+      transparent,
+      var(--gradient-to, transparent)
+    );
+  }
+
+  /* To stops */
+  .to-primary     { --gradient-to: var(--color-primary); }
+  .to-secondary   { --gradient-to: var(--color-secondary); }
+  .to-accent      { --gradient-to: var(--color-accent); }
+  .to-success     { --gradient-to: var(--color-success); }
+  .to-warning     { --gradient-to: var(--color-warning); }
+  .to-danger      { --gradient-to: var(--color-danger); }
+  .to-white       { --gradient-to: oklch(1 0 0); }
+  .to-black       { --gradient-to: oklch(0 0 0); }
+  .to-transparent { --gradient-to: transparent; }
+  .to-bg          { --gradient-to: var(--surface-bg); }
+  .to-base        { --gradient-to: var(--surface-base); }
+
+  .to-primary-100 { --gradient-to: var(--aura-100); }
+  .to-primary-300 { --gradient-to: var(--aura-300); }
+  .to-primary-500 { --gradient-to: var(--aura-500); }
+  .to-primary-700 { --gradient-to: var(--aura-700); }
+  .to-primary-900 { --gradient-to: var(--aura-900); }
+
+  /* Radial gradient */
+  .bg-radial-primary {
+    background-image: radial-gradient(
+      circle at center,
+      var(--color-primary),
+      transparent
+    );
+  }
+
+  .bg-radial-glow {
+    background-image: radial-gradient(
+      ellipse 80% 50% at 50% 0%,
+      color-mix(in oklch, var(--color-primary) 20%, transparent),
+      transparent 70%
+    );
+  }
+
+  .bg-radial-glow-bottom {
+    background-image: radial-gradient(
+      ellipse 80% 50% at 50% 100%,
+      color-mix(in oklch, var(--color-primary) 20%, transparent),
+      transparent 70%
+    );
+  }
+
+  /* Conic gradient */
+  .bg-conic {
+    background-image: conic-gradient(
+      var(--color-primary),
+      var(--color-secondary),
+      var(--color-accent),
+      var(--color-primary)
+    );
+  }
+
+  /* ────────────────────────────────────────────────────────
+     12. PRE-BUILT THEME GRADIENTS — AURA Exclusive
+     Ready-to-use combinations that work across all themes.
+  ──────────────────────────────────────────────────────── */
+
+  /* Signature AURA gradient */
+  .bg-gradient-aura {
+    background-image: linear-gradient(
+      135deg,
+      var(--color-primary)   0%,
+      var(--color-secondary) 50%,
+      var(--color-accent)    100%
+    );
+  }
+
+  .bg-gradient-aura-animated {
+    background-image: linear-gradient(
+      var(--aura-gradient-angle, 135deg),
+      var(--color-primary),
+      var(--color-secondary),
+      var(--color-accent)
+    );
+    background-size: 200% 200%;
+    animation: aura-gradient-bg 6s ease infinite;
+  }
+
+  @keyframes aura-gradient-bg {
+    0%, 100% { background-position: 0% 50%; }
+    50%       { background-position: 100% 50%; }
+  }
+
+  /* Subtle tinted backgrounds */
+  .bg-gradient-primary-subtle {
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--color-primary) 8%, var(--surface-bg)),
+      var(--surface-bg)
+    );
+  }
+
+  .bg-gradient-surface {
+    background-image: linear-gradient(
+      180deg,
+      var(--surface-raised),
+      var(--surface-bg)
+    );
+  }
+
+  /* Hero gradient — primary color at top fades to bg */
+  .bg-gradient-hero {
+    background-image:
+      radial-gradient(
+        ellipse 80% 50% at 20% -10%,
+        color-mix(in oklch, var(--color-primary) 18%, transparent),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 80% 110%,
+        color-mix(in oklch, var(--color-secondary) 14%, transparent),
+        transparent 60%
+      );
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     13. MESH GRADIENT — AURA Exclusive
+     Multi-point radial gradients layered together.
+     Creates the organic "mesh" look without JS.
+  ──────────────────────────────────────────────────────── */
+
+  .bg-mesh {
+    background-image:
+      radial-gradient(
+        at 40% 20%,
+        color-mix(in oklch, var(--color-primary) 25%, transparent) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 80% 0%,
+        color-mix(in oklch, var(--color-secondary) 20%, transparent) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 0% 50%,
+        color-mix(in oklch, var(--color-accent) 15%, transparent) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 80% 50%,
+        color-mix(in oklch, var(--color-primary) 20%, transparent) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 0% 100%,
+        color-mix(in oklch, var(--color-secondary) 18%, transparent) 0px,
+        transparent 50%
+      );
+  }
+
+  .bg-mesh-sm {
+    background-image:
+      radial-gradient(
+        at 30% 30%,
+        color-mix(in oklch, var(--color-primary) 15%, transparent) 0px,
+        transparent 40%
+      ),
+      radial-gradient(
+        at 70% 70%,
+        color-mix(in oklch, var(--color-secondary) 12%, transparent) 0px,
+        transparent 40%
+      );
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     14. BACKGROUND SIZE / POSITION / REPEAT / ATTACHMENT
+  ──────────────────────────────────────────────────────── */
+
+  /* Size */
+  .bg-auto     { background-size: auto; }
+  .bg-cover    { background-size: cover; }
+  .bg-contain  { background-size: contain; }
+
+  /* Position */
+  .bg-center       { background-position: center; }
+  .bg-top          { background-position: top; }
+  .bg-bottom       { background-position: bottom; }
+  .bg-left         { background-position: left; }
+  .bg-right        { background-position: right; }
+  .bg-left-top     { background-position: left top; }
+  .bg-left-bottom  { background-position: left bottom; }
+  .bg-right-top    { background-position: right top; }
+  .bg-right-bottom { background-position: right bottom; }
+
+  /* Repeat */
+  .bg-repeat        { background-repeat: repeat; }
+  .bg-no-repeat     { background-repeat: no-repeat; }
+  .bg-repeat-x      { background-repeat: repeat-x; }
+  .bg-repeat-y      { background-repeat: repeat-y; }
+  .bg-repeat-round  { background-repeat: round; }
+  .bg-repeat-space  { background-repeat: space; }
+
+  /* Attachment */
+  .bg-fixed    { background-attachment: fixed; }
+  .bg-local    { background-attachment: local; }
+  .bg-scroll   { background-attachment: scroll; }
+
+  /* Origin */
+  .bg-origin-border  { background-origin: border-box; }
+  .bg-origin-padding { background-origin: padding-box; }
+  .bg-origin-content { background-origin: content-box; }
+
+
+  /* ────────────────────────────────────────────────────────
+     15. BACKGROUND CLIP
+     Used for gradient text + visual effects.
+  ──────────────────────────────────────────────────────── */
+
+  .bg-clip-border  { background-clip: border-box; }
+  .bg-clip-padding { background-clip: padding-box; }
+  .bg-clip-content { background-clip: content-box; }
+  .bg-clip-text    {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     16. MIX BLEND MODE
+  ──────────────────────────────────────────────────────── */
+
+  .mix-blend-normal      { mix-blend-mode: normal; }
+  .mix-blend-multiply    { mix-blend-mode: multiply; }
+  .mix-blend-screen      { mix-blend-mode: screen; }
+  .mix-blend-overlay     { mix-blend-mode: overlay; }
+  .mix-blend-darken      { mix-blend-mode: darken; }
+  .mix-blend-lighten     { mix-blend-mode: lighten; }
+  .mix-blend-color-dodge { mix-blend-mode: color-dodge; }
+  .mix-blend-color-burn  { mix-blend-mode: color-burn; }
+  .mix-blend-hard-light  { mix-blend-mode: hard-light; }
+  .mix-blend-soft-light  { mix-blend-mode: soft-light; }
+  .mix-blend-difference  { mix-blend-mode: difference; }
+  .mix-blend-exclusion   { mix-blend-mode: exclusion; }
+  .mix-blend-hue         { mix-blend-mode: hue; }
+  .mix-blend-saturation  { mix-blend-mode: saturation; }
+  .mix-blend-color       { mix-blend-mode: color; }
+  .mix-blend-luminosity  { mix-blend-mode: luminosity; }
+  .mix-blend-plus-darker { mix-blend-mode: plus-darker; }
+  .mix-blend-plus-lighter{ mix-blend-mode: plus-lighter; }
+
+  /* Isolation */
+  .isolate           { isolation: isolate; }
+  .isolation-auto    { isolation: auto; }
+
+
+  /* ────────────────────────────────────────────────────────
+     17. OPACITY UTILITIES
+  ──────────────────────────────────────────────────────── */
+
+  .opacity-0   { opacity: var(--opacity-0); }
+  .opacity-5   { opacity: var(--opacity-5); }
+  .opacity-10  { opacity: var(--opacity-10); }
+  .opacity-20  { opacity: var(--opacity-20); }
+  .opacity-25  { opacity: var(--opacity-25); }
+  .opacity-30  { opacity: var(--opacity-30); }
+  .opacity-40  { opacity: var(--opacity-40); }
+  .opacity-50  { opacity: var(--opacity-50); }
+  .opacity-60  { opacity: var(--opacity-60); }
+  .opacity-70  { opacity: var(--opacity-70); }
+  .opacity-75  { opacity: var(--opacity-75); }
+  .opacity-80  { opacity: var(--opacity-80); }
+  .opacity-90  { opacity: var(--opacity-90); }
+  .opacity-95  { opacity: var(--opacity-95); }
+  .opacity-100 { opacity: var(--opacity-100); }
+
+
+  /* ────────────────────────────────────────────────────────
+     18. COLOR SCHEME UTILITY
+     Controls how native browser UI elements render.
+     NEW — missing from Tailwind v3.
+  ──────────────────────────────────────────────────────── */
+
+  .color-scheme-light  { color-scheme: light; }
+  .color-scheme-dark   { color-scheme: dark; }
+  .color-scheme-normal { color-scheme: normal; }
+  .color-scheme-auto   { color-scheme: light dark; }
+
+
+  /* ────────────────────────────────────────────────────────
+     19. COLOR-MIX TINT / SHADE HELPERS — AURA Exclusive
+     Dynamically lighten or darken any color using
+     color-mix() without needing extra palette stops.
+     Chainable with any color token.
+  ──────────────────────────────────────────────────────── */
+
+  /* Lighten — mix with white */
+  .tint-10  { background-color: color-mix(in oklch, currentColor 90%, white); }
+  .tint-20  { background-color: color-mix(in oklch, currentColor 80%, white); }
+  .tint-30  { background-color: color-mix(in oklch, currentColor 70%, white); }
+  .tint-40  { background-color: color-mix(in oklch, currentColor 60%, white); }
+  .tint-50  { background-color: color-mix(in oklch, currentColor 50%, white); }
+
+  /* Shade — mix with black */
+  .shade-10 { background-color: color-mix(in oklch, currentColor 90%, black); }
+  .shade-20 { background-color: color-mix(in oklch, currentColor 80%, black); }
+  .shade-30 { background-color: color-mix(in oklch, currentColor 70%, black); }
+  .shade-40 { background-color: color-mix(in oklch, currentColor 60%, black); }
+  .shade-50 { background-color: color-mix(in oklch, currentColor 50%, black); }
+
+  /* Desaturate — mix with gray */
+  .desaturate-25 { filter: saturate(75%); }
+  .desaturate-50 { filter: saturate(50%); }
+  .desaturate-75 { filter: saturate(25%); }
+  .desaturate    { filter: saturate(0%); }
+
+
+  /* ────────────────────────────────────────────────────────
+     20. BACKDROP FILTER — color-related
+     Full backdrop-filter utilities are in aura-visual.css.
+     These color-focused ones live here.
+  ──────────────────────────────────────────────────────── */
+
+  /* Backdrop brightness */
+  .backdrop-brightness-0   { backdrop-filter: brightness(0); }
+  .backdrop-brightness-50  { backdrop-filter: brightness(0.5); }
+  .backdrop-brightness-75  { backdrop-filter: brightness(0.75); }
+  .backdrop-brightness-90  { backdrop-filter: brightness(0.9); }
+  .backdrop-brightness-95  { backdrop-filter: brightness(0.95); }
+  .backdrop-brightness-100 { backdrop-filter: brightness(1); }
+  .backdrop-brightness-105 { backdrop-filter: brightness(1.05); }
+  .backdrop-brightness-110 { backdrop-filter: brightness(1.1); }
+  .backdrop-brightness-125 { backdrop-filter: brightness(1.25); }
+  .backdrop-brightness-150 { backdrop-filter: brightness(1.5); }
+  .backdrop-brightness-200 { backdrop-filter: brightness(2); }
+
+  /* Backdrop contrast */
+  .backdrop-contrast-0    { backdrop-filter: contrast(0); }
+  .backdrop-contrast-50   { backdrop-filter: contrast(0.5); }
+  .backdrop-contrast-75   { backdrop-filter: contrast(0.75); }
+  .backdrop-contrast-100  { backdrop-filter: contrast(1); }
+  .backdrop-contrast-125  { backdrop-filter: contrast(1.25); }
+  .backdrop-contrast-150  { backdrop-filter: contrast(1.5); }
+  .backdrop-contrast-200  { backdrop-filter: contrast(2); }
+
+  /* Backdrop saturate */
+  .backdrop-saturate-0    { backdrop-filter: saturate(0); }
+  .backdrop-saturate-50   { backdrop-filter: saturate(0.5); }
+  .backdrop-saturate-100  { backdrop-filter: saturate(1); }
+  .backdrop-saturate-150  { backdrop-filter: saturate(1.5); }
+  .backdrop-saturate-200  { backdrop-filter: saturate(2); }
+
+  /* Backdrop grayscale / sepia / invert */
+  .backdrop-grayscale   { backdrop-filter: grayscale(1); }
+  .backdrop-grayscale-0 { backdrop-filter: grayscale(0); }
+  .backdrop-sepia       { backdrop-filter: sepia(1); }
+  .backdrop-sepia-0     { backdrop-filter: sepia(0); }
+  .backdrop-invert      { backdrop-filter: invert(1); }
+  .backdrop-invert-0    { backdrop-filter: invert(0); }
+
+  /* Combined backdrop presets — common patterns */
+  .backdrop-dim {
+    backdrop-filter: brightness(0.7) saturate(0.8);
+  }
+
+  .backdrop-brighten {
+    backdrop-filter: brightness(1.15) saturate(1.1);
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     21. FILTER UTILITIES (element, not backdrop)
+  ──────────────────────────────────────────────────────── */
+
+  .filter-none      { filter: none; }
+
+  .brightness-0     { filter: brightness(0); }
+  .brightness-50    { filter: brightness(0.5); }
+  .brightness-75    { filter: brightness(0.75); }
+  .brightness-90    { filter: brightness(0.9); }
+  .brightness-95    { filter: brightness(0.95); }
+  .brightness-100   { filter: brightness(1); }
+  .brightness-105   { filter: brightness(1.05); }
+  .brightness-110   { filter: brightness(1.1); }
+  .brightness-125   { filter: brightness(1.25); }
+  .brightness-150   { filter: brightness(1.5); }
+  .brightness-200   { filter: brightness(2); }
+
+  .contrast-0   { filter: contrast(0); }
+  .contrast-50  { filter: contrast(0.5); }
+  .contrast-75  { filter: contrast(0.75); }
+  .contrast-100 { filter: contrast(1); }
+  .contrast-125 { filter: contrast(1.25); }
+  .contrast-150 { filter: contrast(1.5); }
+  .contrast-200 { filter: contrast(2); }
+
+  .saturate-0   { filter: saturate(0); }
+  .saturate-50  { filter: saturate(0.5); }
+  .saturate-100 { filter: saturate(1); }
+  .saturate-150 { filter: saturate(1.5); }
+  .saturate-200 { filter: saturate(2); }
+
+  .hue-rotate-0   { filter: hue-rotate(0deg); }
+  .hue-rotate-15  { filter: hue-rotate(15deg); }
+  .hue-rotate-30  { filter: hue-rotate(30deg); }
+  .hue-rotate-60  { filter: hue-rotate(60deg); }
+  .hue-rotate-90  { filter: hue-rotate(90deg); }
+  .hue-rotate-180 { filter: hue-rotate(180deg); }
+
+  .grayscale    { filter: grayscale(1); }
+  .grayscale-0  { filter: grayscale(0); }
+  .sepia        { filter: sepia(1); }
+  .sepia-0      { filter: sepia(0); }
+  .invert       { filter: invert(1); }
+  .invert-0     { filter: invert(0); }
+
+  /* Drop shadow filter (not box-shadow) */
+  .drop-shadow-sm {
+    filter: drop-shadow(0 1px 2px oklch(0 0 0 / 0.15));
+  }
+  .drop-shadow {
+    filter: drop-shadow(0 2px 6px oklch(0 0 0 / 0.20));
+  }
+  .drop-shadow-md {
+    filter: drop-shadow(0 4px 10px oklch(0 0 0 / 0.25));
+  }
+  .drop-shadow-lg {
+    filter: drop-shadow(0 8px 20px oklch(0 0 0 / 0.30));
+  }
+  .drop-shadow-xl {
+    filter: drop-shadow(0 16px 40px oklch(0 0 0 / 0.35));
+  }
+  .drop-shadow-none {
+    filter: drop-shadow(0 0 #0000);
+  }
+  .drop-shadow-primary {
+    filter: drop-shadow(0 4px 12px color-mix(in oklch, var(--color-primary) 40%, transparent));
+  }
+
+} /* end @layer aura.utilities — Phase 05 Part 2 */

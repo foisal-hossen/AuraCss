@@ -1,0 +1,1194 @@
+/* ============================================================
+   AURA CSS — Phase 13: Motion System (Part 1 of 2)
+   Version  : 1.0.0
+   Layer    : aura.motion
+   Depends  : Phase 01, 02, 03
+   ============================================================
+   PART 1 COVERS:
+   1.  Keyframe definitions — complete library
+   2.  Named animation classes
+   3.  Spin / loading animations
+   4.  Pulse / beat animations
+   5.  Bounce animations
+   6.  Fade animations (in/out, all directions)
+   7.  Slide animations (all directions)
+   8.  Scale animations
+   9.  Blur animations
+
+   AURA MOTION PHILOSOPHY:
+   - All animations respect prefers-reduced-motion
+   - Duration and easing use token system
+   - CSS-only where possible (no JS required)
+   - Composable — combine animation classes freely
+   ============================================================ */
+
+@layer aura.motion {
+
+  /* ────────────────────────────────────────────────────────
+     1. KEYFRAME LIBRARY
+  ──────────────────────────────────────────────────────── */
+
+  /* Spin */
+  @keyframes aura-spin {
+    from { rotate: 0deg; }
+    to   { rotate: 360deg; }
+  }
+
+  @keyframes aura-spin-reverse {
+    from { rotate: 360deg; }
+    to   { rotate: 0deg; }
+  }
+
+  /* Ping — expand and fade */
+  @keyframes aura-ping {
+    0%        { transform: scale(1); opacity: 1; }
+    75%, 100% { transform: scale(2.2); opacity: 0; }
+  }
+
+  /* Pulse — breathe opacity */
+  @keyframes aura-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+
+  /* Pulse scale — breathe size */
+  @keyframes aura-pulse-scale {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.04); }
+  }
+
+  /* Beat — quick scale pop */
+  @keyframes aura-beat {
+    0%, 100% { transform: scale(1); }
+    14%       { transform: scale(1.3); }
+    28%       { transform: scale(1); }
+    42%       { transform: scale(1.3); }
+    70%       { transform: scale(1); }
+  }
+
+  /* Bounce */
+  @keyframes aura-bounce {
+    0%, 100% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(-20%);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+
+  @keyframes aura-bounce-sm {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-6px); }
+  }
+
+  /* Float — gentle up/down hover */
+  @keyframes aura-float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+  }
+
+  /* Swing — rotation oscillation */
+  @keyframes aura-swing {
+    0%, 100% { transform: rotate(0deg); }
+    25%       { transform: rotate(8deg); }
+    75%       { transform: rotate(-8deg); }
+  }
+
+  /* Wobble */
+  @keyframes aura-wobble {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    15%       { transform: translateX(-8px) rotate(-5deg); }
+    30%       { transform: translateX(6px) rotate(3deg); }
+    45%       { transform: translateX(-4px) rotate(-3deg); }
+    60%       { transform: translateX(3px) rotate(2deg); }
+    75%       { transform: translateX(-2px) rotate(-1deg); }
+  }
+
+  /* Shake — horizontal */
+  @keyframes aura-shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80%      { transform: translateX(4px); }
+  }
+
+  /* Rubber band */
+  @keyframes aura-rubber {
+    0%   { transform: scale(1, 1); }
+    30%  { transform: scale(1.25, 0.75); }
+    40%  { transform: scale(0.75, 1.25); }
+    50%  { transform: scale(1.15, 0.85); }
+    65%  { transform: scale(0.95, 1.05); }
+    75%  { transform: scale(1.05, 0.95); }
+    100% { transform: scale(1, 1); }
+  }
+
+  /* Jello */
+  @keyframes aura-jello {
+    0%, 11.1%, 100% { transform: none; }
+    22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); }
+    33.3% { transform: skewX(6.25deg) skewY(6.25deg); }
+    44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); }
+    55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); }
+    66.6% { transform: skewX(-0.78125deg) skewY(-0.78125deg); }
+    77.7% { transform: skewX(0.390625deg) skewY(0.390625deg); }
+    88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); }
+  }
+
+  /* Fade in */
+  @keyframes aura-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Fade out */
+  @keyframes aura-fade-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  /* Fade in up */
+  @keyframes aura-fade-in-up {
+    from { opacity: 0; translate: 0 20px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  /* Fade in down */
+  @keyframes aura-fade-in-down {
+    from { opacity: 0; translate: 0 -20px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  /* Fade in left */
+  @keyframes aura-fade-in-left {
+    from { opacity: 0; translate: -20px 0; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  /* Fade in right */
+  @keyframes aura-fade-in-right {
+    from { opacity: 0; translate: 20px 0; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  /* Fade out up */
+  @keyframes aura-fade-out-up {
+    from { opacity: 1; translate: 0 0; }
+    to   { opacity: 0; translate: 0 -20px; }
+  }
+
+  /* Fade out down */
+  @keyframes aura-fade-out-down {
+    from { opacity: 1; translate: 0 0; }
+    to   { opacity: 0; translate: 0 20px; }
+  }
+
+  /* Fade out left */
+  @keyframes aura-fade-out-left {
+    from { opacity: 1; translate: 0 0; }
+    to   { opacity: 0; translate: -20px 0; }
+  }
+
+  /* Fade out right */
+  @keyframes aura-fade-out-right {
+    from { opacity: 1; translate: 0 0; }
+    to   { opacity: 0; translate: 20px 0; }
+  }
+
+  /* Slide in up */
+  @keyframes aura-slide-in-up {
+    from { translate: 0 100%; }
+    to   { translate: 0 0; }
+  }
+
+  /* Slide in down */
+  @keyframes aura-slide-in-down {
+    from { translate: 0 -100%; }
+    to   { translate: 0 0; }
+  }
+
+  /* Slide in left */
+  @keyframes aura-slide-in-left {
+    from { translate: -100% 0; }
+    to   { translate: 0 0; }
+  }
+
+  /* Slide in right */
+  @keyframes aura-slide-in-right {
+    from { translate: 100% 0; }
+    to   { translate: 0 0; }
+  }
+
+  /* Slide out up */
+  @keyframes aura-slide-out-up {
+    from { translate: 0 0; }
+    to   { translate: 0 -100%; }
+  }
+
+  /* Slide out down */
+  @keyframes aura-slide-out-down {
+    from { translate: 0 0; }
+    to   { translate: 0 100%; }
+  }
+
+  /* Slide out left */
+  @keyframes aura-slide-out-left {
+    from { translate: 0 0; }
+    to   { translate: -100% 0; }
+  }
+
+  /* Slide out right */
+  @keyframes aura-slide-out-right {
+    from { translate: 0 0; }
+    to   { translate: 100% 0; }
+  }
+
+  /* Scale in */
+  @keyframes aura-scale-in {
+    from { scale: 0; opacity: 0; }
+    to   { scale: 1; opacity: 1; }
+  }
+
+  /* Scale out */
+  @keyframes aura-scale-out {
+    from { scale: 1; opacity: 1; }
+    to   { scale: 0; opacity: 0; }
+  }
+
+  /* Scale in up — from small to full, slight upward motion */
+  @keyframes aura-scale-in-up {
+    from { scale: 0.85; opacity: 0; translate: 0 10px; }
+    to   { scale: 1; opacity: 1; translate: 0 0; }
+  }
+
+  /* Pop — spring scale */
+  @keyframes aura-pop {
+    0%   { scale: 0.8; opacity: 0; }
+    60%  { scale: 1.1; opacity: 1; }
+    100% { scale: 1; }
+  }
+
+  /* Zoom in */
+  @keyframes aura-zoom-in {
+    from { scale: 0.5; opacity: 0; }
+    to   { scale: 1; opacity: 1; }
+  }
+
+  /* Zoom out */
+  @keyframes aura-zoom-out {
+    from { scale: 1; opacity: 1; }
+    to   { scale: 0.5; opacity: 0; }
+  }
+
+  /* Blur in */
+  @keyframes aura-blur-in {
+    from { filter: blur(var(--blur-lg)); opacity: 0; }
+    to   { filter: blur(0); opacity: 1; }
+  }
+
+  /* Blur out */
+  @keyframes aura-blur-out {
+    from { filter: blur(0); opacity: 1; }
+    to   { filter: blur(var(--blur-lg)); opacity: 0; }
+  }
+
+  /* Flip in X */
+  @keyframes aura-flip-in-x {
+    from {
+      transform: perspective(600px) rotateX(-90deg);
+      opacity: 0;
+    }
+    to {
+      transform: perspective(600px) rotateX(0deg);
+      opacity: 1;
+    }
+  }
+
+  /* Flip in Y */
+  @keyframes aura-flip-in-y {
+    from {
+      transform: perspective(600px) rotateY(-90deg);
+      opacity: 0;
+    }
+    to {
+      transform: perspective(600px) rotateY(0deg);
+      opacity: 1;
+    }
+  }
+
+  /* Roll in */
+  @keyframes aura-roll-in {
+    from {
+      translate: -100% 0;
+      rotate: -120deg;
+      opacity: 0;
+    }
+    to {
+      translate: 0 0;
+      rotate: 0deg;
+      opacity: 1;
+    }
+  }
+
+  /* Typewriter cursor blink */
+  @keyframes aura-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* Marquee — horizontal scroll */
+  @keyframes aura-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* Marquee reverse */
+  @keyframes aura-marquee-reverse {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
+
+  /* Gradient shift */
+  @keyframes aura-gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50%       { background-position: 100% 50%; }
+  }
+
+  /* Gradient angle rotation */
+  @keyframes aura-gradient-rotate {
+    from { --aura-gradient-angle: 0deg; }
+    to   { --aura-gradient-angle: 360deg; }
+  }
+
+  /* Counter up — number counting effect */
+  @keyframes aura-count-up {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+
+  /* Draw — SVG stroke animation */
+  @keyframes aura-draw {
+    from { stroke-dashoffset: 1000; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  /* Morph — for SVG path morphing placeholder */
+  @keyframes aura-morph {
+    0%, 100% { border-radius: var(--radius-lg); }
+    50%       { border-radius: var(--radius-full); }
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     2. NAMED ANIMATION UTILITY CLASSES
+     All respect prefers-reduced-motion.
+  ──────────────────────────────────────────────────────── */
+
+  @media (prefers-reduced-motion: no-preference) {
+
+    /* Spin */
+    .animate-spin {
+      animation: aura-spin 1s linear infinite;
+    }
+    .animate-spin-slow {
+      animation: aura-spin 3s linear infinite;
+    }
+    .animate-spin-fast {
+      animation: aura-spin 0.5s linear infinite;
+    }
+    .animate-spin-reverse {
+      animation: aura-spin-reverse 1s linear infinite;
+    }
+
+    /* Ping */
+    .animate-ping {
+      animation: aura-ping 1.2s ease-out infinite;
+    }
+
+    /* Pulse */
+    .animate-pulse {
+      animation: aura-pulse 2s ease-in-out infinite;
+    }
+    .animate-pulse-scale {
+      animation: aura-pulse-scale 2s ease-in-out infinite;
+    }
+    .animate-pulse-slow {
+      animation: aura-pulse 3s ease-in-out infinite;
+    }
+
+    /* Beat */
+    .animate-beat {
+      animation: aura-beat 1.3s ease-in-out infinite;
+    }
+
+    /* Bounce */
+    .animate-bounce {
+      animation: aura-bounce 1s infinite;
+    }
+    .animate-bounce-sm {
+      animation: aura-bounce-sm 1.2s ease-in-out infinite;
+    }
+
+    /* Float */
+    .animate-float {
+      animation: aura-float 3s ease-in-out infinite;
+    }
+    .animate-float-slow {
+      animation: aura-float 5s ease-in-out infinite;
+    }
+
+    /* Swing */
+    .animate-swing {
+      animation: aura-swing 1.5s ease-in-out infinite;
+      transform-origin: top center;
+    }
+
+    /* Wobble */
+    .animate-wobble {
+      animation: aura-wobble 0.9s ease-in-out;
+    }
+
+    /* Shake */
+    .animate-shake {
+      animation: aura-shake 0.6s ease-in-out;
+    }
+
+    /* Rubber */
+    .animate-rubber {
+      animation: aura-rubber 0.9s var(--ease-spring);
+    }
+
+    /* Jello */
+    .animate-jello {
+      animation: aura-jello 0.9s both;
+    }
+
+    /* Fade in */
+    .animate-fade-in {
+      animation: aura-fade-in var(--duration-slow) var(--ease-out) both;
+    }
+    .animate-fade-in-fast {
+      animation: aura-fade-in var(--duration-base) var(--ease-out) both;
+    }
+    .animate-fade-out {
+      animation: aura-fade-out var(--duration-slow) var(--ease-out) both;
+    }
+
+    /* Fade in directions */
+    .animate-fade-in-up {
+      animation: aura-fade-in-up var(--duration-slow) var(--ease-out) both;
+    }
+    .animate-fade-in-down {
+      animation: aura-fade-in-down var(--duration-slow) var(--ease-out) both;
+    }
+    .animate-fade-in-left {
+      animation: aura-fade-in-left var(--duration-slow) var(--ease-out) both;
+    }
+    .animate-fade-in-right {
+      animation: aura-fade-in-right var(--duration-slow) var(--ease-out) both;
+    }
+
+    /* Fade out directions */
+    .animate-fade-out-up    { animation: aura-fade-out-up    var(--duration-slow) var(--ease-out) both; }
+    .animate-fade-out-down  { animation: aura-fade-out-down  var(--duration-slow) var(--ease-out) both; }
+    .animate-fade-out-left  { animation: aura-fade-out-left  var(--duration-slow) var(--ease-out) both; }
+    .animate-fade-out-right { animation: aura-fade-out-right var(--duration-slow) var(--ease-out) both; }
+
+    /* Slide in directions */
+    .animate-slide-in-up    { animation: aura-slide-in-up    var(--duration-slow) var(--ease-spring) both; }
+    .animate-slide-in-down  { animation: aura-slide-in-down  var(--duration-slow) var(--ease-spring) both; }
+    .animate-slide-in-left  { animation: aura-slide-in-left  var(--duration-slow) var(--ease-spring) both; }
+    .animate-slide-in-right { animation: aura-slide-in-right var(--duration-slow) var(--ease-spring) both; }
+
+    /* Slide out directions */
+    .animate-slide-out-up    { animation: aura-slide-out-up    var(--duration-slow) var(--ease-out) both; }
+    .animate-slide-out-down  { animation: aura-slide-out-down  var(--duration-slow) var(--ease-out) both; }
+    .animate-slide-out-left  { animation: aura-slide-out-left  var(--duration-slow) var(--ease-out) both; }
+    .animate-slide-out-right { animation: aura-slide-out-right var(--duration-slow) var(--ease-out) both; }
+
+    /* Scale */
+    .animate-scale-in    { animation: aura-scale-in    var(--duration-slow) var(--ease-spring) both; }
+    .animate-scale-out   { animation: aura-scale-out   var(--duration-slow) var(--ease-out) both; }
+    .animate-scale-in-up { animation: aura-scale-in-up var(--duration-slow) var(--ease-spring) both; }
+    .animate-pop         { animation: aura-pop         var(--duration-slow) var(--ease-spring) both; }
+    .animate-zoom-in     { animation: aura-zoom-in     var(--duration-slow) var(--ease-spring) both; }
+    .animate-zoom-out    { animation: aura-zoom-out    var(--duration-slow) var(--ease-out) both; }
+
+    /* Blur */
+    .animate-blur-in  { animation: aura-blur-in  var(--duration-slow) var(--ease-out) both; }
+    .animate-blur-out { animation: aura-blur-out var(--duration-slow) var(--ease-out) both; }
+
+    /* Flip */
+    .animate-flip-in-x { animation: aura-flip-in-x 0.5s var(--ease-out) both; }
+    .animate-flip-in-y { animation: aura-flip-in-y 0.5s var(--ease-out) both; }
+
+    /* Roll in */
+    .animate-roll-in { animation: aura-roll-in 0.6s var(--ease-out) both; }
+
+    /* Blink */
+    .animate-blink { animation: aura-blink 1s step-end infinite; }
+
+    /* Marquee */
+    .animate-marquee {
+      animation: aura-marquee 20s linear infinite;
+    }
+    .animate-marquee-fast {
+      animation: aura-marquee 10s linear infinite;
+    }
+    .animate-marquee-slow {
+      animation: aura-marquee 40s linear infinite;
+    }
+    .animate-marquee-reverse {
+      animation: aura-marquee-reverse 20s linear infinite;
+    }
+
+    /* Gradient */
+    .animate-gradient {
+      background-size: 200% 200%;
+      animation: aura-gradient-shift 4s ease infinite;
+    }
+    .animate-gradient-slow {
+      background-size: 300% 300%;
+      animation: aura-gradient-shift 8s ease infinite;
+    }
+
+    /* Morph */
+    .animate-morph {
+      animation: aura-morph 4s ease-in-out infinite;
+    }
+
+    /* Draw — for SVG */
+    .animate-draw {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: aura-draw 2s var(--ease-out) forwards;
+    }
+
+  } /* end prefers-reduced-motion: no-preference */
+
+  /* Safe static fallbacks for reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-spin,
+    .animate-spin-slow,
+    .animate-spin-fast,
+    .animate-spin-reverse,
+    .animate-ping,
+    .animate-pulse,
+    .animate-pulse-scale,
+    .animate-bounce,
+    .animate-bounce-sm,
+    .animate-float,
+    .animate-float-slow,
+    .animate-swing,
+    .animate-beat,
+    .animate-marquee,
+    .animate-marquee-fast,
+    .animate-marquee-slow,
+    .animate-marquee-reverse,
+    .animate-gradient,
+    .animate-gradient-slow,
+    .animate-morph,
+    .animate-glow-pulse,
+    .animate-wobble,
+    .animate-shake,
+    .animate-rubber,
+    .animate-jello {
+      animation: none !important;
+    }
+
+    .animate-fade-in,
+    .animate-fade-in-fast,
+    .animate-fade-in-up,
+    .animate-fade-in-down,
+    .animate-fade-in-left,
+    .animate-fade-in-right,
+    .animate-scale-in,
+    .animate-scale-in-up,
+    .animate-pop,
+    .animate-zoom-in,
+    .animate-blur-in,
+    .animate-flip-in-x,
+    .animate-flip-in-y,
+    .animate-slide-in-up,
+    .animate-slide-in-down,
+    .animate-slide-in-left,
+    .animate-slide-in-right,
+    .animate-roll-in {
+      animation: none !important;
+      opacity: 1 !important;
+      translate: 0 0 !important;
+      scale: 1 !important;
+      filter: none !important;
+    }
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     3. ANIMATE-NONE
+  ──────────────────────────────────────────────────────── */
+
+  .animate-none { animation: none; }
+
+} /* end Part 1 */
+/* ============================================================
+   AURA CSS — Phase 13: Motion System (Part 2 of 2)
+   ============================================================
+   PART 2 COVERS:
+   4.  CSS-only Scroll Reveal — AURA Exclusive
+   5.  Stagger system — AURA Exclusive
+   6.  Hover motion effects
+   7.  Page transition helpers
+   8.  Marquee component preset
+   9.  Loading state animations
+   10. View transition API support
+   ============================================================ */
+
+@layer aura.motion {
+
+  /* ────────────────────────────────────────────────────────
+     4. CSS-ONLY SCROLL REVEAL — AURA Exclusive
+     Uses @keyframes + animation-timeline: scroll() and
+     animation-range for true CSS scroll animations.
+     Also includes the IntersectionObserver-ready class
+     pattern for broader browser support.
+
+     TWO APPROACHES:
+     A) Pure CSS (scroll timeline — Chrome 115+)
+     B) JS-assisted (add .revealed class via IntersectionObserver)
+        — works everywhere, tiny JS footprint
+  ──────────────────────────────────────────────────────── */
+
+  /* ── Approach A: Pure CSS Scroll Timeline ── */
+  @supports (animation-timeline: scroll()) {
+
+    @keyframes aura-reveal-up {
+      from { opacity: 0; translate: 0 40px; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+
+    @keyframes aura-reveal-down {
+      from { opacity: 0; translate: 0 -40px; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+
+    @keyframes aura-reveal-left {
+      from { opacity: 0; translate: -40px 0; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+
+    @keyframes aura-reveal-right {
+      from { opacity: 0; translate: 40px 0; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+
+    @keyframes aura-reveal-scale {
+      from { opacity: 0; scale: 0.85; }
+      to   { opacity: 1; scale: 1; }
+    }
+
+    @keyframes aura-reveal-blur {
+      from { opacity: 0; filter: blur(12px); }
+      to   { opacity: 1; filter: blur(0); }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+
+      .scroll-reveal {
+        animation: aura-reveal-up linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+
+      .scroll-reveal-up {
+        animation: aura-reveal-up linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+
+      .scroll-reveal-down {
+        animation: aura-reveal-down linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+
+      .scroll-reveal-left {
+        animation: aura-reveal-left linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+
+      .scroll-reveal-right {
+        animation: aura-reveal-right linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+
+      .scroll-reveal-scale {
+        animation: aura-reveal-scale linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+
+      .scroll-reveal-blur {
+        animation: aura-reveal-blur linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+
+      /* Range variants */
+      .scroll-range-early  { animation-range: entry 0% entry 20%; }
+      .scroll-range-normal { animation-range: entry 0% entry 30%; }
+      .scroll-range-late   { animation-range: entry 10% entry 40%; }
+      .scroll-range-slow   { animation-range: entry 0% entry 50%; }
+    }
+  }
+
+  /* ── Approach B: IntersectionObserver-ready classes ── */
+  /* Initial hidden state */
+  .reveal {
+    opacity: 0;
+    translate: 0 28px;
+    transition:
+      opacity   var(--duration-slower) var(--ease-out),
+      translate var(--duration-slower) var(--ease-out);
+  }
+
+  .reveal-up     { opacity: 0; translate: 0 28px; transition: opacity var(--duration-slower) var(--ease-out), translate var(--duration-slower) var(--ease-out); }
+  .reveal-down   { opacity: 0; translate: 0 -28px; transition: opacity var(--duration-slower) var(--ease-out), translate var(--duration-slower) var(--ease-out); }
+  .reveal-left   { opacity: 0; translate: -28px 0; transition: opacity var(--duration-slower) var(--ease-out), translate var(--duration-slower) var(--ease-out); }
+  .reveal-right  { opacity: 0; translate: 28px 0; transition: opacity var(--duration-slower) var(--ease-out), translate var(--duration-slower) var(--ease-out); }
+  .reveal-scale  { opacity: 0; scale: 0.88; transition: opacity var(--duration-slower) var(--ease-spring), scale var(--duration-slower) var(--ease-spring); }
+  .reveal-blur   { opacity: 0; filter: blur(12px); transition: opacity var(--duration-slower) var(--ease-out), filter var(--duration-slower) var(--ease-out); }
+  .reveal-fade   { opacity: 0; transition: opacity var(--duration-slower) var(--ease-out); }
+
+  /* Revealed state — add this class via JS IntersectionObserver */
+  .reveal.is-visible,
+  .reveal-up.is-visible,
+  .reveal-down.is-visible,
+  .reveal-left.is-visible,
+  .reveal-right.is-visible {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .reveal-scale.is-visible {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .reveal-blur.is-visible {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  .reveal-fade.is-visible {
+    opacity: 1;
+  }
+
+  /* Reduced motion — show immediately */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal-up, .reveal-down,
+    .reveal-left, .reveal-right,
+    .reveal-scale, .reveal-blur,
+    .reveal-fade {
+      opacity: 1 !important;
+      translate: 0 0 !important;
+      scale: 1 !important;
+      filter: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* Minimal IntersectionObserver script — include in your HTML:
+  <script>
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          obs.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll(
+      '.reveal,.reveal-up,.reveal-down,.reveal-left,
+       .reveal-right,.reveal-scale,.reveal-blur,.reveal-fade'
+    ).forEach(el => obs.observe(el));
+  </script>
+  */
+
+
+  /* ────────────────────────────────────────────────────────
+     5. STAGGER SYSTEM — AURA Exclusive
+     Apply delays to children for sequential animation.
+     Works with any of the reveal/animate classes.
+
+     Usage:
+       <div class="stagger">
+         <div class="reveal-up">1st — no delay</div>
+         <div class="reveal-up">2nd — 100ms delay</div>
+         <div class="reveal-up">3rd — 200ms delay</div>
+       </div>
+  ──────────────────────────────────────────────────────── */
+
+  /* Auto stagger via CSS :nth-child */
+  .stagger > *:nth-child(1)  { animation-delay:   0ms; transition-delay:   0ms; }
+  .stagger > *:nth-child(2)  { animation-delay: 100ms; transition-delay: 100ms; }
+  .stagger > *:nth-child(3)  { animation-delay: 200ms; transition-delay: 200ms; }
+  .stagger > *:nth-child(4)  { animation-delay: 300ms; transition-delay: 300ms; }
+  .stagger > *:nth-child(5)  { animation-delay: 400ms; transition-delay: 400ms; }
+  .stagger > *:nth-child(6)  { animation-delay: 500ms; transition-delay: 500ms; }
+  .stagger > *:nth-child(7)  { animation-delay: 600ms; transition-delay: 600ms; }
+  .stagger > *:nth-child(8)  { animation-delay: 700ms; transition-delay: 700ms; }
+  .stagger > *:nth-child(9)  { animation-delay: 800ms; transition-delay: 800ms; }
+  .stagger > *:nth-child(10) { animation-delay: 900ms; transition-delay: 900ms; }
+  .stagger > *:nth-child(11) { animation-delay:1000ms; transition-delay:1000ms; }
+  .stagger > *:nth-child(12) { animation-delay:1100ms; transition-delay:1100ms; }
+
+  /* Fast stagger — 50ms interval */
+  .stagger-fast > *:nth-child(1)  { animation-delay:  0ms; transition-delay:  0ms; }
+  .stagger-fast > *:nth-child(2)  { animation-delay: 50ms; transition-delay: 50ms; }
+  .stagger-fast > *:nth-child(3)  { animation-delay:100ms; transition-delay:100ms; }
+  .stagger-fast > *:nth-child(4)  { animation-delay:150ms; transition-delay:150ms; }
+  .stagger-fast > *:nth-child(5)  { animation-delay:200ms; transition-delay:200ms; }
+  .stagger-fast > *:nth-child(6)  { animation-delay:250ms; transition-delay:250ms; }
+  .stagger-fast > *:nth-child(7)  { animation-delay:300ms; transition-delay:300ms; }
+  .stagger-fast > *:nth-child(8)  { animation-delay:350ms; transition-delay:350ms; }
+  .stagger-fast > *:nth-child(9)  { animation-delay:400ms; transition-delay:400ms; }
+  .stagger-fast > *:nth-child(10) { animation-delay:450ms; transition-delay:450ms; }
+  .stagger-fast > *:nth-child(11) { animation-delay:500ms; transition-delay:500ms; }
+  .stagger-fast > *:nth-child(12) { animation-delay:550ms; transition-delay:550ms; }
+
+  /* Slow stagger — 200ms interval */
+  .stagger-slow > *:nth-child(1)  { animation-delay:   0ms; transition-delay:   0ms; }
+  .stagger-slow > *:nth-child(2)  { animation-delay: 200ms; transition-delay: 200ms; }
+  .stagger-slow > *:nth-child(3)  { animation-delay: 400ms; transition-delay: 400ms; }
+  .stagger-slow > *:nth-child(4)  { animation-delay: 600ms; transition-delay: 600ms; }
+  .stagger-slow > *:nth-child(5)  { animation-delay: 800ms; transition-delay: 800ms; }
+  .stagger-slow > *:nth-child(6)  { animation-delay:1000ms; transition-delay:1000ms; }
+  .stagger-slow > *:nth-child(7)  { animation-delay:1200ms; transition-delay:1200ms; }
+  .stagger-slow > *:nth-child(8)  { animation-delay:1400ms; transition-delay:1400ms; }
+
+
+  /* ────────────────────────────────────────────────────────
+     6. HOVER MOTION EFFECTS
+     Micro-interactions for interactive elements.
+  ──────────────────────────────────────────────────────── */
+
+  /* Lift on hover */
+  .hover-lift {
+    transition: translate var(--duration-base) var(--ease-spring), box-shadow var(--duration-base) var(--ease-out);
+  }
+  .hover-lift:hover { translate: 0 -3px; box-shadow: var(--shadow-lg); }
+
+  .hover-lift-sm {
+    transition: translate var(--duration-fast) var(--ease-spring), box-shadow var(--duration-fast) var(--ease-out);
+  }
+  .hover-lift-sm:hover { translate: 0 -2px; box-shadow: var(--shadow-md); }
+
+  .hover-lift-lg {
+    transition: translate var(--duration-slow) var(--ease-spring), box-shadow var(--duration-slow) var(--ease-out);
+  }
+  .hover-lift-lg:hover { translate: 0 -6px; box-shadow: var(--shadow-xl); }
+
+  /* Grow on hover */
+  .hover-grow {
+    transition: scale var(--duration-base) var(--ease-spring);
+  }
+  .hover-grow:hover { scale: 1.05; }
+
+  .hover-grow-sm:hover { scale: 1.02; }
+  .hover-grow-lg:hover { scale: 1.10; }
+
+  .hover-grow-sm {
+    transition: scale var(--duration-fast) var(--ease-spring);
+  }
+
+  .hover-grow-lg {
+    transition: scale var(--duration-base) var(--ease-spring);
+  }
+
+  /* Shrink on hover */
+  .hover-shrink {
+    transition: scale var(--duration-base) var(--ease-spring);
+  }
+  .hover-shrink:hover { scale: 0.95; }
+
+  /* Tilt on hover — 3D perspective */
+  .hover-tilt {
+    transition: transform var(--duration-base) var(--ease-out);
+    transform-style: preserve-3d;
+  }
+  .hover-tilt:hover {
+    transform: perspective(600px) rotateY(8deg) rotateX(4deg);
+  }
+
+  .hover-tilt-r:hover {
+    transform: perspective(600px) rotateY(-8deg) rotateX(4deg);
+  }
+
+  /* Rotate on hover */
+  .hover-rotate {
+    transition: rotate var(--duration-base) var(--ease-spring);
+  }
+  .hover-rotate:hover { rotate: 6deg; }
+
+  .hover-rotate-r:hover { rotate: -6deg; }
+  .hover-rotate-180:hover { rotate: 180deg; }
+  .hover-rotate-90:hover  { rotate: 90deg; }
+
+  /* Slide on hover — reveal content */
+  .hover-slide-up {
+    transition: translate var(--duration-base) var(--ease-out);
+  }
+  .hover-slide-up:hover { translate: 0 -4px; }
+
+  .hover-slide-right {
+    transition: translate var(--duration-base) var(--ease-out);
+  }
+  .hover-slide-right:hover { translate: 4px 0; }
+
+  /* Press — push down on click */
+  .press {
+    transition: scale var(--duration-fast) var(--ease-out);
+  }
+  .press:active { scale: 0.96; }
+
+  .press-sm:active { scale: 0.98; }
+  .press-lg:active { scale: 0.92; }
+
+  .press-sm, .press-lg {
+    transition: scale var(--duration-fast) var(--ease-out);
+  }
+
+  /* Spring pop on hover */
+  .hover-pop {
+    transition: scale var(--duration-base) var(--ease-spring);
+  }
+  .hover-pop:hover { scale: 1.08; }
+
+  /* Icon rotation on hover (for chevrons, arrows) */
+  .hover-arrow-right {
+    transition: translate var(--duration-base) var(--ease-out);
+  }
+  .hover-arrow-right:hover .icon,
+  .hover-arrow-right:hover svg { translate: 3px 0; }
+
+  .hover-arrow-up {
+    transition: translate var(--duration-base) var(--ease-out);
+  }
+  .hover-arrow-up:hover .icon,
+  .hover-arrow-up:hover svg { translate: 0 -3px; }
+
+
+  /* ────────────────────────────────────────────────────────
+     7. MARQUEE COMPONENT PRESET
+  ──────────────────────────────────────────────────────── */
+
+  .marquee-wrapper {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: aura-marquee 20s linear infinite;
+    }
+    .marquee-track-slow {
+      display: flex;
+      width: max-content;
+      animation: aura-marquee 40s linear infinite;
+    }
+    .marquee-track-fast {
+      display: flex;
+      width: max-content;
+      animation: aura-marquee 10s linear infinite;
+    }
+    .marquee-track-reverse {
+      display: flex;
+      width: max-content;
+      animation: aura-marquee-reverse 20s linear infinite;
+    }
+    /* Pause on hover */
+    .marquee-wrapper:hover .marquee-track,
+    .marquee-wrapper:hover .marquee-track-slow,
+    .marquee-wrapper:hover .marquee-track-fast,
+    .marquee-wrapper:hover .marquee-track-reverse {
+      animation-play-state: paused;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track,
+    .marquee-track-slow,
+    .marquee-track-fast,
+    .marquee-track-reverse {
+      animation: none;
+    }
+  }
+
+
+  /* ────────────────────────────────────────────────────────
+     8. LOADING STATE ANIMATIONS
+  ──────────────────────────────────────────────────────── */
+
+  /* Spinner */
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid color-mix(in oklch, var(--color-primary) 25%, transparent);
+    border-top-color: var(--color-primary);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .spinner { animation: aura-spin 0.7s linear infinite; }
+  }
+
+  .spinner-sm { width: 14px; height: 14px; border-width: 2px; }
+  .spinner-md { width: 20px; height: 20px; border-width: 2px; }
+  .spinner-lg { width: 28px; height: 28px; border-width: 3px; }
+  .spinner-xl { width: 40px; height: 40px; border-width: 4px; }
+
+  .spinner-secondary {
+    border-color: color-mix(in oklch, var(--color-secondary) 25%, transparent);
+    border-top-color: var(--color-secondary);
+  }
+
+  .spinner-white {
+    border-color: oklch(1 0 0 / 0.25);
+    border-top-color: oklch(1 0 0);
+  }
+
+  /* Dots loading */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes aura-dot-bounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40%           { transform: scale(1.0); opacity: 1; }
+    }
+
+    .loading-dots {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .loading-dots > * {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      animation: aura-dot-bounce 1.2s ease-in-out infinite;
+    }
+
+    .loading-dots > *:nth-child(1) { animation-delay: 0ms; }
+    .loading-dots > *:nth-child(2) { animation-delay: 160ms; }
+    .loading-dots > *:nth-child(3) { animation-delay: 320ms; }
+  }
+
+  /* Skeleton pulse — for content placeholders */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes aura-skeleton {
+      0%   { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+
+    .skeleton {
+      background: linear-gradient(
+        105deg,
+        var(--surface-raised) 40%,
+        color-mix(in oklch, var(--text-primary) 6%, var(--surface-raised)) 50%,
+        var(--surface-raised) 60%
+      );
+      background-size: 200% 100%;
+      animation: aura-skeleton 1.6s ease-in-out infinite;
+      border-radius: var(--radius-sm);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton {
+      background: var(--surface-raised);
+      border-radius: var(--radius-sm);
+    }
+  }
+
+  /* Skeleton size helpers */
+  .skeleton-text    { height: 1em; }
+  .skeleton-text-sm { height: 0.75em; }
+  .skeleton-text-lg { height: 1.5em; }
+  .skeleton-circle  { border-radius: var(--radius-full); }
+  .skeleton-rect    { border-radius: var(--radius-sm); }
+  .skeleton-card    { height: 200px; border-radius: var(--radius-lg); }
+
+
+  /* ────────────────────────────────────────────────────────
+     9. VIEW TRANSITION API — Modern page transitions
+     Works with document.startViewTransition()
+  ──────────────────────────────────────────────────────── */
+
+  @keyframes aura-vt-fade-in {
+    from { opacity: 0; translate: 0 8px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+
+  @keyframes aura-vt-fade-out {
+    from { opacity: 1; translate: 0 0; }
+    to   { opacity: 0; translate: 0 -8px; }
+  }
+
+  @keyframes aura-vt-slide-in {
+    from { translate: 100% 0; }
+    to   { translate: 0 0; }
+  }
+
+  @keyframes aura-vt-slide-out {
+    from { translate: 0 0; }
+    to   { translate: -30% 0; opacity: 0; }
+  }
+
+  /* Default view transition — fade */
+  @media (prefers-reduced-motion: no-preference) {
+
+    ::view-transition-old(root) {
+      animation: aura-vt-fade-out 200ms var(--ease-out) both;
+    }
+
+    ::view-transition-new(root) {
+      animation: aura-vt-fade-in 300ms var(--ease-out) both;
+    }
+
+    /* Slide transition variant — add data-vt="slide" to <html> */
+    [data-vt="slide"]::view-transition-old(root) {
+      animation: aura-vt-slide-out 280ms var(--ease-out) both;
+    }
+
+    [data-vt="slide"]::view-transition-new(root) {
+      animation: aura-vt-slide-in 320ms var(--ease-spring) both;
+    }
+
+    /* Shared element transitions — name specific elements */
+    .vt-hero   { view-transition-name: hero; }
+    .vt-card   { view-transition-name: card; }
+    .vt-image  { view-transition-name: image; }
+    .vt-title  { view-transition-name: title; }
+    .vt-nav    { view-transition-name: nav; }
+
+    /* Isolate element from root transition */
+    .vt-none {
+      view-transition-name: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none;
+    }
+  }
+
+} /* end @layer aura.motion — Phase 13 */
