@@ -450,6 +450,8 @@
   /* Images — prevent dragging by default */
   img {
     -webkit-user-drag: none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
     user-select: none;
   }
 
@@ -1816,7 +1818,9 @@
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     background-size: 200% 200%;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
     background-clip: text;
   }
 
@@ -1824,7 +1828,9 @@
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-accent));
     background-size: 300% 300%;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
     background-clip: text;
     animation: aura-grad-shift 4s ease infinite;
   }
@@ -1837,23 +1843,28 @@
   .text-gradient-to-r {
     background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
   .text-gradient-to-br {
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
   .text-gradient-primary-accent {
     background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
   .text-gradient-secondary-accent {
     background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
   .text-gradient-rainbow {
     background: linear-gradient(135deg, oklch(.55 .22 270), oklch(.65 .22 330), oklch(.72 .20 25), oklch(.75 .18 75), oklch(.65 .20 145), oklch(.68 .16 215));
     background-size: 300% 300%;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     animation: aura-grad-shift 6s ease infinite;
   }
 
@@ -2922,8 +2933,10 @@
   .bg-clip-padding { background-clip: padding-box; }
   .bg-clip-content { background-clip: content-box; }
   .bg-clip-text    {
+    -webkit-background-clip: text;
     background-clip: text;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
   }
@@ -3063,10 +3076,12 @@
 
   /* Combined backdrop presets — common patterns */
   .backdrop-dim {
+    -webkit-backdrop-filter:brightness(0.7) saturate(0.8);
     backdrop-filter: brightness(0.7) saturate(0.8);
   }
 
   .backdrop-brighten {
+    -webkit-backdrop-filter:brightness(1.15) saturate(1.1);
     backdrop-filter: brightness(1.15) saturate(1.1);
   }
 
@@ -5459,11 +5474,13 @@
 
   .box-decoration-clone {
     -webkit-box-decoration-break: clone;
+    -webkit-box-decoration-break:clone;
     box-decoration-break: clone;
   }
 
   .box-decoration-slice {
     -webkit-box-decoration-break: slice;
+    -webkit-box-decoration-break:slice;
     box-decoration-break: slice;
   }
 
@@ -6527,7 +6544,9 @@
   .hover\:text-gradient:hover {
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
     background-clip: text;
   }
 
@@ -7280,6 +7299,7 @@
   /* Base glass */
   .glass {
     background: color-mix(in oklch, var(--surface-base) 12%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-lg));
     backdrop-filter: blur(var(--blur-lg));
     -webkit-backdrop-filter: blur(var(--blur-lg));
     border: 1px solid color-mix(in oklch, white 18%, transparent);
@@ -7291,6 +7311,7 @@
   /* Glass variants by opacity */
   .glass-sm {
     background: color-mix(in oklch, var(--surface-base) 8%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-md));
     backdrop-filter: blur(var(--blur-md));
     -webkit-backdrop-filter: blur(var(--blur-md));
     border: 1px solid color-mix(in oklch, white 12%, transparent);
@@ -7298,6 +7319,7 @@
 
   .glass-md {
     background: color-mix(in oklch, var(--surface-base) 18%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-xl));
     backdrop-filter: blur(var(--blur-xl));
     -webkit-backdrop-filter: blur(var(--blur-xl));
     border: 1px solid color-mix(in oklch, white 20%, transparent);
@@ -7308,6 +7330,7 @@
 
   .glass-lg {
     background: color-mix(in oklch, var(--surface-base) 25%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-2xl));
     backdrop-filter: blur(var(--blur-2xl));
     -webkit-backdrop-filter: blur(var(--blur-2xl));
     border: 1px solid color-mix(in oklch, white 25%, transparent);
@@ -7318,6 +7341,7 @@
 
   .glass-xl {
     background: color-mix(in oklch, var(--surface-base) 35%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-3xl));
     backdrop-filter: blur(var(--blur-3xl));
     -webkit-backdrop-filter: blur(var(--blur-3xl));
     border: 1px solid color-mix(in oklch, white 30%, transparent);
@@ -7329,6 +7353,7 @@
   /* Dark glass — for dark backgrounds */
   .glass-dark {
     background: color-mix(in oklch, oklch(0 0 0) 40%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-lg));
     backdrop-filter: blur(var(--blur-lg));
     -webkit-backdrop-filter: blur(var(--blur-lg));
     border: 1px solid color-mix(in oklch, white 8%, transparent);
@@ -7339,6 +7364,7 @@
 
   .glass-dark-sm {
     background: color-mix(in oklch, oklch(0 0 0) 25%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-md));
     backdrop-filter: blur(var(--blur-md));
     -webkit-backdrop-filter: blur(var(--blur-md));
     border: 1px solid color-mix(in oklch, white 5%, transparent);
@@ -7347,6 +7373,7 @@
   /* Colored glass — tinted with brand color */
   .glass-primary {
     background: color-mix(in oklch, var(--color-primary) 15%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-lg));
     backdrop-filter: blur(var(--blur-lg));
     -webkit-backdrop-filter: blur(var(--blur-lg));
     border: 1px solid color-mix(in oklch, var(--color-primary) 30%, transparent);
@@ -7357,6 +7384,7 @@
 
   .glass-secondary {
     background: color-mix(in oklch, var(--color-secondary) 15%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-lg));
     backdrop-filter: blur(var(--blur-lg));
     -webkit-backdrop-filter: blur(var(--blur-lg));
     border: 1px solid color-mix(in oklch, var(--color-secondary) 30%, transparent);
@@ -7367,6 +7395,7 @@
 
   .glass-accent {
     background: color-mix(in oklch, var(--color-accent) 12%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-lg));
     backdrop-filter: blur(var(--blur-lg));
     -webkit-backdrop-filter: blur(var(--blur-lg));
     border: 1px solid color-mix(in oklch, var(--color-accent) 28%, transparent);
@@ -7606,6 +7635,7 @@
   .surface-frosted {
     position: relative;
     background: color-mix(in oklch, var(--surface-base) 70%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-xl));
     backdrop-filter: blur(var(--blur-xl));
     -webkit-backdrop-filter: blur(var(--blur-xl));
     border: 1px solid color-mix(in oklch, white 15%, transparent);
@@ -7632,6 +7662,7 @@
   .surface-premium {
     position: relative;
     background: color-mix(in oklch, var(--surface-base) 85%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-md));
     backdrop-filter: blur(var(--blur-md));
     -webkit-backdrop-filter: blur(var(--blur-md));
     border: 1px solid color-mix(in oklch, var(--color-primary) 20%, transparent);
@@ -7746,6 +7777,7 @@
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
+    -webkit-mask-composite:xor;
     mask-composite: exclude;
     pointer-events: none;
   }
@@ -7820,50 +7852,59 @@
 
   /* Fade out bottom */
   .mask-b {
+    -webkit-mask-image:linear-gradient(to bottom, black 60%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
   }
 
   .mask-b-from-50 {
+    -webkit-mask-image:linear-gradient(to bottom, black 50%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
   }
 
   .mask-b-from-75 {
+    -webkit-mask-image:linear-gradient(to bottom, black 75%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
   }
 
   /* Fade out top */
   .mask-t {
+    -webkit-mask-image:linear-gradient(to top, black 60%, transparent 100%);
     mask-image: linear-gradient(to top, black 60%, transparent 100%);
     -webkit-mask-image: linear-gradient(to top, black 60%, transparent 100%);
   }
 
   .mask-t-from-50 {
+    -webkit-mask-image:linear-gradient(to top, black 50%, transparent 100%);
     mask-image: linear-gradient(to top, black 50%, transparent 100%);
     -webkit-mask-image: linear-gradient(to top, black 50%, transparent 100%);
   }
 
   /* Fade out right */
   .mask-r {
+    -webkit-mask-image:linear-gradient(to right, black 60%, transparent 100%);
     mask-image: linear-gradient(to right, black 60%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
   }
 
   .mask-r-from-50 {
+    -webkit-mask-image:linear-gradient(to right, black 50%, transparent 100%);
     mask-image: linear-gradient(to right, black 50%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
   }
 
   /* Fade out left */
   .mask-l {
+    -webkit-mask-image:linear-gradient(to left, black 60%, transparent 100%);
     mask-image: linear-gradient(to left, black 60%, transparent 100%);
     -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);
   }
 
   /* Fade both horizontal edges */
   .mask-x {
+    -webkit-mask-image:linear-gradient(
     mask-image: linear-gradient(
       to right,
       transparent 0%,
@@ -7882,6 +7923,7 @@
 
   /* Fade both vertical edges */
   .mask-y {
+    -webkit-mask-image:linear-gradient(
     mask-image: linear-gradient(
       to bottom,
       transparent 0%,
@@ -7900,17 +7942,20 @@
 
   /* Radial mask — reveals center, fades edges */
   .mask-radial {
+    -webkit-mask-image:radial-gradient(ellipse 80% 80% at center, black 40%, transparent 100%);
     mask-image: radial-gradient(ellipse 80% 80% at center, black 40%, transparent 100%);
     -webkit-mask-image: radial-gradient(ellipse 80% 80% at center, black 40%, transparent 100%);
   }
 
   .mask-radial-sm {
+    -webkit-mask-image:radial-gradient(ellipse 60% 60% at center, black 30%, transparent 100%);
     mask-image: radial-gradient(ellipse 60% 60% at center, black 30%, transparent 100%);
     -webkit-mask-image: radial-gradient(ellipse 60% 60% at center, black 30%, transparent 100%);
   }
 
   /* None */
   .mask-none {
+    -webkit-mask-image:none;
     mask-image: none;
     -webkit-mask-image: none;
   }
@@ -8175,6 +8220,7 @@
 
   .card-glass {
     background: color-mix(in oklch, var(--surface-base) 12%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-lg));
     backdrop-filter: blur(var(--blur-lg));
     -webkit-backdrop-filter: blur(var(--blur-lg));
     border: 1px solid color-mix(in oklch, white 18%, transparent);
@@ -9574,6 +9620,8 @@
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
     user-select: none;
     appearance: none;
     outline: none;
@@ -9730,6 +9778,7 @@
   /* ── Glass variant ── */
   .btn--glass {
     background: color-mix(in oklch, var(--surface-base) 15%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-md));
     backdrop-filter: blur(var(--blur-md));
     -webkit-backdrop-filter: blur(var(--blur-md));
     border-color: color-mix(in oklch, white 20%, transparent);
@@ -10178,6 +10227,8 @@
     align-items: center;
     gap: var(--space-2-5);
     cursor: pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
     user-select: none;
   }
 
@@ -10249,6 +10300,8 @@
     align-items: center;
     gap: var(--space-2-5);
     cursor: pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
     user-select: none;
   }
 
@@ -10316,6 +10369,8 @@
     align-items: center;
     gap: var(--space-2-5);
     cursor: pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
     user-select: none;
   }
 
@@ -10601,6 +10656,7 @@
 
   .card--glass {
     background: color-mix(in oklch, var(--surface-base) 12%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-lg));
     backdrop-filter: blur(var(--blur-lg));
     -webkit-backdrop-filter: blur(var(--blur-lg));
     border-color: color-mix(in oklch, white 18%, transparent);
@@ -10660,6 +10716,7 @@
     height: var(--nav-height);
     padding-inline: var(--space-8);
     background: color-mix(in oklch, var(--surface-base) 85%, transparent);
+    -webkit-backdrop-filter:blur(var(--blur-xl));
     backdrop-filter: blur(var(--blur-xl));
     -webkit-backdrop-filter: blur(var(--blur-xl));
     border-bottom: 1px solid var(--surface-border);
@@ -10795,6 +10852,7 @@
     align-items: center;
     justify-content: center;
     padding: var(--space-6);
+    -webkit-backdrop-filter:blur(var(--blur-xs));
     backdrop-filter: blur(var(--blur-xs));
   }
 
@@ -11385,6 +11443,8 @@
     color: var(--text-primary);
     cursor: pointer;
     list-style: none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
     user-select: none;
     transition: background var(--duration-fast);
   }

@@ -296,4 +296,3 @@ bunx aura migrate --report    # detailed report
 - 🐙 GitHub: https://github.com/aura-css/aura
 
 **MIT © AURA CSS**
-# AuraCss

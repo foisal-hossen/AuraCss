@@ -1,11 +1,20 @@
 {
   "name": "@aura/core",
   "version": "1.0.0",
-  "description": "AURA CSS — Adaptive Utility & Responsive Architecture. OKLCH-powered, AI-intelligent CSS framework.",
-  "keywords": ["css", "css-framework", "utility-css", "design-system", "oklch", "dark-mode", "tailwind-alternative"],
+  "description": "AURA CSS — Adaptive Utility & Responsive Architecture. OKLCH-powered CSS framework built with Lightning CSS (Rust).",
+  "keywords": [
+    "css", "css-framework", "utility-css", "design-system",
+    "oklch", "dark-mode", "tailwind-alternative", "lightning-css",
+    "rust", "zero-breakpoints"
+  ],
   "homepage": "https://aura-css.dev",
-  "repository": { "type": "git", "url": "https://github.com/aura-css/aura" },
-  "bugs": { "url": "https://github.com/aura-css/aura/issues" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/foisal-hossen/AuraCss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/foisal-hossen/AuraCss/issues"
+  },
   "license": "MIT",
   "type": "module",
 
@@ -50,16 +59,23 @@
     "dist/",
     "css/",
     "packages/",
+    "scripts/",
     "README.md",
     "LICENSE"
   ],
 
   "scripts": {
-    "dev":       "bun run packages/cli/index.ts dev",
-    "build":     "bun run packages/cli/index.ts build",
-    "migrate":   "bun run packages/cli/index.ts migrate",
-    "audit":     "bun run packages/cli/index.ts audit",
-    "themes":    "bun run packages/cli/index.ts themes"
+    "build":       "bun run scripts/build.ts",
+    "build:watch": "bun run scripts/build.ts --watch",
+    "dev":         "bun run packages/cli/index.ts dev",
+    "migrate":     "bun run packages/cli/index.ts migrate",
+    "audit":       "bun run packages/cli/index.ts audit",
+    "themes":      "bun run packages/cli/index.ts themes",
+    "typecheck":   "tsc --noEmit"
+  },
+
+  "dependencies": {
+    "lightningcss": "^1.25.0"
   },
 
   "peerDependencies": {
@@ -68,12 +84,13 @@
   "peerDependenciesMeta": {
     "vite": { "optional": true }
   },
+
   "devDependencies": {
-    "typescript":   "^5.4.0",
-    "lightningcss": "^1.25.0",
-    "glob":         "^11.0.0",
-    "vite":         "^5.0.0"
+    "typescript": "^5.4.0",
+    "glob":       "^11.0.0",
+    "vite":       "^5.0.0"
   },
+
   "engines": {
     "bun":  ">=1.1.0",
     "node": ">=20.0.0"
