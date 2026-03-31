@@ -81,7 +81,7 @@ async function cmdInit(flags: Record<string, unknown>) {
   // 1. Create aura.config.ts
   const configPath = join(cwd, 'aura.config.ts')
   if (!existsSync(configPath)) {
-    writeFileSync(configPath, `import { defineConfig } from '@aura/core'
+    writeFileSync(configPath, `import { defineConfig } from '@foisal-hossen/aura-css'
 
 export default defineConfig({
   theme: 'system',       // 'light' | 'dark' | 'ocean' | 'aurora' | 'ember' | 'rose' | 'midnight'
@@ -108,20 +108,20 @@ export default defineConfig({
   const entryPath = join(stylesDir, 'aura.css')
   if (!existsSync(entryPath)) {
     writeFileSync(entryPath, `/* AURA CSS — Entry Point */
-@import '@aura/core/css/aura-core.css';
-@import '@aura/core/css/aura-tokens.css';
-@import '@aura/core/css/aura-themes.css';
-@import '@aura/core/css/aura-typography.css';
-@import '@aura/core/css/aura-color.css';
-@import '@aura/core/css/aura-spacing.css';
-@import '@aura/core/css/aura-elevation.css';
-@import '@aura/core/css/aura-layout.css';
-@import '@aura/core/css/aura-utilities.css';
-@import '@aura/core/css/aura-transform.css';
-@import '@aura/core/css/aura-variants.css';
-@import '@aura/core/css/aura-visual.css';
-@import '@aura/core/css/aura-motion.css';
-@import '@aura/core/css/aura-components.css';
+@import '@foisal-hossen/aura-css/css/aura-core.css';
+@import '@foisal-hossen/aura-css/css/aura-tokens.css';
+@import '@foisal-hossen/aura-css/css/aura-themes.css';
+@import '@foisal-hossen/aura-css/css/aura-typography.css';
+@import '@foisal-hossen/aura-css/css/aura-color.css';
+@import '@foisal-hossen/aura-css/css/aura-spacing.css';
+@import '@foisal-hossen/aura-css/css/aura-elevation.css';
+@import '@foisal-hossen/aura-css/css/aura-layout.css';
+@import '@foisal-hossen/aura-css/css/aura-utilities.css';
+@import '@foisal-hossen/aura-css/css/aura-transform.css';
+@import '@foisal-hossen/aura-css/css/aura-variants.css';
+@import '@foisal-hossen/aura-css/css/aura-visual.css';
+@import '@foisal-hossen/aura-css/css/aura-motion.css';
+@import '@foisal-hossen/aura-css/css/aura-components.css';
 
 /* Your custom overrides below */
 @layer aura.overrides {

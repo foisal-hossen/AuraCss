@@ -2,27 +2,36 @@
 
 **Adaptive Utility & Responsive Architecture**
 
-> OKLCH-powered · Lightning CSS · 7 themes · Zero breakpoints · Tailwind v4-compatible
-
-[![npm](https://img.shields.io/npm/v/@aura/core)](https://npmjs.com/package/@aura/core)
-[![license](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+> OKLCH-powered · Lightning CSS (Rust) · 7 themes · Zero breakpoints · Tailwind v4-compatible
 
 ---
 
-## Installation
+## 🚀 CDN — Works Immediately (no install needed)
+
+```html
+<!-- jsDelivr GitHub CDN — always up to date from GitHub -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foisal-hossen/AuraCss@main/dist/aura.min.css">
+
+<!-- Specific version (recommended for production) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foisal-hossen/AuraCss@v1.0.0/dist/aura.min.css">
+
+<!-- Full version (unminified) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foisal-hossen/AuraCss@main/dist/aura.css">
+```
+
+---
+
+## 📦 Install via npm / bun
 
 ```bash
-# bun (recommended — ultra-fast)
-bun add @aura/core
+# bun (recommended)
+bun add @foisal-hossen/aura-css
 
 # npm
-npm install @aura/core
+npm install @foisal-hossen/aura-css
 
 # pnpm
-pnpm add @aura/core
-
-# yarn
-yarn add @aura/core
+pnpm add @foisal-hossen/aura-css
 ```
 
 ---
@@ -32,16 +41,16 @@ yarn add @aura/core
 ### 1. Import CSS
 
 ```js
-// main.js / main.ts / app.js
-import '@aura/core'
+// main.js / main.ts
+import '@foisal-hossen/aura-css'
 ```
 
 ```css
-/* globals.css / main.css */
-@import '@aura/core';
+/* globals.css */
+@import '@foisal-hossen/aura-css';
 ```
 
-### 2. Set theme on `<html>`
+### 2. Set theme
 
 ```html
 <html data-theme="dark">
@@ -52,46 +61,8 @@ import '@aura/core'
 ```html
 <button class="btn btn--primary">Hello AURA</button>
 <div class="card card--glass glow">Glass Card</div>
+<h1 class="heading-hero text-gradient-aura">Big Heading</h1>
 <div class="grid grid-auto-280 gap-6">...</div>
-```
-
----
-
-## CDN (no install)
-
-```html
-<!-- Full -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@aura/core@1.0.0/dist/aura.css">
-
-<!-- Minified (recommended for production) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@aura/core@1.0.0/dist/aura.min.css">
-
-<!-- unpkg -->
-<link rel="stylesheet" href="https://unpkg.com/@aura/core@1.0.0/dist/aura.min.css">
-```
-
----
-
-## AURA CLI (bunx)
-
-```bash
-# Initialize project
-bunx aura init
-
-# Development (watch + HMR)
-bunx aura dev
-
-# Production build (Lightning CSS)
-bunx aura build
-
-# Migrate from Tailwind
-bunx aura migrate
-
-# Design audit
-bunx aura audit
-
-# List themes
-bunx aura themes
 ```
 
 ---
@@ -101,26 +72,22 @@ bunx aura themes
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
-import aura from '@aura/vite-plugin'
+import aura from '@foisal-hossen/aura-css/vite-plugin'
 
 export default defineConfig({
   plugins: [
-    aura({
-      theme: 'dark',   // default theme
-      inject: true,    // auto theme-restore from localStorage
-      hmr: true,       // hot-reload on aura.config.ts change
-    })
+    aura({ theme: 'dark', inject: true, hmr: true })
   ]
 })
 ```
 
 ---
 
-## Next.js
+## Next.js (App Router)
 
 ```tsx
 // app/layout.tsx
-import '@aura/core'
+import '@foisal-hossen/aura-css'
 
 export default function RootLayout({ children }) {
   return (
@@ -144,29 +111,23 @@ export default function RootLayout({ children }) {
 
 ---
 
-## Configuration
+## AURA CLI
 
-```ts
-// aura.config.ts
-import { defineConfig } from '@aura/core/config'
+```bash
+# Initialize project
+bunx @foisal-hossen/aura-css init
 
-export default defineConfig({
-  theme: 'dark',
-  motion: 'smooth',    // 'smooth' | 'snappy' | 'bouncy' | 'none'
-  content: ['./src/**/*.{html,js,ts,jsx,tsx,vue,svelte}'],
-  extend: {
-    colors: {
-      brand: 'oklch(0.58 0.26 290)',
-    },
-    spacing: {
-      section: 'clamp(5rem, 10vw, 9rem)',
-    },
-  },
-  lint: {
-    enabled: true,
-    enforceTokens: ['color', 'spacing'],
-  },
-})
+# Development (watch + HMR)
+bunx @foisal-hossen/aura-css dev
+
+# Production build (Lightning CSS — Rust)
+bunx @foisal-hossen/aura-css build
+
+# Migrate from Tailwind (200+ class mappings)
+bunx @foisal-hossen/aura-css migrate
+
+# Design audit
+bunx @foisal-hossen/aura-css audit
 ```
 
 ---
@@ -174,7 +135,6 @@ export default defineConfig({
 ## Themes
 
 ```html
-<!-- Built-in themes -->
 <html data-theme="dark">      <!-- Deep violet dark      -->
 <html data-theme="light">     <!-- Default light          -->
 <html data-theme="ocean">     <!-- Deep navy, cyan        -->
@@ -185,114 +145,104 @@ export default defineConfig({
 ```
 
 ```js
-// Switch at runtime (smooth transition)
+// Switch theme (smooth transition)
 function setTheme(name) {
   document.documentElement.classList.add('aura-transitioning')
   document.documentElement.setAttribute('data-theme', name)
   localStorage.setItem('aura-theme', name)
-  setTimeout(() => document.documentElement.classList.remove('aura-transitioning'), 280)
+  setTimeout(() =>
+    document.documentElement.classList.remove('aura-transitioning'), 280)
 }
 ```
 
-```html
-<!-- Scoped theme — only this element is dark -->
-<html data-theme="light">
-  <aside data-theme="dark">Dark sidebar!</aside>
-  <main>Light content</main>
-</html>
+---
+
+## Configuration
+
+```ts
+// aura.config.ts
+import { defineConfig } from '@foisal-hossen/aura-css/config'
+
+export default defineConfig({
+  theme: 'dark',
+  motion: 'smooth',
+  content: ['./src/**/*.{html,js,ts,jsx,tsx,vue,svelte}'],
+  extend: {
+    colors: { brand: 'oklch(0.58 0.26 290)' },
+    spacing: { section: 'clamp(5rem, 10vw, 9rem)' },
+  },
+})
 ```
 
 ---
 
-## Tree-shaking (individual imports)
+## Tree-shaking
 
 ```css
 /* Only import what you need */
-@import '@aura/core/css/aura-core.css';
-@import '@aura/core/css/aura-tokens.css';
-@import '@aura/core/css/aura-themes.css';
-@import '@aura/core/css/aura-components.css';
-```
-
----
-
-## Intelligence Tools
-
-```ts
-import { generateTokens, lintCSS, suggestFontPairs } from '@aura/core/intelligence'
-
-// Brand color → full OKLCH palette
-const palette = generateTokens('#6B4EFF')
-console.log(palette.css) // CSS variables ready to use
-
-// Lint your CSS
-const result = lintCSS(myCSSString, 'globals.css')
-console.log(`Score: ${result.score}/100`)
-
-// Font pairing suggestions
-const pairs = suggestFontPairs('bold')
+@import '@foisal-hossen/aura-css/css/aura-core.css';
+@import '@foisal-hossen/aura-css/css/aura-tokens.css';
+@import '@foisal-hossen/aura-css/css/aura-components.css';
 ```
 
 ---
 
 ## Class Reference
 
-| Category | Classes |
+| Category     | Classes |
 |---|---|
-| **Buttons** | `btn btn--primary` · `btn--ghost` · `btn--outline` · `btn--glass` · `btn--sm/lg` |
-| **Cards** | `card card--raised` · `card--glass` · `card--glow` · `card--interactive` |
-| **Grid** | `grid grid-auto-280` · `layout-bento` · `layout-sidebar` |
-| **Spacing** | `p-4` · `px-6` · `py-8` · `p-fluid-lg` · `gap-4` |
-| **Typography** | `heading-hero` · `text-gradient-aura` · `prose` · `text-eyebrow` |
-| **Effects** | `glass` · `glow` · `neon` · `shimmer` · `bg-mesh` · `border-gradient` |
-| **Motion** | `animate-fade-in-up` · `reveal-up` · `stagger` · `animate-spin` |
+| **Buttons**  | `btn btn--primary` · `btn--ghost` · `btn--outline` · `btn--glass` |
+| **Cards**    | `card card--raised` · `card--glass` · `card--glow` · `card--interactive` |
+| **Grid**     | `grid grid-auto-280` · `layout-bento` · `layout-sidebar` |
+| **Spacing**  | `p-4` · `px-6` · `py-8` · `p-fluid-lg` · `gap-4` |
+| **Type**     | `heading-hero` · `text-gradient-aura` · `prose` · `text-eyebrow` |
+| **Effects**  | `glass` · `glow` · `neon` · `shimmer` · `bg-mesh` · `border-gradient` |
+| **Motion**   | `animate-fade-in-up` · `reveal-up` · `stagger` |
 | **Variants** | `hover:shadow-glow` · `focus:ring-primary` · `group-hover:opacity-100` |
-| **3D** | `rotate-x-45` · `perspective-lg` · `transform-3d` · `backface-hidden` |
-| **Responsive** | `@sm:flex` · `@lg:grid-cols-3` (container queries) |
+
+---
+
+## Build from source
+
+```bash
+# Clone
+git clone https://github.com/foisal-hossen/AuraCss.git
+cd AuraCss
+
+# Install (includes lightningcss — Rust native)
+bun install
+
+# Build (Lightning CSS Rust transform)
+bun run build
+
+# Watch mode
+bun run build:watch
+```
 
 ---
 
 ## Stack
 
 ```
-Source CSS (Vanilla CSS + CSS Custom Properties)
+css/ (Source — Vanilla CSS + CSS Custom Properties)
        ↓
-Lightning CSS (Rust) ← bunx aura build
-  ├── CSS nesting flatten
-  ├── Vendor prefix add
-  ├── Unused CSS remove (tree-shaking)
-  └── Minify
+scripts/build.ts
        ↓
-Output: dist/aura.min.css
-
-TypeScript (CLI + Config + Plugins)
-  ├── aura.config.ts parse
-  ├── Theme tokens inject
-  └── Figma / Tailwind migration handle
-
-Bun (Runtime)
-  ├── CLI চালায় (ultra-fast)
-  └── Package manager
+lightningcss (Rust native binary)
+  ├─ Vendor prefix (-webkit-, -moz-)
+  ├─ CSS nesting flatten
+  ├─ Unused CSS remove
+  └─ Minify
+       ↓
+dist/aura.css + dist/aura.min.css
 ```
-
----
-
-## Tailwind Migration
-
-```bash
-bunx aura migrate --dry-run   # preview
-bunx aura migrate             # apply
-bunx aura migrate --report    # detailed report
-```
-
-200+ class mappings automatic। 95%+ classes identical।
 
 ---
 
 ## Links
 
-- 📖 Docs: https://aura-css.dev/docs
-- ▶ Playground: https://aura-css.dev/play
-- 🐙 GitHub: https://github.com/aura-css/aura
+- 📦 npm: https://npmjs.com/package/@foisal-hossen/aura-css
+- 🐙 GitHub: https://github.com/foisal-hossen/AuraCss
+- 🌐 CDN: https://cdn.jsdelivr.net/gh/foisal-hossen/AuraCss@main/dist/aura.min.css
 
-**MIT © AURA CSS**
+**MIT © 2025 Foisal Hossen**

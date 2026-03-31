@@ -1,13 +1,20 @@
 {
-  "name": "@aura/core",
+  "name": "@foisal-hossen/aura-css",
   "version": "1.0.0",
-  "description": "AURA CSS — Adaptive Utility & Responsive Architecture. OKLCH-powered CSS framework built with Lightning CSS (Rust).",
+  "description": "AURA CSS \u2014 Adaptive Utility & Responsive Architecture. OKLCH-powered CSS framework built with Lightning CSS (Rust).",
   "keywords": [
-    "css", "css-framework", "utility-css", "design-system",
-    "oklch", "dark-mode", "tailwind-alternative", "lightning-css",
-    "rust", "zero-breakpoints"
+    "css",
+    "css-framework",
+    "utility-css",
+    "design-system",
+    "oklch",
+    "dark-mode",
+    "tailwind-alternative",
+    "lightning-css",
+    "rust",
+    "zero-breakpoints"
   ],
-  "homepage": "https://aura-css.dev",
+  "homepage": "https://github.com/foisal-hossen/AuraCss#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/foisal-hossen/AuraCss.git"
@@ -17,44 +24,39 @@
   },
   "license": "MIT",
   "type": "module",
-
   "style": "./dist/aura.css",
-
-  "main":   "./packages/index.ts",
+  "main": "./packages/index.ts",
   "module": "./packages/index.ts",
-  "types":  "./packages/index.d.ts",
-
+  "types": "./packages/index.d.ts",
   "exports": {
     ".": {
-      "import":  "./packages/index.ts",
+      "import": "./packages/index.ts",
       "default": "./packages/index.ts"
     },
-    "./css/aura.css":             "./dist/aura.css",
-    "./dist/aura.css":            "./dist/aura.css",
-    "./dist/aura.min.css":        "./dist/aura.min.css",
-    "./css/aura-core.css":        "./css/aura-core.css",
-    "./css/aura-tokens.css":      "./css/aura-tokens.css",
-    "./css/aura-themes.css":      "./css/aura-themes.css",
-    "./css/aura-typography.css":  "./css/aura-typography.css",
-    "./css/aura-color.css":       "./css/aura-color.css",
-    "./css/aura-spacing.css":     "./css/aura-spacing.css",
-    "./css/aura-elevation.css":   "./css/aura-elevation.css",
-    "./css/aura-layout.css":      "./css/aura-layout.css",
-    "./css/aura-utilities.css":   "./css/aura-utilities.css",
-    "./css/aura-transform.css":   "./css/aura-transform.css",
-    "./css/aura-variants.css":    "./css/aura-variants.css",
-    "./css/aura-visual.css":      "./css/aura-visual.css",
-    "./css/aura-motion.css":      "./css/aura-motion.css",
-    "./css/aura-components.css":  "./css/aura-components.css",
-    "./vite-plugin":              "./packages/vite-plugin/index.ts",
-    "./intelligence":             "./packages/intelligence.ts",
-    "./config":                   "./packages/aura.config.ts"
+    "./css/aura.css": "./dist/aura.css",
+    "./dist/aura.css": "./dist/aura.css",
+    "./dist/aura.min.css": "./dist/aura.min.css",
+    "./css/aura-core.css": "./css/aura-core.css",
+    "./css/aura-tokens.css": "./css/aura-tokens.css",
+    "./css/aura-themes.css": "./css/aura-themes.css",
+    "./css/aura-typography.css": "./css/aura-typography.css",
+    "./css/aura-color.css": "./css/aura-color.css",
+    "./css/aura-spacing.css": "./css/aura-spacing.css",
+    "./css/aura-elevation.css": "./css/aura-elevation.css",
+    "./css/aura-layout.css": "./css/aura-layout.css",
+    "./css/aura-utilities.css": "./css/aura-utilities.css",
+    "./css/aura-transform.css": "./css/aura-transform.css",
+    "./css/aura-variants.css": "./css/aura-variants.css",
+    "./css/aura-visual.css": "./css/aura-visual.css",
+    "./css/aura-motion.css": "./css/aura-motion.css",
+    "./css/aura-components.css": "./css/aura-components.css",
+    "./vite-plugin": "./packages/vite-plugin/index.ts",
+    "./intelligence": "./packages/intelligence.ts",
+    "./config": "./packages/aura.config.ts"
   },
-
   "bin": {
     "aura": "./packages/cli/index.ts"
   },
-
   "files": [
     "dist/",
     "css/",
@@ -63,36 +65,33 @@
     "README.md",
     "LICENSE"
   ],
-
   "scripts": {
-    "build":       "bun run scripts/build.ts",
+    "build": "bun run scripts/build.ts",
     "build:watch": "bun run scripts/build.ts --watch",
-    "dev":         "bun run packages/cli/index.ts dev",
-    "migrate":     "bun run packages/cli/index.ts migrate",
-    "audit":       "bun run packages/cli/index.ts audit",
-    "themes":      "bun run packages/cli/index.ts themes",
-    "typecheck":   "tsc --noEmit"
+    "dev": "bun run packages/cli/index.ts dev",
+    "migrate": "bun run packages/cli/index.ts migrate",
+    "audit": "bun run packages/cli/index.ts audit",
+    "themes": "bun run packages/cli/index.ts themes",
+    "typecheck": "tsc --noEmit"
   },
-
   "dependencies": {
     "lightningcss": "^1.25.0"
   },
-
   "peerDependencies": {
     "vite": ">=5.0.0"
   },
   "peerDependenciesMeta": {
-    "vite": { "optional": true }
+    "vite": {
+      "optional": true
+    }
   },
-
   "devDependencies": {
     "typescript": "^5.4.0",
-    "glob":       "^11.0.0",
-    "vite":       "^5.0.0"
+    "glob": "^11.0.0",
+    "vite": "^5.0.0"
   },
-
   "engines": {
-    "bun":  ">=1.1.0",
+    "bun": ">=1.1.0",
     "node": ">=20.0.0"
   }
 }

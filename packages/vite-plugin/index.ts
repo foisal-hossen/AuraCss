@@ -1,9 +1,9 @@
 /**
  * AURA CSS — Vite Plugin
- * @module @aura/vite-plugin
+ * @module @foisal-hossen/aura-css/vite-plugin
  *
  * Usage in vite.config.ts:
- *   import aura from '@aura/vite-plugin'
+ *   import aura from '@foisal-hossen/aura-css/vite-plugin'
  *   export default defineConfig({ plugins: [aura()] })
  */
 
@@ -33,7 +33,7 @@ export function aura(options: AuraViteOptions = {}): Plugin {
   let root = process.cwd()
 
   return {
-    name: '@aura/vite-plugin',
+    name: '@foisal-hossen/aura-css/vite-plugin',
     enforce: 'pre',
 
     configResolved(c) {
@@ -75,13 +75,13 @@ export function aura(options: AuraViteOptions = {}): Plugin {
         .replace('</head>', `${themeScript}\n</head>`)
     },
 
-    // Resolve @aura/core/css/* imports
+    // Resolve @foisal-hossen/aura-css/css/* imports
     resolveId(id: string) {
-      if (id === '@aura/core' || id === '@aura/core/dist/aura.css') {
+      if (id === '@foisal-hossen/aura-css' || id === '@foisal-hossen/aura-css/dist/aura.css') {
         return join(root, 'node_modules', '@aura', 'core', 'dist', 'aura.css')
       }
-      if (id.startsWith('@aura/core/css/')) {
-        const file = id.replace('@aura/core/css/', '')
+      if (id.startsWith('@foisal-hossen/aura-css/css/')) {
+        const file = id.replace('@foisal-hossen/aura-css/css/', '')
         return join(root, 'node_modules', '@aura', 'core', 'css', file)
       }
     },
